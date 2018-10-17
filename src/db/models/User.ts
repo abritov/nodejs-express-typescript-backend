@@ -66,6 +66,6 @@ export default (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) 
   return {
     options,
     attributes,
-    Users: sequelize.define<UsersInstance, UserAttributes>('Users', attributes, options),
+    User: sequelize.define<UsersInstance, UserAttributes>('Users', attributes, options),
   }
 };
