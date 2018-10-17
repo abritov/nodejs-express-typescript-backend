@@ -3,7 +3,7 @@ import { User as UserAttributes } from '../../models/User'
 
 type UsersInstance = Sequelize.Instance<UserAttributes> & UserAttributes;
 
-export default (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) => {
+function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: SequelizeAttributes<UserAttributes> = {
     id: {
       field: 'id',
@@ -63,9 +63,11 @@ export default (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) 
     timestamps: true,
     tableName: 'users',
   };
-  return {
-    options,
-    attributes,
-    User: sequelize.define<UsersInstance, UserAttributes>('Users', attributes, options),
-  }
-};
+  return sequelize.define<UsersInstance, UserAttributes>('Users', attributes, options)
+}
+
+function userFactory(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize)
+}
+
+export default userFactory;
