@@ -1,10 +1,9 @@
 import { QueryInterface, SequelizeStatic } from 'sequelize';
-import * as Promise from 'bluebird';
 
-export function up(queryInterface: QueryInterface, Sequelize: SequelizeStatic): Promise<void> {
+export function up(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
   return queryInterface.createTable('Users', {}, {});
 };
 
-export function down(queryInterface: QueryInterface, Sequelize: SequelizeStatic): Promise<void> {
+export function down(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
   return queryInterface.dropTable('Users');
 };
