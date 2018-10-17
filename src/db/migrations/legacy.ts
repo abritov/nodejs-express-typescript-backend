@@ -8,6 +8,6 @@ module.exports = {
   },
   // tslint:disable-next-line:variable-name
   down: async (queryInterface: QueryInterface, Sequelize: SequelizeStatic) => {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable("Users");
   },
 };
