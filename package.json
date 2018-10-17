@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/sequelize": "^4.27.28",
+    "mysql2": "^1.6.1",
     "sequelize": "^4.39.0",
     "sequelize-cli": "^5.1.0",
     "sequelize-cli-typescript": "^3.2.0-c"
