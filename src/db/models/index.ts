@@ -1,5 +1,3 @@
-'use strict';
-
 import * as Sequelize from "sequelize";
 import userFactory from './User';
 const env = process.env.NODE_ENV || "development";
