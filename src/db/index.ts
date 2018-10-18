@@ -1,5 +1,5 @@
 import * as Sequelize from "sequelize";
-import userFactory from './User';
+import userFactory from './models/User';
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config.json")[env];
 const url = config.url || process.env.DATABASE_URI;
