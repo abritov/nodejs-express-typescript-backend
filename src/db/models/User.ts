@@ -1,5 +1,15 @@
 import * as Sequelize from 'sequelize'
-import { User as UserAttributes } from '../../models/User'
+
+interface UserAttributes {
+  id?: number,
+  name: string,
+  authKey: string,
+  passwordHash: string,
+  passwordResetToken: string,
+  email: string,
+  status: number,
+}
+
 
 type UsersInstance = Sequelize.Instance<UserAttributes> & UserAttributes;
 
@@ -64,4 +74,5 @@ function userFactory(sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }
 
+export { UserAttributes as User };
 export default userFactory;
