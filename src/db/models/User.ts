@@ -4,7 +4,7 @@ import { User as UserAttributes } from '../../models/User'
 type UsersInstance = Sequelize.Instance<UserAttributes> & UserAttributes;
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
-  const attributes: SequelizeAttributes<UserAttributes> = {
+  const attributes: Sequelize.DefineModelAttributes<UserAttributes> = {
     id: {
       field: 'id',
       type: DataTypes.INTEGER,
