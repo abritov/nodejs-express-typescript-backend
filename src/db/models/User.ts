@@ -54,12 +54,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   };
 
   const options = {
-    indexes: [
-      {
-        unique: true,
-        fields: ['email'],
-      },
-    ],
     timestamps: true,
     tableName: 'users',
   };
