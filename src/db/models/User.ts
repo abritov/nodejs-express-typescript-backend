@@ -57,7 +57,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     timestamps: true,
     tableName: 'users',
   };
-  return sequelize.define<UsersInstance, UserAttributes>('Users', attributes, options)
+  return sequelize.define<UsersInstance, UserAttributes>('User', attributes, options)
 }
 
 function userFactory(sequelize: Sequelize.Sequelize) {
