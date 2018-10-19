@@ -102,7 +102,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   };
 
   const options = {
-    timestamps: true,
+    timestamps: false,
     tableName: 'users',
   };
   return sequelize.define<UsersInstance, UserAttributes>('User', attributes, options)
