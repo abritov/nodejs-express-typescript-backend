@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize'
 
-interface StaffUserAttributes {
+interface Attributes {
   id?: number,
   userId: number,
   rateTranslate: number,
@@ -9,10 +9,10 @@ interface StaffUserAttributes {
 }
 
 
-type StaffUsersInstance = Sequelize.Instance<StaffUserAttributes> & StaffUserAttributes;
+type StaffUsersInstance = Sequelize.Instance<Attributes> & Attributes;
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
-  const attributes: Sequelize.DefineModelAttributes<StaffUserAttributes> = {
+  const attributes: Sequelize.DefineModelAttributes<Attributes> = {
     id: {
       field: 'id',
       type: DataTypes.INTEGER,
@@ -50,15 +50,15 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
   };
 
-  const options: Sequelize.DefineOptions<StaffUserAttributes> = {
+  const options: Sequelize.DefineOptions<Attributes> = {
     timestamps: false,
     tableName: 'staff_users',
   };
 
-  return sequelize.define<StaffUsersInstance, StaffUserAttributes>('StaffUser', attributes, options)
+  return sequelize.define<StaffUsersInstance, Attributes>('StaffUser', attributes, options)
 }
 
-export { StaffUserAttributes as StaffUser };
+export { Attributes as StaffUser };
 export default function (sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }
