@@ -3,11 +3,16 @@ import * as Sequelize from 'sequelize'
 interface UserAttributes {
   id?: number,
   name: string,
+  email: string,
   authKey: string,
   passwordHash: string,
+  salt: string,
+  oldHash: string,
   passwordResetToken: string,
-  email: string,
-  status: number,
+  statusId: number,
+  approved?: boolean,
+  lastLogin: Date,
+  createtAt: Date,
 }
 
 
@@ -40,6 +45,22 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       type: DataTypes.STRING(255),
       allowNull: true,
     },
+    salt: {
+      field: 'salt',
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    oldHash: {
+      field: 'old_hash',
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     passwordResetToken: {
       field: 'password_reset_token',
       type: DataTypes.STRING(255),
@@ -55,11 +76,28 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
         isEmail: true,
       },
     },
-    status: {
-      field: 'status',
+    statusId: {
+      field: 'status_id',
       type: DataTypes.INTEGER(10),
       allowNull: false,
       defaultValue: 0,
+    },
+    approved: {
+      field: 'approved',
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    lastLogin: {
+      field: 'last_login',
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    createtAt: {
+      field: 'createt_at',
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   };
 
