@@ -19,24 +19,22 @@ echo ""
 echo " -> Compilation completed."
 echo ""
 
-# echo ""
-# echo " -> Step 2/4: Copying resources required for migration."
-# cp -rf ./src/db/dump ./build-migrations/db/
-# echo " -> Copying resources completed."
-# echo ""
+echo ""
+echo " -> Step 2/3: Starting migration."
+echo ""
+yarn sequelize --config ./src/db/config.json \
+--models-path ./src/db/models \
+--seeders-path ./src/db/seeders \
+--migrations-path ./build-migrations \
+--env $ENVIRONMENT db:migrate 
+echo ""
+echo " -> Migration completed."
+echo ""
 
-# echo ""
-# echo " -> Step 3/4: Starting migration."
-# echo ""
-# yarn sequelize db:migrate - env $ENVIRONMENT
-# echo ""
-# echo " -> Migration completed."
-# echo ""
-
-# echo ""
-# echo " -> Step 4/4: Deleting generated files."
-# echo ""
-# rm -Rf ./build-migrations
-# mkdir ./build-migrations
-# echo ""
-# echo " -> Deletion completed."
+echo ""
+echo " -> Step 3/3: Deleting generated files."
+echo ""
+rm -Rf ./build-migrations
+mkdir ./build-migrations
+echo ""
+echo " -> Deletion completed."
