@@ -113,5 +113,7 @@ function userFactory(sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }
 
-export { Attributes as User };
-export default userFactory;
+export { Attributes as User }
+export { Instance as UserInstance }
+export { Model as UserModel }
+export default userFactory
