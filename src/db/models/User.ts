@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize'
 
-interface UserAttributes {
+interface Attributes {
   id?: number,
   name: string,
   email: string,
@@ -16,10 +16,10 @@ interface UserAttributes {
 }
 
 
-type UserInstance = Sequelize.Instance<UserAttributes> & UserAttributes;
+type UserInstance = Sequelize.Instance<Attributes> & Attributes;
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
-  const attributes: Sequelize.DefineModelAttributes<UserAttributes> = {
+  const attributes: Sequelize.DefineModelAttributes<Attributes> = {
     id: {
       field: 'id',
       type: DataTypes.INTEGER,
@@ -105,12 +105,12 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     timestamps: false,
     tableName: 'users',
   };
-  return sequelize.define<UserInstance, UserAttributes>('User', attributes, options)
+  return sequelize.define<UserInstance, Attributes>('User', attributes, options)
 }
 
 function userFactory(sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }
 
-export { UserAttributes as User };
+export { Attributes as User };
 export default userFactory;
