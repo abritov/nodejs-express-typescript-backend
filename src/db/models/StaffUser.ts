@@ -9,7 +9,7 @@ interface Attributes {
 }
 
 
-type StaffUsersInstance = Sequelize.Instance<Attributes> & Attributes;
+type Instance = Sequelize.Instance<Attributes> & Attributes;
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
@@ -55,7 +55,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: 'staff_users',
   };
 
-  return sequelize.define<StaffUsersInstance, Attributes>('StaffUser', attributes, options)
+  return sequelize.define<Instance, Attributes>('StaffUser', attributes, options)
 }
 
 export { Attributes as StaffUser };
