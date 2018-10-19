@@ -14,7 +14,7 @@ export function up(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'users',
         key: 'id',
       },
       onUpdate: 'cascade',
