@@ -17,6 +17,7 @@ interface Attributes {
 
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
+type Model = Sequelize.Model<Instance, Attributes>
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
