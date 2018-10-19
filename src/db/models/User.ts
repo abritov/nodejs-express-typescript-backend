@@ -16,7 +16,7 @@ interface UserAttributes {
 }
 
 
-type UsersInstance = Sequelize.Instance<UserAttributes> & UserAttributes;
+type UserInstance = Sequelize.Instance<UserAttributes> & UserAttributes;
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<UserAttributes> = {
@@ -105,7 +105,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     timestamps: false,
     tableName: 'users',
   };
-  return sequelize.define<UsersInstance, UserAttributes>('User', attributes, options)
+  return sequelize.define<UserInstance, UserAttributes>('User', attributes, options)
 }
 
 function userFactory(sequelize: Sequelize.Sequelize) {
