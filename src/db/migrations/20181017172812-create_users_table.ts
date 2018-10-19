@@ -1,7 +1,7 @@
 import { QueryInterface, SequelizeStatic } from 'sequelize';
 
 export function up(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
-  return queryInterface.createTable('Users', {
+  return queryInterface.createTable('users', {
     id: {
       field: 'id',
       type: Sequelize.INTEGER,
@@ -85,5 +85,5 @@ export function up(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
 };
 
 export function down(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
-  return queryInterface.dropTable('Users')
+  return queryInterface.dropTable('users')
 };
