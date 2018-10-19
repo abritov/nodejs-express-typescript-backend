@@ -16,6 +16,7 @@ const db = {
   StaffUser: staffUserFactory(sequelize),
   Role: roleFactory(sequelize),
   UserRole: userRoleFactory(sequelize),
+  UserToken: userTokenFactory(sequelize),
 };
 
 (<any>Object).values(db).forEach(model => {
