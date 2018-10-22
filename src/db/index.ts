@@ -5,10 +5,10 @@ import roleFactory from './models/Role'
 import userRoleFactory from './models/UserRole'
 import userTokenFactory from './models/UserToken'
 const env = process.env.NODE_ENV || "development"
-const config = require(__dirname + "/../config.json")[env]
+const config = require("./config.json")[env]
 const url = config.url || process.env.DATABASE_URI
 
-const sequelize = new Sequelize(url, config)
+const sequelize = new Sequelize(config)
 
 const db = {
   sequelize,
