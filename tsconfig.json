@@ -2,9 +2,13 @@
     "compilerOptions": {
         "outDir": "./dist",
         "allowJs": true,
-        "target": "es2015",
+        "sourceMap": true,
+        "module": "commonjs",
         "noEmitOnError": true,
         "moduleResolution": "node",
+        "lib": [
+            "es2015"
+        ],
     },
     "include": [
         "./src/**/*"
