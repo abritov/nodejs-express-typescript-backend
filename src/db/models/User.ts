@@ -11,8 +11,8 @@ interface Attributes {
   passwordResetToken: string,
   statusId: number,
   approved?: boolean,
-  lastLogin: Date,
-  createtAt: Date,
+  lastLogin?: Date,
+  createtAt?: Date,
 }
 
 
