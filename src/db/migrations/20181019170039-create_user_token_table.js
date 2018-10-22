@@ -1,6 +1,4 @@
-import { QueryInterface, SequelizeStatic } from 'sequelize';
-
-export function up(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
+module.exports.up = (queryInterface, Sequelize) => {
   return queryInterface.createTable('user_token', {
     userId: {
       field: 'user_id',
@@ -22,6 +20,6 @@ export function up(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
   })
 };
 
-export function down(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
+module.exports.down = (queryInterface, Sequelize) => {
   return queryInterface.dropTable('user_token')
 };
