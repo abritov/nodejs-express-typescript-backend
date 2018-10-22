@@ -1,3 +1,9 @@
+// @ts-check
+
+/**
+ * @param {import('sequelize').QueryInterface} queryInterface
+ * @param {import('sequelize').SequelizeStatic} Sequelize
+ */
 module.exports.up = (queryInterface, Sequelize) => {
   return queryInterface.createTable('staff_users', {
     id: {
@@ -38,6 +44,10 @@ module.exports.up = (queryInterface, Sequelize) => {
   })
 };
 
+/**
+ * @param {import('sequelize').QueryInterface} queryInterface
+ * @param {import('sequelize').SequelizeStatic} Sequelize
+ */
 module.exports.down = (queryInterface, Sequelize) => {
   return queryInterface.dropTable('staff_users')
 };
