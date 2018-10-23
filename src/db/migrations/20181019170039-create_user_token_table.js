@@ -7,7 +7,6 @@
 module.exports.up = (queryInterface, Sequelize) => {
   return queryInterface.createTable('user_token', {
     userId: {
-      field: 'user_id',
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
@@ -18,7 +17,6 @@ module.exports.up = (queryInterface, Sequelize) => {
       onDelete: 'cascade',
     },
     token: {
-      field: 'token',
       type: Sequelize.STRING(255),
       allowNull: true,
       unique: true,

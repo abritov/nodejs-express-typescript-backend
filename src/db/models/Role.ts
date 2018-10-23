@@ -11,14 +11,12 @@ type Instance = Sequelize.Instance<Attributes> & Attributes;
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
     id: {
-      field: 'id',
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
     name: {
-      field: 'name',
       type: DataTypes.STRING(128),
       allowNull: false,
       unique: true,

@@ -22,14 +22,12 @@ type Model = Sequelize.Model<Instance, Attributes>
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
     id: {
-      field: 'id',
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
     name: {
-      field: 'name',
       type: DataTypes.STRING(255),
       allowNull: false,
       validate: {
@@ -37,17 +35,14 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       },
     },
     authKey: {
-      field: 'auth_key',
       type: DataTypes.STRING(255),
       allowNull: true,
     },
     passwordHash: {
-      field: 'password_hash',
       type: DataTypes.STRING(255),
       allowNull: true,
     },
     salt: {
-      field: 'salt',
       type: DataTypes.STRING(255),
       allowNull: false,
       validate: {
@@ -55,7 +50,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       },
     },
     oldHash: {
-      field: 'old_hash',
       type: DataTypes.STRING(255),
       allowNull: false,
       validate: {
@@ -63,12 +57,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       },
     },
     passwordResetToken: {
-      field: 'password_reset_token',
       type: DataTypes.STRING(255),
       allowNull: true,
     },
     email: {
-      field: 'email',
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: true,
@@ -78,24 +70,20 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       },
     },
     statusId: {
-      field: 'status_id',
       type: DataTypes.INTEGER(10),
       allowNull: false,
       defaultValue: 0,
     },
     approved: {
-      field: 'approved',
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
     lastLogin: {
-      field: 'last_login',
       type: DataTypes.DATE,
       allowNull: true,
     },
     createtAt: {
-      field: 'createt_at',
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW
