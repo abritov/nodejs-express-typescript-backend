@@ -6,7 +6,9 @@ interface Attributes {
 }
 
 
-type Instance = Sequelize.Instance<Attributes> & Attributes;
+interface Instance extends Sequelize.Instance<Attributes>, Attributes {
+
+}
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
@@ -38,7 +40,8 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   return sequelize.define<Instance, Attributes>('UserToken', attributes, options)
 }
 
-export { Attributes as UserToken };
+export { Attributes as UserToken }
+export { Instance as UserTokenInstance }
 export default function (sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }
