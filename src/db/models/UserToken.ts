@@ -13,7 +13,6 @@ interface Instance extends Sequelize.Instance<Attributes>, Attributes {
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
     userId: {
-      field: 'user_id',
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -24,7 +23,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       onDelete: 'cascade',
     },
     token: {
-      field: 'token',
       type: DataTypes.STRING(255),
       allowNull: true,
       unique: true,

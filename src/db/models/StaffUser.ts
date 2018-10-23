@@ -14,14 +14,12 @@ type Instance = Sequelize.Instance<Attributes> & Attributes;
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
     id: {
-      field: 'id',
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
     userId: {
-      field: 'user_id',
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -32,19 +30,16 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       onDelete: 'cascade',
     },
     rateTranslate: {
-      field: 'rate_translate',
       type: DataTypes.INTEGER(10),
       allowNull: false,
       defaultValue: 0,
     },
     rateRedactor: {
-      field: 'rate_redactor',
       type: DataTypes.INTEGER(10),
       allowNull: false,
       defaultValue: 0,
     },
     adminActivity: {
-      field: 'admin_activity',
       type: DataTypes.INTEGER(10),
       allowNull: true,
     },

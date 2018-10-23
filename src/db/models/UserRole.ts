@@ -11,7 +11,6 @@ type Instance = Sequelize.Instance<Attributes> & Attributes;
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
     userId: {
-      field: 'user_id',
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -22,7 +21,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       onDelete: 'cascade',
     },
     roleId: {
-      field: 'role_id',
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
