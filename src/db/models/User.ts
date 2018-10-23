@@ -1,4 +1,5 @@
 import * as Sequelize from 'sequelize'
+import { UserTokenInstance } from './UserToken';
 
 interface Attributes {
   id?: number,
@@ -16,7 +17,9 @@ interface Attributes {
 }
 
 
-type Instance = Sequelize.Instance<Attributes> & Attributes;
+interface Instance extends Sequelize.Instance<Attributes>, Attributes {
+  getToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
+}
 type Model = Sequelize.Model<Instance, Attributes>
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
@@ -106,8 +109,16 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     timestamps: false,
     tableName: 'users',
   };
-  return sequelize.define<Instance, Attributes>('User', attributes, options)
+  const User = sequelize.define<Instance, Attributes>('User', attributes, options)
+  User.associate = models => {
+    debugger
+    console.log('User.associate')
+    models.User.hasOne(models.UserToken)
+  }
+
+  return User;
 }
+
 
 function userFactory(sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
