@@ -51,7 +51,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   };
 
   const options: Sequelize.DefineOptions<Attributes> = {
-    timestamps: false,
     tableName: 'staff_users',
   };
 
