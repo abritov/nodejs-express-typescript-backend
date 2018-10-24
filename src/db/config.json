@@ -3,21 +3,48 @@
     "username": "root",
     "password": "root",
     "database": "ranobe_v2",
-    "host": "arch",
-    "dialect": "mysql"
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "sync": {
+      "force": false
+    },
+    "define": {
+      "underscored": false,
+      "freezeTableName": true,
+      "charset": "utf8",
+      "timestamps": false
+    }
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "sync": {
+      "force": false
+    },
+    "define": {
+      "underscored": false,
+      "freezeTableName": true,
+      "charset": "utf8",
+      "timestamps": false
+    }
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "sync": {
+      "force": false
+    },
+    "define": {
+      "underscored": false,
+      "freezeTableName": true,
+      "charset": "utf8",
+      "timestamps": false
+    }
   }
 }
