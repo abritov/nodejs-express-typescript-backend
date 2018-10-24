@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize'
 import { UserTokenInstance, UserToken } from './UserToken';
+import { UserRole } from './UserRole';
 
 interface Attributes {
   id?: number,
@@ -15,11 +16,12 @@ interface Attributes {
   lastLogin?: Date,
   createtAt?: Date,
   UserToken?: UserToken | UserToken['id'],
+  // UserRole?: UserRole | UserRole['id'],
 }
 
 
 interface Instance extends Sequelize.Instance<Attributes>, Attributes {
-  getToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
+  getUserToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
 }
 type Model = Sequelize.Model<Instance, Attributes>
 
