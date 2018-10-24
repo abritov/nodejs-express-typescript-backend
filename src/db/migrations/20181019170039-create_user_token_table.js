@@ -6,6 +6,12 @@
  */
 module.exports.up = (queryInterface, Sequelize) => {
   return queryInterface.createTable('user_token', {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     userId: {
       type: Sequelize.INTEGER,
       allowNull: false,

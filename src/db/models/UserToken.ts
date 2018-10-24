@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize'
 
 interface Attributes {
+  id?: number,
   userId: number,
   token: string,
 }
@@ -12,11 +13,17 @@ interface Instance extends Sequelize.Instance<Attributes>, Attributes {
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id',
       },
       onUpdate: 'cascade',
@@ -33,7 +40,13 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: 'user_token',
   };
 
-  return sequelize.define<Instance, Attributes>('UserToken', attributes, options)
+  const UserToken = sequelize.define<Instance, Attributes>('UserToken', attributes, options);
+
+  // UserToken.associate = models => {
+  //   UserToken.belongsTo(models.User, { as: 'user', foreignKey: 'userId' });
+  // }
+
+  return UserToken;
 }
 
 export { Attributes as UserToken }
