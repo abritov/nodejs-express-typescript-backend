@@ -40,13 +40,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: 'user_token',
   };
 
-  const UserToken = sequelize.define<Instance, Attributes>('UserToken', attributes, options);
-
-  // UserToken.associate = models => {
-  //   UserToken.belongsTo(models.User, { as: 'user', foreignKey: 'userId' });
-  // }
-
-  return UserToken;
+  return sequelize.define<Instance, Attributes>('UserToken', attributes, options)
 }
 
 export { Attributes as UserToken }
