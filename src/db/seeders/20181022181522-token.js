@@ -7,11 +7,11 @@
 module.exports.up = (queryInterface, Sequelize) => {
   return queryInterface.bulkInsert('user_token', [
     {
-      user_id: 1,
+      userId: 1,
       token: 'zzzzzzzzzzzzzzzzzzzz',
     },
     {
-      user_id: 2,
+      userId: 2,
       token: 'lllllllllllllllllllll',
     }
   ])
