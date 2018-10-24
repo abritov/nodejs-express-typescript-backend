@@ -1,6 +1,6 @@
 import * as os from 'os'
 import * as Sequelize from "sequelize"
-import config from './config'
+import * as config from './config'
 import userFactory from './models/User'
 import staffUserFactory from './models/StaffUser'
 import roleFactory from './models/Role'
