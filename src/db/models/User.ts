@@ -1,5 +1,5 @@
 import * as Sequelize from 'sequelize'
-import { UserTokenInstance } from './UserToken';
+import { UserTokenInstance, UserToken } from './UserToken';
 
 interface Attributes {
   id?: number,
@@ -14,6 +14,7 @@ interface Attributes {
   approved?: boolean,
   lastLogin?: Date,
   createtAt?: Date,
+  UserToken?: UserToken | UserToken['id'],
 }
 
 
@@ -98,9 +99,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   };
   const User = sequelize.define<Instance, Attributes>('User', attributes, options)
   User.associate = models => {
-    debugger
-    console.log('User.associate')
-    models.User.hasOne(models.UserToken)
+    User.hasOne(models.UserToken);
   }
 
   return User;
