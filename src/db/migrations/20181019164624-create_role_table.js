@@ -5,7 +5,7 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('roles', {
+  queryInterface.createTable('roles', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -20,6 +20,27 @@ module.exports.up = (queryInterface, Sequelize) => {
         notEmpty: true,
       },
     },
+  }).then(() => {
+    queryInterface.bulkInsert('roles', [
+      {
+        name: 'admin',
+      },
+      {
+        name: 'main_redactor'
+      },
+      {
+        name: 'main_translate',
+      },
+      {
+        name: 'redactor',
+      },
+      {
+        name: 'translate',
+      },
+      {
+        name: 'user',
+      },
+    ]).thenReturn()
   })
 };
 
