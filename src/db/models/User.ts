@@ -15,13 +15,11 @@ interface Attributes {
   approved?: boolean,
   lastLogin?: Date,
   createtAt?: Date,
-  UserToken?: UserToken | UserToken['id'],
-  // UserRole?: UserRole | UserRole['id'],
 }
 
 
 interface Instance extends Sequelize.Instance<Attributes>, Attributes {
-  getUserToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
+  getToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
 }
 type Model = Sequelize.Model<Instance, Attributes>
 
@@ -101,7 +99,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   };
   const User = sequelize.define<Instance, Attributes>('User', attributes, options)
   User.associate = models => {
-    User.hasOne(models.UserToken);
+    User.hasOne(models.UserToken, { as: 'token', foreignKey: 'userId' });
   }
 
   return User;
