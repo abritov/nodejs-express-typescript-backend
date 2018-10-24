@@ -1,0 +1,67 @@
+export default {
+  development: {
+    username: "root",
+    password: "root",
+    database: "ranobe_v2",
+    host: "127.0.0.1",
+    dialect: "mysql",
+    sync: {
+      force: false
+    },
+    define: {
+      underscored: false,
+      freezeTableName: true,
+      charset: "utf8",
+      timestamps: false
+    }
+  },
+  development_int09h: {
+    username: "root",
+    password: "root",
+    database: "ranobe_v2",
+    host: "arch",
+    port: 3308,
+    dialect: "mysql",
+    sync: {
+      force: false
+    },
+    define: {
+      underscored: false,
+      freezeTableName: true,
+      charset: "utf8",
+      timestamps: false
+    }
+  },
+  test: {
+    username: "root",
+    password: null,
+    database: "database_test",
+    host: "127.0.0.1",
+    dialect: "mysql",
+    sync: {
+      force: false
+    },
+    define: {
+      underscored: false,
+      freezeTableName: true,
+      charset: "utf8",
+      timestamps: false
+    }
+  },
+  production: {
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOSTNAME,
+    dialect: "mysql",
+    sync: {
+      force: false
+    },
+    define: {
+      underscored: false,
+      freezeTableName: true,
+      charset: "utf8",
+      timestamps: false
+    }
+  }
+}
