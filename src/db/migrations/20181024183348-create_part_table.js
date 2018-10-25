@@ -34,12 +34,12 @@ module.exports.up = (queryInterface, Sequelize) => {
       type: Sequelize.TEXT,
     },
     createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.NOW,
       allowNull: false,
     },
     updatedAt: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: true
     },
   })
