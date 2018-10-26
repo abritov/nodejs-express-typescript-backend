@@ -33,14 +33,14 @@ module.exports.up = (queryInterface, Sequelize) => {
     content: {
       type: Sequelize.TEXT,
     },
-    createdAt: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW,
-      allowNull: false,
-    },
     updatedAt: {
       type: Sequelize.DATE,
       allowNull: true
+    },
+    createdAt: {
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false,
     },
   })
 };
@@ -50,5 +50,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  // If migration fails, this will be called. Rollback your migration changes.
+  return queryInterface.dropTable('part')
 };
