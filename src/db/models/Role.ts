@@ -34,6 +34,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
 }
 
 export { Attributes as Role };
+export { Instance as RoleInstance };
 export default function (sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }

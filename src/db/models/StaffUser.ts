@@ -53,6 +53,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
 }
 
 export { Attributes as StaffUser };
+export { Instance as StaffUserInstance };
 export default function (sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }

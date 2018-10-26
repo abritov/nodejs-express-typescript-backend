@@ -1,5 +1,10 @@
-import db from './db'
+import * as os from 'os'
+import * as Sequelize from "sequelize"
+import { createSequelizeDb } from './db'
+import * as config from './db/config'
 
+const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
+const db = createSequelizeDb(new Sequelize(config[env]));
 
 async function main() {
   try {
