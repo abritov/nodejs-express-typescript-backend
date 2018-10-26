@@ -89,9 +89,9 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     createdAt: {
       type: DataTypes.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false,
-      defaultValue: DataTypes.NOW
-    }
+    },
   };
 
   const options: Sequelize.DefineOptions<Attributes> = {
