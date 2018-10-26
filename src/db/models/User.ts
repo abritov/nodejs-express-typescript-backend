@@ -2,6 +2,9 @@ import * as Sequelize from 'sequelize'
 import { UserTokenInstance } from './UserToken';
 import { UserRoleInstance } from './UserRole';
 
+const DB_TABLE_NAME = 'users';
+const SEQUELIZE_MODEL_NAME = 'User';
+
 interface Attributes {
   id?: number,
   name: string,
@@ -96,9 +99,9 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   };
 
   const options: Sequelize.DefineOptions<Attributes> = {
-    tableName: 'users',
+    tableName: DB_TABLE_NAME,
   };
-  const User = sequelize.define<Instance, Attributes>('User', attributes, options)
+  const User = sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
   User.associate = models => {
     User.hasOne(models.UserToken, { as: 'token', foreignKey: 'userId' });
     User.hasMany(models.UserRole, { as: 'roles', foreignKey: 'userId' });
@@ -112,6 +115,8 @@ function userFactory(sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }
 
+export { DB_TABLE_NAME as DB_TABLE_NAME_USER }
+export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_USER }
 export { Attributes as User }
 export { Instance as UserInstance }
 export { Model as UserModel }

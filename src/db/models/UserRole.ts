@@ -1,4 +1,9 @@
 import * as Sequelize from 'sequelize'
+import { SEQUELIZE_MODEL_NAME_USER } from './User';
+import { SEQUELIZE_MODEL_NAME_ROLE } from './Role';
+
+const DB_TABLE_NAME = 'user_roles';
+const SEQUELIZE_MODEL_NAME = 'UserRole';
 
 interface Attributes {
   userId: number,
@@ -15,7 +20,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       primaryKey: true,
       allowNull: false,
       references: {
-        model: 'user',
+        model: SEQUELIZE_MODEL_NAME_USER,
         key: 'id',
       },
       onUpdate: 'cascade',
@@ -25,7 +30,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'role',
+        model: SEQUELIZE_MODEL_NAME_ROLE,
         key: 'id',
       },
       onUpdate: 'cascade',
@@ -34,10 +39,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   };
 
   const options: Sequelize.DefineOptions<Attributes> = {
-    tableName: 'user_roles',
+    tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>('UserRole', attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
 }
 
 export { Attributes as UserRole };

@@ -1,4 +1,8 @@
 import * as Sequelize from 'sequelize'
+import { SEQUELIZE_MODEL_NAME_USER } from './User';
+
+const DB_TABLE_NAME = 'user_token';
+const SEQUELIZE_MODEL_NAME = 'UserToken';
 
 interface Attributes {
   id?: number,
@@ -23,7 +27,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'user',
+        model: SEQUELIZE_MODEL_NAME_USER,
         key: 'id',
       },
       onUpdate: 'cascade',
@@ -37,10 +41,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   };
 
   const options: Sequelize.DefineOptions<Attributes> = {
-    tableName: 'user_token',
+    tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>('UserToken', attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
 }
 
 export { Attributes as UserToken }
