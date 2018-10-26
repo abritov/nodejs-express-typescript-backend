@@ -55,7 +55,9 @@ const config = {
 config['development_int09h'] = {
   ...config.development,
   host: "arch",
-  port: 3308,
+  port: 3309,
+  username: 'test',
+  password: 'test',
 }
 
 module.exports = config;
