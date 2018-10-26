@@ -68,7 +68,7 @@ module.exports.up = (queryInterface, Sequelize) => {
       type: Sequelize.DATE,
       allowNull: true,
     },
-    createtAt: {
+    createdAt: {
       type: Sequelize.DATE,
       allowNull: false,
       defaultValue: Sequelize.NOW

@@ -14,7 +14,7 @@ interface Attributes {
   statusId: number,
   approved?: boolean,
   lastLogin?: Date,
-  createtAt?: Date,
+  createdAt?: Date,
 }
 
 
@@ -87,7 +87,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       type: DataTypes.DATE,
       allowNull: true,
     },
-    createtAt: {
+    createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW
