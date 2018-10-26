@@ -12,9 +12,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
     userId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id',
       },
       onUpdate: 'cascade',
@@ -24,7 +25,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Role',
+        model: 'role',
         key: 'id',
       },
       onUpdate: 'cascade',

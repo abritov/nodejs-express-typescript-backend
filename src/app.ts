@@ -12,7 +12,8 @@ async function main() {
     // console.log(user.UserToken);
     let token = await user.getToken();
     console.log(token);
-    // console.log(user.token);
+    let roles = await user.getRoles();
+    console.log(roles);
   }
   catch (err) {
     console.log(err)
