@@ -3,3 +3,4 @@ built
 dist/
 build-migrations/
 .DS_Store
+db.sqlite
