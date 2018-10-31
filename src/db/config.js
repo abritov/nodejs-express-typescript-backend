@@ -16,6 +16,20 @@ const config = {
       timestamps: false
     }
   },
+  development_sqlite: {
+    dialect: "sqlite",
+    storage: "db.sqlite",
+    operatorsAliases: false,
+    sync: {
+      force: false
+    },
+    define: {
+      underscored: false,
+      freezeTableName: true,
+      charset: "utf8",
+      timestamps: false
+    }
+  },
   test: {
     username: "root",
     password: null,
