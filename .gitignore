@@ -5,3 +5,4 @@ build/
 build-migrations/
 .DS_Store
 db.sqlite
+.vscode/
