@@ -10,10 +10,12 @@ async function main() {
   try {
     let user = await db.User.findById(1);
     // console.log(user.UserToken);
-    let token = await user.getToken();
-    console.log(token);
-    let roles = await user.getRoles();
-    console.log(roles);
+    if (user) {
+      let token = await user.getToken();
+      console.log(token);
+      let roles = await user.getRoles();
+      console.log(roles);
+    }
   }
   catch (err) {
     console.log(err)
