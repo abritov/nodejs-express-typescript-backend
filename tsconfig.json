@@ -58,5 +58,6 @@
     ],
     "exclude": [
         "./src/db/migrations/*",
+        "./src/db/seeders/*",
     ]
 }
