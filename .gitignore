@@ -1,6 +1,7 @@
 node_modules
 built
 dist/
+build/
 build-migrations/
 .DS_Store
 db.sqlite
