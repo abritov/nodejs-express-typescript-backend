@@ -7,3 +7,4 @@ build-migrations/
 db.sqlite
 .vscode/
 src/controllers/**/openapi.json
+src/controllers/**/schema.d.ts
