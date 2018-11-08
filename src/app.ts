@@ -4,7 +4,7 @@ import { createSequelizeDb } from './db'
 import * as config from './db/config'
 
 const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
-const db = createSequelizeDb(new Sequelize(config[env]));
+const db = createSequelizeDb(new Sequelize.default(config["development_sqlite"]));
 
 async function main() {
   try {

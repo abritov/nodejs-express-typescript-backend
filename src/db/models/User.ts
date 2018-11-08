@@ -93,7 +93,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.default.literal('CURRENT_TIMESTAMP'),
       allowNull: false,
     },
   };

@@ -21,7 +21,7 @@ export function createSequelizeDb(sequelize: Sequelize.Sequelize) {
 
   const db: DbApi = {
     sequelize,
-    Sequelize,
+    Sequelize: Sequelize.default,
     User: userFactory(sequelize),
     StaffUser: staffUserFactory(sequelize),
     Role: roleFactory(sequelize),
@@ -30,7 +30,7 @@ export function createSequelizeDb(sequelize: Sequelize.Sequelize) {
     Part: partFactory(sequelize),
   };
 
-  (<any>Object).values(db).forEach(model => {
+  (<any>Object).values(db).forEach((model: any) => {
     if (model.associate) {
       model.associate(db);
     }
