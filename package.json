@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
+  "scripts": {
+    "gen-spec-v1": "(cd src/controllers/v1/ && exec yarn run tinyspec -j -o src/controllers/v1/)"
+  },
   "dependencies": {
     "@types/sequelize": "^4.27.28",
     "mysql2": "^1.6.1",
