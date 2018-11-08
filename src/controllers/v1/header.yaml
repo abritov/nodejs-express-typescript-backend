@@ -1,0 +1,15 @@
+swagger: '2.0'
+info:
+  title: Ranobe API
+  version: 'v1'
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  token:
+    name: Authorization
+    type: apiKey
+    in: header

@@ -1,0 +1,4 @@
+Comment {authorId: i, message}
+Post {topic, message, comments?: Comment[]}
+User {name, isAdmin: b, age?: i}
+UserWithPosts < User {posts: Post[]}
