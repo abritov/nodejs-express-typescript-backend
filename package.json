@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "gen-spec-v1": "(cd src/controllers/v1/ && exec yarn run tinyspec -j -o src/controllers/v1/)"
+    "gen-spec-v1": "(cd src/controllers/v1/ && exec yarn run tinyspec -j -o src/controllers/v1/); yarn run sw2dts ./src/controllers/v1/openapi.json -o ./src/controllers/v1/schema.d.ts"
   },
   "dependencies": {
     "@types/sequelize": "^4.27.28",
@@ -15,5 +15,8 @@
     "tinyspec": "^2.0.0",
     "tslib": "^1.9.3",
     "typescript": "^3.1.3"
+  },
+  "devDependencies": {
+    "sw2dts": "^2.6.1"
   }
 }
