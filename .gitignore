@@ -6,3 +6,4 @@ build-migrations/
 .DS_Store
 db.sqlite
 .vscode/
+src/controllers/**/openapi.json
