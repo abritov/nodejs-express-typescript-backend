@@ -4,11 +4,12 @@ export interface Hasher {
 }
 
 export class MockHasher implements Hasher {
+  constructor(public salt: string) { }
   createHash(data: string, salt?: string | undefined): string {
-    return data + "." + salt || "mock_salt";
+    return data + "." + this.salt || salt || "mock_salt";
   }
   validate(data: string, hash: string, salt?: string | undefined): boolean {
-    return (data + "." + salt || "mock_salt") == hash;
+    return (data + "." + this.salt || salt || "mock_salt") == hash;
   }
 }
 
