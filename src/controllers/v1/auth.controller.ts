@@ -2,7 +2,7 @@ import { Router, Request } from 'express';
 import { AuthSignUp, AuthorizationToken } from './schema';
 import { StrategyOptions, Strategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
 import passport = require('passport');
-import * as vk from 'passport-vkontakte';
+import { Strategy as VkStrategy } from 'passport-vkontakte';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { DbApi } from '../../db';
 import { Hasher } from '../../utils/hasher';
@@ -48,7 +48,7 @@ export function createLocalStrategy(db: DbApi, hasher: Hasher) {
 }
 
 export function createVkStrategy(db: DbApi, clientID: string, clientSecret: string, callbackURL: string) {
-  return new vk.Strategy({
+  return new VkStrategy({
     clientID,
     clientSecret,
     callbackURL
