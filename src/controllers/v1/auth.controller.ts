@@ -13,6 +13,19 @@ interface JwtPayload {
   accessBitmask: number
 }
 
+export class AuthController {
+  db: DbApi;
+
+  constructor(db: DbApi) {
+    this.db = db;
+  }
+
+  signup(request: AuthSignUp): AuthorizationToken {
+    console.log(request.issuer);
+    return { token: '123' }
+  }
+}
+
 export function createJwtStrategy(db: DbApi, secret?: string) {
 
   const jwtOptions: StrategyOptions = {
@@ -55,19 +68,6 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
   }, (accessToken, refreshToken, params, profile, done) => {
     console.log(accessToken, refreshToken, params, profile);
   });
-}
-
-export class AuthController {
-  db: DbApi;
-
-  constructor(db: DbApi) {
-    this.db = db;
-  }
-
-  signup(request: AuthSignUp): AuthorizationToken {
-    console.log(request.issuer);
-    return { token: '123' }
-  }
 }
 
 export function createAuthRouter(db: DbApi, hasher: Hasher) {
