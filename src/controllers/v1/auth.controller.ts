@@ -1,9 +1,11 @@
 import { Router, Request } from 'express';
 import { AuthSignUp, AuthorizationToken } from './schema';
 import { StrategyOptions, Strategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
-import * as vk from 'passport-vkontakte';
 import passport = require('passport');
+import * as vk from 'passport-vkontakte';
+import { Strategy as LocalStrategy } from 'passport-local';
 import { DbApi } from '../../db';
+import { Hasher } from '../../utils/hasher';
 
 interface JwtPayload {
   userId: number
@@ -26,6 +28,23 @@ export function createJwtStrategy(db: DbApi, secret?: string) {
     return done('cannot find user', null);
   });
 
+}
+
+export function createLocalStrategy(db: DbApi, hasher: Hasher) {
+  return new LocalStrategy({ usernameField: 'email' },
+    async (email, password, done) => {
+      try {
+        const user = await db.User.findOne({ where: { email } });
+        if (!user) return done(null, false);
+        if (!hasher.validate(email + "." + password, user.passwordHash))
+          return done(null, false);
+        return done(null, user);
+      }
+      catch (err) {
+        return done(err);
+      }
+    }
+  );
 }
 
 export function createVkStrategy(db: DbApi, clientID: string, clientSecret: string, callbackURL: string) {
@@ -51,11 +70,12 @@ export class AuthController {
   }
 }
 
-export function createAuthRouter(db: DbApi) {
+export function createAuthRouter(db: DbApi, hasher: Hasher) {
   const router = Router();
   const controller = new AuthController(db);
 
   passport.use(createJwtStrategy(db));
+  passport.use(createLocalStrategy(db, hasher));
   passport.use(createVkStrategy(db, '6089541', '556be07b556be07b556be07b1355370b3e5556b556be07b0c3bf286237a2ac5a17ec8f0', 'http://localhost:8008/auth/vk/success'))
 
   router.post('/signup', (req: Request, res) => {
@@ -63,6 +83,10 @@ export function createAuthRouter(db: DbApi) {
   });
 
   router.post('/vk', passport.authenticate('vkontakte', { session: false }), (req: Request, res) => {
+    res.send(controller.signup(<AuthSignUp>req.body));
+  });
+
+  router.post('/default', passport.authenticate('local', { session: false }), (req: Request, res) => {
     res.send(controller.signup(<AuthSignUp>req.body));
   });
 
