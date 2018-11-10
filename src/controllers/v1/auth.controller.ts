@@ -14,11 +14,7 @@ interface JwtPayload {
 }
 
 export class AuthController {
-  db: DbApi;
-
-  constructor(db: DbApi) {
-    this.db = db;
-  }
+  constructor(public db: DbApi) { }
 
   signup(request: AuthSignUp): AuthorizationToken {
     console.log(request.issuer);
