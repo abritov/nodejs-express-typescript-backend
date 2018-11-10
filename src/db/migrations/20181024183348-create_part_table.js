@@ -16,7 +16,7 @@ module.exports.up = (queryInterface, Sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'user',
+        model: 'users',
         key: 'id',
       },
       onUpdate: 'cascade',
