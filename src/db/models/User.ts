@@ -9,12 +9,7 @@ interface Attributes {
   id?: number,
   name: string,
   email: string,
-  authKey: string,
-  passwordHash: string,
-  salt: string,
-  oldHash: string,
-  passwordResetToken: string,
-  statusId: number,
+  passwordHash?: string,
   approved?: boolean,
   lastLogin?: Date,
   createdAt?: Date,
@@ -42,32 +37,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
         notEmpty: true,
       },
     },
-    authKey: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-    },
-    passwordHash: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-    },
-    salt: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    oldHash: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    passwordResetToken: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-    },
     email: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -77,10 +46,9 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
         isEmail: true,
       },
     },
-    statusId: {
-      type: DataTypes.INTEGER(10),
-      allowNull: false,
-      defaultValue: 0,
+    passwordHash: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
     },
     approved: {
       type: DataTypes.BOOLEAN,

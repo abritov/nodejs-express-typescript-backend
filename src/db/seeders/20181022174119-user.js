@@ -9,22 +9,12 @@ module.exports.up = (queryInterface, Sequelize) => {
     {
       name: 'Jane',
       email: 'maryjane@gmail.com',
-      authKey: '1234',
       passwordHash: '5678',
-      salt: '####',
-      oldHash: 'legacy',
-      passwordResetToken: 'eatme',
-      statusId: 1,
     },
     {
       name: 'Sam',
       email: 'samgamgee@gmail.com',
-      authKey: '1234',
       passwordHash: '5678',
-      salt: '####',
-      oldHash: 'legacy',
-      passwordResetToken: 'eatme',
-      statusId: 1,
     }
   ])
 };
