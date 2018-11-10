@@ -4,7 +4,7 @@ export interface Hasher {
 }
 
 export class MockHasher implements Hasher {
-  constructor(public salt: string) { }
+  constructor(public salt?: string) { }
   createHash(data: string, salt?: string | undefined): string {
     return data + "." + this.salt || salt || "mock_salt";
   }
