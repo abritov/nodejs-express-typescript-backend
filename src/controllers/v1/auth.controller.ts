@@ -6,9 +6,9 @@ import passport = require('passport');
 import { DbApi } from '../../db';
 
 interface JwtPayload {
-  userId: number,
-  roleId: number,
+  userId: number
   name: string
+  accessBitmask: number
 }
 
 export function createJwtStrategy(db: DbApi, secret?: string) {
