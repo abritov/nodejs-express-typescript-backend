@@ -1,6 +1,7 @@
 import { Router, Request } from 'express';
 import { AuthSignUp, AuthorizationToken } from './schema';
 import { StrategyOptions, Strategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
+import * as vk from 'passport-vkontakte';
 import { DbApi } from '../../db';
 
 interface JwtPayload {
@@ -26,6 +27,16 @@ export function createJwtStrategy(db: DbApi, secret?: string) {
 
 }
 
+export function createVkStrategy(db: DbApi, clientID: string, clientSecret: string, callbackURL: string) {
+  return new vk.Strategy({
+    clientID,
+    clientSecret,
+    callbackURL
+  }, (accessToken, refreshToken, params, profile, done) => {
+    console.log(accessToken, refreshToken, params, profile);
+  });
+}
+
 export class AuthController {
   db: DbApi;
 
@@ -44,6 +55,10 @@ export function createAuthRouter(db: DbApi) {
   const controller = new AuthController(db);
 
   router.post('/signup', (req: Request, res) => {
+    res.send(controller.signup(<AuthSignUp>req.body));
+  });
+
+  router.post('/vk', passport.authenticate('vkontakte'), (req: Request, res) => {
     res.send(controller.signup(<AuthSignUp>req.body));
   });
 
