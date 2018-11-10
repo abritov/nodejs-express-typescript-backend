@@ -62,7 +62,7 @@ export function createAuthRouter(db: DbApi) {
     res.send(controller.signup(<AuthSignUp>req.body));
   });
 
-  router.post('/vk', passport.authenticate('vkontakte'), (req: Request, res) => {
+  router.post('/vk', passport.authenticate('vkontakte', { session: false }), (req: Request, res) => {
     res.send(controller.signup(<AuthSignUp>req.body));
   });
 
