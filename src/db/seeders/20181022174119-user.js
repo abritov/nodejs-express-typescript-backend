@@ -9,12 +9,12 @@ module.exports.up = (queryInterface, Sequelize) => {
     {
       name: 'Jane',
       email: 'maryjane@gmail.com',
-      passwordHash: '5678',
+      passwordHash: 'maryjane@gmail.com.123456.mock_salt',
     },
     {
       name: 'Sam',
       email: 'samgamgee@gmail.com',
-      passwordHash: '5678',
+      passwordHash: 'samgamgee@gmail.com.5555.mock_salt',
     }
   ])
 };
