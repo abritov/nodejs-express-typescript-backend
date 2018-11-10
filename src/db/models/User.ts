@@ -25,7 +25,7 @@ interface Instance extends Sequelize.Instance<Attributes>, Attributes {
   getToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
   getRoles: Sequelize.HasManyGetAssociationsMixin<UserRoleInstance>
 }
-type Model = Sequelize.Model<Instance, Attributes>
+interface Model extends Sequelize.Model<Instance, Attributes> { }
 
 function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
   const attributes: Sequelize.DefineModelAttributes<Attributes> = {
