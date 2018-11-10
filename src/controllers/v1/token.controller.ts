@@ -13,7 +13,7 @@ interface JwtPayload {
   accessBitmask: number
 }
 
-export class AuthController {
+export class TokenController {
   constructor(public db: DbApi) { }
 
   signup(request: AuthSignUp): AuthorizationToken {
@@ -66,9 +66,9 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
   });
 }
 
-export function createAuthRouter(db: DbApi, hasher: Hasher) {
+export function createTokenRouter(db: DbApi, hasher: Hasher) {
   const router = Router();
-  const controller = new AuthController(db);
+  const controller = new TokenController(db);
 
   passport.use(createJwtStrategy(db));
   passport.use(createLocalStrategy(db, hasher));
