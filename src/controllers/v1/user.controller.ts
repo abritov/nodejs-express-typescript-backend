@@ -15,7 +15,10 @@ export class UserController {
       email: request.email,
       passwordHash
     });
-    return user;
+    return {
+      name: user.name,
+      email: user.email
+    };
   }
 }
 
