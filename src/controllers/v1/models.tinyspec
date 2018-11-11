@@ -1,2 +1,3 @@
 AuthSignUp {issuer, subject}
 AuthorizationToken {token}
+CreateUser {name, email, password}
