@@ -41,7 +41,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/token', createTokenRouter(db));
+app.use('/token', createTokenRouter(db, hasher));
 app.use('/user', createUserRouter(db, hasher));
 
 app.listen(port, () => {
