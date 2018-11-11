@@ -9,6 +9,7 @@ import passport = require('passport');
 import { createTokenRouter, createJwtStrategy } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import * as config from './db/config'
+import { createVkStrategy, createLocalStrategy } from './controllers/v1/authenticate';
 
 const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
 
@@ -18,7 +19,13 @@ const hasher = new MockHasher("mock_salt");
 
 const db = createSequelizeDb(new Sequelize.default(config.development_sqlite))
 
-passport.use(createJwtStrategy(db));
+passport.use(createJwtStrategy(db, 'SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT'));
+passport.use(createVkStrategy(
+  db,
+  '6089541',
+  '556be07b556be07b556be07b1355370b3e5556b556be07b0c3bf286237a2ac5a17ec8f0',
+  'http://localhost:8008/auth/vk/success'));
+passport.use(createLocalStrategy(db, hasher));
 
 app.use(bodyParser.json());
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -28,7 +35,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/token', createTokenRouter(db, hasher));
+app.use('/token', createTokenRouter(db));
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/`);

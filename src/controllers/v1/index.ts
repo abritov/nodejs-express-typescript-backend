@@ -1,1 +1,2 @@
-export * from './token.controller'
+export * from './token.controller';
+export * from './authenticate';
