@@ -9,7 +9,7 @@ import {
 import { DbApi } from '../../db/index';
 import { Hasher } from '../../utils/hasher';
 
-interface JwtPayload {
+export interface JwtPayload {
   userId: number
   name: string
   accessBitmask: number
