@@ -17,7 +17,7 @@ const port = 8080;
 const app = express();
 const hasher = new MockHasher("mock_salt");
 
-const db = createSequelizeDb(new Sequelize.default(config.development_sqlite))
+const db = createSequelizeDb(new Sequelize.default(config[env]))
 
 passport.use(createJwtStrategy(db, 'SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT'));
 passport.use(createVkStrategy(
