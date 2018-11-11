@@ -21,11 +21,11 @@ export function createTokenRouter(db: DbApi) {
       res.status(403).send();
       return;
     }
-    res.send(controller.create(<CreateToken>req.body));
+    res.json(controller.create(<CreateToken>req.body));
   });
 
   router.post('/', passport.authenticate('local', { session: false }), (req: Request, res: Response) => {
-    res.send(controller.create(<CreateToken>req.body));
+    res.json(controller.create(<CreateToken>req.body));
   });
 
   return router;
