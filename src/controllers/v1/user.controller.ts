@@ -1,4 +1,5 @@
 import passport = require('passport');
+import { UniqueConstraintError } from 'sequelize';
 import { Router, Request } from 'express';
 import { DbApi } from '../../db/index';
 import { CreateUser } from './schema';
@@ -23,7 +24,13 @@ export function createUserRouter(db: DbApi, hasher: Hasher) {
   const controller = new UserController(db, hasher);
 
   router.post('/', async (req: Request, res) => {
-    res.json(await controller.create(<CreateUser>req.body));
+    try {
+      res.json(await controller.create(<CreateUser>req.body));
+    } catch (error) {
+      if (error instanceof UniqueConstraintError) {
+        res.status(422).json({ error: "user already exists" });
+      }
+    }
   });
 
   router.post('/vk', passport.authenticate('vkontakte', { session: false }), async (req: Request, res) => {
