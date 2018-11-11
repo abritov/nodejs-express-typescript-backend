@@ -1,29 +1,27 @@
+import passport = require('passport');
 import { Router, Request } from 'express';
 import { DbApi } from '../../db/index';
+import { CreateUser } from './schema';
 
 export class UserController {
   constructor(public db: DbApi) { }
 
-  create() {
-
+  create(request: CreateUser) {
+    // this.db.User.create({ name: request.name });
   }
 }
 
-// export function createUserRouter() {
-//   const router = Router();
-//   const controller = new UserController(db);
+export function createUserRouter(db: DbApi) {
+  const router = Router();
+  const controller = new UserController(db);
 
-//   router.post('/', (req: Request, res) => {
-//     res.json(controller.create(<CreateToken>req.body));
-//   });
+  router.post('/', (req: Request, res) => {
+    res.json(controller.create(<CreateUser>req.body));
+  });
 
-//   router.post('/vk', passport.authenticate('vkontakte', { session: false }), (req: Request, res) => {
-//     res.send(controller.signup(<CreateToken>req.body));
-//   });
+  router.post('/vk', passport.authenticate('vkontakte', { session: false }), (req: Request, res) => {
+    res.json(controller.create(<CreateUser>req.body));
+  });
 
-//   router.post('/default', passport.authenticate('local', { session: false }), (req: Request, res) => {
-//     res.send(controller.signup(<CreateToken>req.body));
-//   });
-
-//   return router;
-// }
+  return router;
+}
