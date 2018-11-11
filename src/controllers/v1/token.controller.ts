@@ -16,7 +16,11 @@ export function createTokenRouter(db: DbApi) {
   const router = Router();
   const controller = new TokenController(db);
 
-  router.post('/create-insecure', (req: Request, res) => {
+  router.post('/insecure', (req: Request, res: Response) => {
+    if (req.connection.localAddress != "127.0.0.1") {
+      res.status(403).send();
+      return;
+    }
     res.send(controller.create(<CreateToken>req.body));
   });
 
