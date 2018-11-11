@@ -6,7 +6,7 @@ import * as Sequelize from "sequelize";
 import passport = require('passport');
 import { createSequelizeDb } from './db';
 import swaggerSpec from './controllers/v1/openapi.json';
-import { createTokenRouter, createJwtStrategy } from './controllers/v1';
+import { createTokenRouter, createUserRouter, createJwtStrategy } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import * as config from './db/config'
 import { createVkStrategy, createLocalStrategy } from './controllers/v1/authenticate';
@@ -36,6 +36,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/token', createTokenRouter(db));
+app.use('/user', createUserRouter(db, hasher));
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/`);
