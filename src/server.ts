@@ -17,6 +17,7 @@ import { MockHasher } from './utils/hasher';
 import * as config from './db/config'
 
 const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
+console.log(`starting server using ${env} env`);
 
 const port = 8080;
 const app = express();
