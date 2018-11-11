@@ -6,10 +6,15 @@ import * as Sequelize from "sequelize";
 import passport = require('passport');
 import { createSequelizeDb } from './db';
 import swaggerSpec from './controllers/v1/openapi.json';
-import { createTokenRouter, createUserRouter, createJwtStrategy } from './controllers/v1';
+import {
+  createTokenRouter,
+  createUserRouter,
+  createJwtStrategy,
+  createVkStrategy,
+  createLocalStrategy
+} from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import * as config from './db/config'
-import { createVkStrategy, createLocalStrategy } from './controllers/v1/authenticate';
 
 const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
 
