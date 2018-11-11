@@ -16,7 +16,7 @@ interface JwtPayload {
 export class TokenController {
   constructor(public db: DbApi) { }
 
-  signup(request: AuthSignUp): AuthorizationToken {
+  create(request: AuthSignUp): AuthorizationToken {
     console.log(request.issuer);
     return { token: '123' }
   }
@@ -45,7 +45,7 @@ export function createLocalStrategy(db: DbApi, hasher: Hasher) {
       try {
         const user = await db.User.findOne({ where: { email } });
         if (!user) return done(null, false);
-        if (!hasher.validate(email + "." + password, user.passwordHash))
+        if (!hasher.validate(email + "." + password, user.passwordHash!))
           return done(null, false);
         return done(null, user);
       }
@@ -74,16 +74,16 @@ export function createTokenRouter(db: DbApi, hasher: Hasher) {
   passport.use(createLocalStrategy(db, hasher));
   passport.use(createVkStrategy(db, '6089541', '556be07b556be07b556be07b1355370b3e5556b556be07b0c3bf286237a2ac5a17ec8f0', 'http://localhost:8008/auth/vk/success'))
 
-  router.post('/signup', (req: Request, res) => {
-    res.send(controller.signup(<AuthSignUp>req.body));
+  router.post('/create-insecure', (req: Request, res) => {
+    res.send(controller.create(<AuthSignUp>req.body));
   });
 
   router.post('/vk', passport.authenticate('vkontakte', { session: false }), (req: Request, res) => {
-    res.send(controller.signup(<AuthSignUp>req.body));
+    res.send(controller.create(<AuthSignUp>req.body));
   });
 
   router.post('/default', passport.authenticate('local', { session: false }), (req: Request, res) => {
-    res.send(controller.signup(<AuthSignUp>req.body));
+    res.send(controller.create(<AuthSignUp>req.body));
   });
 
   return router;

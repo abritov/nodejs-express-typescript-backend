@@ -1,2 +1,2 @@
-POST /auth/signup AuthSignUp
+POST /token/create-insecure AuthSignUp
     => 200 AuthorizationToken
