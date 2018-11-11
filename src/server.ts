@@ -2,10 +2,10 @@ import * as os from 'os';
 import express, { NextFunction, Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import * as swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './controllers/v1/openapi.json';
 import * as Sequelize from "sequelize";
-import { createSequelizeDb } from './db';
 import passport = require('passport');
+import { createSequelizeDb } from './db';
+import swaggerSpec from './controllers/v1/openapi.json';
 import { createTokenRouter, createJwtStrategy } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import * as config from './db/config'
