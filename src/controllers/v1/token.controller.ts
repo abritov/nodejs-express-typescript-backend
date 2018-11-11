@@ -1,5 +1,5 @@
 import { Router, Request } from 'express';
-import { AuthSignUp, AuthorizationToken } from './schema';
+import { CreateToken, AuthorizationToken } from './schema';
 import { StrategyOptions, Strategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
 import passport = require('passport');
 import { Strategy as VkStrategy } from 'passport-vkontakte';
@@ -16,7 +16,7 @@ interface JwtPayload {
 export class TokenController {
   constructor(public db: DbApi) { }
 
-  create(request: AuthSignUp): AuthorizationToken {
+  create(request: CreateToken): AuthorizationToken {
     console.log(request.issuer);
     return { token: '123' }
   }
@@ -75,15 +75,15 @@ export function createTokenRouter(db: DbApi, hasher: Hasher) {
   passport.use(createVkStrategy(db, '6089541', '556be07b556be07b556be07b1355370b3e5556b556be07b0c3bf286237a2ac5a17ec8f0', 'http://localhost:8008/auth/vk/success'))
 
   router.post('/create-insecure', (req: Request, res) => {
-    res.send(controller.create(<AuthSignUp>req.body));
+    res.send(controller.create(<CreateToken>req.body));
   });
 
   router.post('/vk', passport.authenticate('vkontakte', { session: false }), (req: Request, res) => {
-    res.send(controller.create(<AuthSignUp>req.body));
+    res.send(controller.create(<CreateToken>req.body));
   });
 
   router.post('/default', passport.authenticate('local', { session: false }), (req: Request, res) => {
-    res.send(controller.create(<AuthSignUp>req.body));
+    res.send(controller.create(<CreateToken>req.body));
   });
 
   return router;
