@@ -22,10 +22,11 @@ console.log(`starting server using ${env} env`);
 const port = 8080;
 const app = express();
 const hasher = new MockHasher("mock_salt");
+const jwt = new Jwt('SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT');
 
 const db = createSequelizeDb(new Sequelize.default(config[env]))
 
-passport.use(createJwtStrategy(db, 'SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT'));
+passport.use(createJwtStrategy(db, jwt));
 passport.use(createVkStrategy(
   db,
   '6089541',

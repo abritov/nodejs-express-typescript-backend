@@ -15,13 +15,20 @@ interface JwtPayload {
   accessBitmask: number
 }
 
-export function createJwtStrategy(db: DbApi, secret: string) {
-  const jwtOptions: JwtStrategyOptions = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: secret,
-    algorithms: ['HS256']
-  };
-  return new JwtStrategy(jwtOptions, async (payload: JwtPayload, done: JwtVerifiedCallback) => {
+export class Jwt {
+  constructor(public secret: string, public algorithm?: string) { }
+
+  toJwtStrategyOptions(): JwtStrategyOptions {
+    return {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: this.secret,
+      algorithms: [this.algorithm || "HS256"]
+    };
+  }
+}
+
+export function createJwtStrategy(db: DbApi, jwt: Jwt) {
+  return new JwtStrategy(jwt.toJwtStrategyOptions(), async (payload: JwtPayload, done: JwtVerifiedCallback) => {
     const user = await db.User.findById(payload.userId);
     if (user) {
       return done(null, user);
