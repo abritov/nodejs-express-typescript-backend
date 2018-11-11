@@ -4,7 +4,7 @@ import passport = require('passport');
 import { DbApi } from '../../db';
 
 export class TokenController {
-  constructor(public db: DbApi) { }
+  constructor(public _db: DbApi) { }
 
   create(request: CreateToken): AuthorizationToken {
     console.log(request.userId);
