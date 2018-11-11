@@ -1,5 +1,6 @@
 import { Strategy as VkStrategy } from 'passport-vkontakte';
 import { Strategy as LocalStrategy } from 'passport-local';
+import jwtToken from 'jsonwebtoken';
 import {
   StrategyOptions as JwtStrategyOptions,
   Strategy as JwtStrategy,
@@ -16,13 +17,19 @@ export interface JwtPayload {
 }
 
 export class Jwt {
-  constructor(public secret: string, public algorithm?: string) { }
+  constructor(public secret: string, public algorithm?: string) {
+    this.algorithm = algorithm || "HS256";
+  }
+
+  encrypt(data: JwtPayload) {
+    return jwtToken.sign(data, this.secret, { algorithm: this.algorithm })
+  }
 
   toJwtStrategyOptions(): JwtStrategyOptions {
     return {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: this.secret,
-      algorithms: [this.algorithm || "HS256"]
+      algorithms: [this.algorithm!]
     };
   }
 }
