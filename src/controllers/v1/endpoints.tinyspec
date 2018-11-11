@@ -1,2 +1,6 @@
 POST /token/create-insecure CreateToken
     => 200 AuthorizationToken
+POST /token/vk CreateToken
+    => 200 AuthorizationToken
+POST /token/default CreateToken
+    => 200 AuthorizationToken
