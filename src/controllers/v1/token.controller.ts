@@ -27,7 +27,7 @@ export function createTokenRouter(db: DbApi, hasher: Hasher, jwt: Jwt) {
   const controller = new TokenController(db, hasher, jwt);
 
   router.post('/insecure', async (req: Request, res: Response) => {
-    if (req.connection.localAddress != "127.0.0.1") {
+    if (!(req.ip == "127.0.0.1" || req.ip == "::1")) {
       res.status(403).send();
       return;
     }
