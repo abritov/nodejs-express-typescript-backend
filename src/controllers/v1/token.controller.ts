@@ -11,6 +11,8 @@ export class TokenController {
 
   async create(request: CreateToken, user: User) {
     const accessBitmask = request.accessBitmask || 1;
+    if (accessBitmask < 1)
+      throw Error("invalid accessBitmask value");
     const token = this._jwt.encrypt(<JwtPayload>{
       userId: user.id!,
       name: user.name,
@@ -29,17 +31,26 @@ export function createTokenRouter(db: DbApi, hasher: Hasher, jwt: Jwt) {
       res.status(403).send();
       return;
     }
-    const user = await db.User.findOne({ where: { email: req.body.email } });
-    if (!user) {
-      res.status(404).json({ error: "user not found" });
-      return;
+    try {
+      const user = await db.User.findOne({ where: { email: req.body.email } });
+      if (!user) {
+        res.status(404).json({ error: "user not found" });
+        return;
+      }
+      res.json(controller.create(<CreateToken>req.body, user));
     }
-    res.json(controller.create(<CreateToken>req.body, user));
+    catch (error) {
+      res.status(400).json({ error });
+    }
   });
 
   router.post('/', passport.authenticate('local', { session: false }), async (req: Request, res: Response) => {
-    const user: User = req.user;
-    res.json(await controller.create(<CreateToken>req.body, req.user));
+    try {
+      res.json(await controller.create(<CreateToken>req.body, req.user));
+    }
+    catch (error) {
+      res.status(400).json({ error: error.message || error.stack[0] });
+    }
   });
 
   return router;
