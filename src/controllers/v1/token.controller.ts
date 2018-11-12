@@ -5,6 +5,7 @@ import { DbApi } from '../../db';
 import { Hasher } from '../../utils/hasher';
 import { User } from '../../db/models/User';
 import { Jwt, JwtPayload } from './authenticate';
+import { TokenRequestAccepted } from './error';
 
 export class TokenController {
   constructor(public _db: DbApi, public _hasher: Hasher, public _jwt: Jwt) { }
@@ -13,6 +14,8 @@ export class TokenController {
     const accessBitmask = request.accessBitmask || 1;
     if (accessBitmask < 1)
       throw Error("invalid accessBitmask value");
+    if (accessBitmask > 1)
+      throw new TokenRequestAccepted();
     const token = this._jwt.encrypt(<JwtPayload>{
       userId: user.id!,
       name: user.name,
@@ -40,6 +43,10 @@ export function createTokenRouter(db: DbApi, hasher: Hasher, jwt: Jwt) {
       res.json(controller.create(<CreateToken>req.body, user));
     }
     catch (error) {
+      if (error instanceof TokenRequestAccepted) {
+        res.status(202).json({ message: "please wait until your token will be approved" });
+        return;
+      }
       res.status(400).json({ error });
     }
   });
@@ -49,6 +56,10 @@ export function createTokenRouter(db: DbApi, hasher: Hasher, jwt: Jwt) {
       res.json(await controller.create(<CreateToken>req.body, req.user));
     }
     catch (error) {
+      if (error instanceof TokenRequestAccepted) {
+        res.status(202).json({ message: "please wait until your token will be approved" });
+        return;
+      }
       res.status(400).json({ error: error.message || error.stack[0] });
     }
   });
