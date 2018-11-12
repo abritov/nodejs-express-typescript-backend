@@ -1,6 +1,8 @@
-POST /token/create-insecure CreateToken
+POST /token CreateToken
     => 200 AuthorizationToken
-POST /token/vk CreateToken
-    => 200 AuthorizationToken
-POST /token/default CreateToken
-    => 200 AuthorizationToken
+POST /user CreateUser
+    => 200 CreateUserResp
+    => 422 UserExistsError
+POST /user/vk CreateUser
+    => 200 CreateUserResp
+    => 422 UserExistsError
