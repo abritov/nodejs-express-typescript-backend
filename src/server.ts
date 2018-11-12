@@ -11,7 +11,8 @@ import {
   createUserRouter,
   createJwtStrategy,
   createVkStrategy,
-  createLocalStrategy
+  createLocalStrategy,
+  Jwt
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import * as config from './db/config'
