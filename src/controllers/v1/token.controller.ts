@@ -10,10 +10,11 @@ export class TokenController {
   constructor(public _db: DbApi, public _hasher: Hasher, public _jwt: Jwt) { }
 
   async create(request: CreateToken, user: User) {
+    const accessBitmask = request.accessBitmask || 1;
     const token = this._jwt.encrypt(<JwtPayload>{
       userId: user.id!,
       name: user.name,
-      accessBitmask: request.accessBitmask
+      accessBitmask
     });
     return <AuthorizationToken>{ token }
   }
