@@ -12,7 +12,8 @@ import {
   createJwtStrategy,
   createVkStrategy,
   createLocalStrategy,
-  Jwt
+  createFacebookStrategy,
+  Jwt,
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import * as config from './db/config';
