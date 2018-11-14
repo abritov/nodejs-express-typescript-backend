@@ -13,6 +13,7 @@ import {
   createVkStrategy,
   createLocalStrategy,
   createFacebookStrategy,
+  UserController,
   Jwt,
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
@@ -22,12 +23,14 @@ import { initializePassport } from './controllers/v1/authenticate';
 const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
 console.log(`starting server using ${env} env`);
 
-const port = 8080;
-const app = express();
-const hasher = new MockHasher("mock_salt");
-const jwt = new Jwt('SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT');
+const
+  port = 8008,
+  app = express(),
+  hasher = new MockHasher("mock_salt"),
+  db = createSequelizeDb(new Sequelize.default(config[env])),
+  jwt = new Jwt('SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT'),
+  userController = new UserController(db, hasher);
 
-const db = createSequelizeDb(new Sequelize.default(config[env]))
 
 passport.use(createJwtStrategy(db, jwt));
 passport.use(createVkStrategy(
@@ -54,7 +57,7 @@ initializePassport(db, app, passport);
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/token', createTokenRouter(db, hasher, jwt));
-app.use('/user', createUserRouter(db, hasher));
+app.use('/user', createUserRouter(userController));
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/`);

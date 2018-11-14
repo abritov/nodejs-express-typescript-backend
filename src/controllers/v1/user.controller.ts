@@ -22,9 +22,8 @@ export class UserController {
   }
 }
 
-export function createUserRouter(db: DbApi, hasher: Hasher) {
+export function createUserRouter(controller: UserController) {
   const router = Router();
-  const controller = new UserController(db, hasher);
 
   router.post('/', async (req: Request, res) => {
     try {
