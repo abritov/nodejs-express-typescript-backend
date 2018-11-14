@@ -15,7 +15,8 @@ import {
   Jwt
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
-import * as config from './db/config'
+import * as config from './db/config';
+import { initializePassport } from './controllers/v1/authenticate';
 
 const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
 console.log(`starting server using ${env} env`);
@@ -46,6 +47,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).json({ error: err });
 });
+
+initializePassport(db, app, passport);
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

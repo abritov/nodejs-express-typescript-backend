@@ -1,3 +1,5 @@
+import { Express } from 'express';
+import { PassportStatic } from 'passport';
 import { Strategy as VkStrategy, VerifyFunction } from 'passport-vkontakte';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
@@ -8,6 +10,7 @@ import {
   ExtractJwt,
   VerifiedCallback as JwtVerifiedCallback
 } from 'passport-jwt';
+import { User } from '../../db/models/User';
 import { DbApi } from '../../db/index';
 import { Hasher } from '../../utils/hasher';
 
@@ -33,6 +36,21 @@ export class Jwt {
       algorithms: [this.algorithm!]
     };
   }
+}
+
+export function initializePassport(db: DbApi, app: Express, passport: PassportStatic) {
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  passport.serializeUser((user: User, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id: string, done) => {
+    db.User.findById(id).then((user) => {
+      done(null, user!);
+    });
+  });
 }
 
 export function createJwtStrategy(db: DbApi, jwt: Jwt) {
