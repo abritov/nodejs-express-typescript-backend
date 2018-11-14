@@ -1,5 +1,6 @@
-import { Strategy as VkStrategy } from 'passport-vkontakte';
+import { Strategy as VkStrategy, VerifyFunction } from 'passport-vkontakte';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
 import jwtToken from 'jsonwebtoken';
 import {
   StrategyOptions as JwtStrategyOptions,
@@ -68,6 +69,17 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
     callbackURL
   }, (accessToken, refreshToken, params, profile, done) => {
     console.log(accessToken, refreshToken, params, profile);
+    done(null, profile);
+  });
+}
+
+export function createFacebookStrategy(db: DbApi, clientID: string, clientSecret: string, callbackURL: string, profileFields?: string[]) {
+  return new FacebookStrategy({
+    clientID,
+    clientSecret,
+    callbackURL
+  }, (accessToken, refreshToken, profile, done) => {
+    console.log(accessToken, refreshToken, profile);
     done(null, profile);
   });
 }
