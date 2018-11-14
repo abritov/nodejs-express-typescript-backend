@@ -1,5 +1,5 @@
 AuthorizationToken {token}
-CreateUser {name, email, password}
+CreateUser {name, email?, password}
 CreateToken {email, password, accessBitmask?: i}
 
 CreateUserResp {name, email}
