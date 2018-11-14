@@ -107,7 +107,7 @@ export function createFacebookStrategy(userController: UserController, clientID:
         password: userController.makeSocialPassword(accessToken)
       });
       const signup = await userController.createSignupRecord(user, 'fb', profile, true);
-      done(null, profile);
+      done(null, user);
     }
     catch (error) {
       done(error, null);
