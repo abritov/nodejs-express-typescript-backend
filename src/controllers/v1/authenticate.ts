@@ -13,6 +13,7 @@ import {
 import { User } from '../../db/models/User';
 import { DbApi } from '../../db/index';
 import { Hasher } from '../../utils/hasher';
+import { UserController } from './user.controller';
 
 export interface JwtPayload {
   userId: number
@@ -91,13 +92,25 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
   });
 }
 
-export function createFacebookStrategy(db: DbApi, clientID: string, clientSecret: string, callbackURL: string, profileFields?: string[]) {
+export function createFacebookStrategy(userController: UserController, clientID: string, clientSecret: string, callbackURL: string, profileFields?: string[]) {
   return new FacebookStrategy({
     clientID,
     clientSecret,
-    callbackURL
-  }, (accessToken, refreshToken, profile, done) => {
+    callbackURL,
+    profileFields: profileFields || ['id', 'displayName', 'email']
+  }, async (accessToken, refreshToken, profile, done) => {
     console.log(accessToken, refreshToken, profile);
-    done(null, profile);
+    try {
+      const user = await userController.create({
+        name: profile.displayName,
+        email: profile.emails![0].value!,
+        password: userController.makeSocialPassword(accessToken)
+      });
+      const signup = await userController.createSignupRecord(user, 'fb', profile, true);
+      done(null, profile);
+    }
+    catch (error) {
+      done(error, null);
+    }
   });
 }
