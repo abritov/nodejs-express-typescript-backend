@@ -12,6 +12,15 @@ export class UserController {
     return this._hasher.createHash(accessToken);
   }
 
+  async createSignupRecord(user: User, provider: string, payload: any, active: boolean) {
+    return this._db.Signup.create({
+      userId: user.id!,
+      provider,
+      payload,
+      active
+    })
+  }
+
   async create(request: CreateUser) {
     const passwordHash = this._hasher.createHash(this._hasher.prepareCredentials(request.email, request.password));
     const user = await this._db.User.create({
