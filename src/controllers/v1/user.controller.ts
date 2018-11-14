@@ -8,6 +8,10 @@ import { Hasher } from '../../utils/hasher';
 export class UserController {
   constructor(public _db: DbApi, public _hasher: Hasher) { }
 
+  makeSocialPassword(accessToken: string) {
+    return this._hasher.createHash(accessToken);
+  }
+
   async create(request: CreateUser) {
     const passwordHash = this._hasher.createHash(this._hasher.prepareCredentials(request.email, request.password));
     const user = await this._db.User.create({
