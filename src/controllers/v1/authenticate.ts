@@ -68,5 +68,6 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
     callbackURL
   }, (accessToken, refreshToken, params, profile, done) => {
     console.log(accessToken, refreshToken, params, profile);
+    done(null, profile);
   });
 }
