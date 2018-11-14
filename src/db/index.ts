@@ -5,6 +5,7 @@ import roleFactory, { Role, RoleInstance } from './models/Role'
 import userRoleFactory, { UserRole, UserRoleInstance } from './models/UserRole'
 import userTokenFactory, { UserToken, UserTokenInstance } from './models/UserToken'
 import partFactory, { Part, PartInstance } from './models/Part'
+import signupFactory, { SignupInstance, Signup } from "./models/Signup";
 
 export interface DbApi {
   sequelize: Sequelize.Sequelize
@@ -15,6 +16,7 @@ export interface DbApi {
   UserRole: Sequelize.Model<UserRoleInstance, UserRole>
   UserToken: Sequelize.Model<UserTokenInstance, UserToken>
   Part: Sequelize.Model<PartInstance, Part>
+  Signup: Sequelize.Model<SignupInstance, Signup>
 }
 
 export function createSequelizeDb(sequelize: Sequelize.Sequelize) {
@@ -28,6 +30,7 @@ export function createSequelizeDb(sequelize: Sequelize.Sequelize) {
     UserRole: userRoleFactory(sequelize),
     UserToken: userTokenFactory(sequelize),
     Part: partFactory(sequelize),
+    Signup: signupFactory(sequelize)
   };
 
   (<any>Object).values(db).forEach((model: any) => {
