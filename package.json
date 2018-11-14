@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
+    "server:dev": "yarn run ts-node-dev src/server.ts",
     "gen-spec-v1": "(cd src/controllers/v1/ && exec yarn run tinyspec -j -o src/controllers/v1/); yarn run sw2dts ./src/controllers/v1/openapi.json -o ./src/controllers/v1/schema.d.ts"
   },
   "dependencies": {
