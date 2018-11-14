@@ -9,7 +9,7 @@ export class UserController {
   constructor(public _db: DbApi, public _hasher: Hasher) { }
 
   async create(request: CreateUser) {
-    const passwordHash = this._hasher.createHash(request.email + '.' + request.password);
+    const passwordHash = this._hasher.createHash(this._hasher.prepareCredentials(request.email, request.password));
     const user = await this._db.User.create({
       name: request.name,
       email: request.email,
