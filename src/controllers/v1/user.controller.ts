@@ -40,5 +40,9 @@ export function createUserRouter(db: DbApi, hasher: Hasher) {
     res.json(await controller.create(<CreateUser>req.body));
   });
 
+  router.get('/vk/callback', async (req: Request, res) => {
+    console.log(req.body);
+  });
+
   return router;
 }
