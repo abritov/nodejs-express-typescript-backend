@@ -8,7 +8,7 @@ const SEQUELIZE_MODEL_NAME = 'User';
 interface Attributes {
   id?: number,
   name: string,
-  email?: string,
+  email: string,
   passwordHash?: string,
   approved?: boolean,
   lastLogin?: Date,
@@ -39,7 +39,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     email: {
       type: DataTypes.STRING(255),
-      allowNull: true,
+      allowNull: false,
       unique: true,
       validate: {
         notEmpty: true,
