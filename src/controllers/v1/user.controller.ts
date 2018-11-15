@@ -4,9 +4,15 @@ import { Router, Request } from 'express';
 import { DbApi } from '../../db/index';
 import { CreateUser } from './schema';
 import { Hasher } from '../../utils/hasher';
+import { User } from '../../db/models/User';
+import { SignupTemp, SignupTempRecord } from '../../temp/signup';
 
 export class UserController {
-  constructor(public _db: DbApi, public _hasher: Hasher) { }
+  constructor(public _db: DbApi, public _hasher: Hasher, public _signup: SignupTemp) { }
+
+  signupReserve(accessToken: string, signup: SignupTempRecord) {
+    this._signup.set(accessToken, signup);
+  }
 
   makeSocialPassword(accessToken: string) {
     return this._hasher.createHash(accessToken);
