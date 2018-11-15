@@ -17,8 +17,9 @@ import {
   Jwt,
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
-import * as config from './db/config';
+import { SignupTempMemory } from './temp/signup';
 import { initializePassport } from './controllers/v1/authenticate';
+import * as config from './db/config';
 
 const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
 console.log(`starting server using ${env} env`);
@@ -29,7 +30,8 @@ const
   hasher = new MockHasher("mock_salt"),
   db = createSequelizeDb(new Sequelize.default(config[env])),
   jwt = new Jwt('SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT'),
-  userController = new UserController(db, hasher);
+  signupTemp = new SignupTempMemory(),
+  userController = new UserController(db, hasher, signupTemp);
 
 
 passport.use(createJwtStrategy(db, jwt));
