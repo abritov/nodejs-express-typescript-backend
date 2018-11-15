@@ -1,6 +1,7 @@
 export interface SignupTempRecord {
   name: string
   profile: any
+  provider: string
 }
 
 export interface SignupTemp {

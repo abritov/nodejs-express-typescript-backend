@@ -103,6 +103,7 @@ export function createFacebookStrategy(userController: UserController, clientID:
     if (!profile.emails) {
       userController.signupReserve(accessToken, {
         name: profile.displayName,
+        provider: 'fb',
         profile
       });
       done(new EmailIsNotSpecified(), null);
