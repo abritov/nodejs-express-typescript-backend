@@ -100,6 +100,14 @@ export function createFacebookStrategy(userController: UserController, clientID:
     profileFields: profileFields || ['id', 'displayName', 'email']
   }, async (accessToken, refreshToken, profile, done) => {
     console.log(accessToken, refreshToken, profile);
+    if (!profile.emails) {
+      userController.signupReserve(accessToken, {
+        name: profile.displayName,
+        profile
+      });
+      done(new EmailIsNotSpecified(), null);
+      return;
+    }
     try {
       const user = await userController.create({
         name: profile.displayName,
