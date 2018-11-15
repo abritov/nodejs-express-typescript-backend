@@ -14,6 +14,7 @@ import { User } from '../../db/models/User';
 import { DbApi } from '../../db/index';
 import { Hasher } from '../../utils/hasher';
 import { UserController } from './user.controller';
+import { EmailIsNotSpecified } from './error';
 
 export interface JwtPayload {
   userId: number
