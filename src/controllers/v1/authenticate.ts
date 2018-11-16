@@ -71,7 +71,7 @@ export function createLocalStrategy(db: DbApi, hasher: Hasher) {
       try {
         const user = await db.User.findOne({ where: { email } });
         if (!user) return done(null, false);
-        if (!hasher.validate(email + "." + password, user.passwordHash!))
+        if (!hasher.validate(hasher.prepareCredentials(email, password), user.passwordHash!))
           return done(null, false);
         return done(null, user);
       }
