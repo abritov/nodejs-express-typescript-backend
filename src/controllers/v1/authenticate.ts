@@ -59,7 +59,7 @@ export function createJwtStrategy(db: DbApi, jwt: Jwt) {
   return new JwtStrategy(jwt.toJwtStrategyOptions(), async (payload: JwtPayload, done: JwtVerifiedCallback) => {
     const user = await db.User.findById(payload.userId);
     if (user) {
-      return done(null, user);
+      return done(null, payload);
     }
     return done('cannot find user', null);
   });
