@@ -3,6 +3,3 @@ POST /token CreateToken
 POST /user CreateUser
     => 200 CreateUserResp
     => 422 UserExistsError
-POST /user/vk CreateUser
-    => 200 CreateUserResp
-    => 422 UserExistsError
