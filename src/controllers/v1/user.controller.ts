@@ -54,21 +54,5 @@ export function createUserRouter(controller: UserController) {
     }
   });
 
-  router.post('/vk', passport.authenticate('vkontakte', { session: false }), async (req: Request, res) => {
-    res.json(await controller.create(<CreateUser>req.body));
-  });
-
-  router.get('/vk/callback', async (req: Request, res) => {
-    console.log(req.body);
-  });
-
-  router.post('/fb', passport.authenticate('facebook', { session: false }), async (req: Request, res) => {
-    res.json(await controller.create(<CreateUser>req.body));
-  });
-
-  router.get('/fb/callback', async (req: Request, res) => {
-    console.log(req.body);
-  });
-
   return router;
 }
