@@ -1,7 +1,7 @@
 import passport = require('passport');
 import { UniqueConstraintError } from 'sequelize';
 import { Router, Request } from 'express';
-import { DbApi } from '../../db/index';
+import { DbApi } from '../../db';
 import { CreateUser } from './schema';
 import { Hasher } from '../../utils/hasher';
 import { User } from '../../db/models/User';
