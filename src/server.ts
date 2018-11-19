@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as swaggerUi from 'swagger-ui-express';
 import * as Sequelize from "sequelize";
 import passport = require('passport');
-import {Jwt} from './controllers/v1/authenticate';
+import { Jwt } from './controllers/v1/authenticate';
 import { createSequelizeDb } from './db';
 import swaggerSpec from './controllers/v1/openapi.json';
 import {
@@ -14,8 +14,7 @@ import {
   createVkStrategy,
   createLocalStrategy,
   createFacebookStrategy,
-  UserController,
-  Jwt,
+  UserController
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import { SignupTempMemory } from './temp/signup';
