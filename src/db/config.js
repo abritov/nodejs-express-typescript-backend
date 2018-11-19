@@ -1,77 +1,23 @@
-const config = {
-  development: {
-    username: "root",
-    password: "root",
-    database: "ranobe_v2",
-    host: "127.0.0.1",
-    dialect: "mysql",
-    operatorsAliases: false,
-    sync: {
-      force: false
-    },
-    define: {
-      underscored: false,
-      freezeTableName: true,
-      charset: "utf8",
-      timestamps: false
-    }
-  },
-  development_sqlite: {
-    dialect: "sqlite",
-    storage: "db.sqlite",
-    operatorsAliases: false,
-    sync: {
-      force: false
-    },
-    define: {
-      underscored: false,
-      freezeTableName: true,
-      charset: "utf8",
-      timestamps: false
-    }
-  },
-  test: {
-    username: "root",
-    password: null,
-    database: "database_test",
-    host: "127.0.0.1",
-    dialect: "mysql",
-    operatorsAliases: false,
-    sync: {
-      force: false
-    },
-    define: {
-      underscored: false,
-      freezeTableName: true,
-      charset: "utf8",
-      timestamps: false
-    }
-  },
-  production: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOSTNAME,
-    dialect: "mysql",
-    operatorsAliases: false,
-    sync: {
-      force: false
-    },
-    define: {
-      underscored: false,
-      freezeTableName: true,
-      charset: "utf8",
-      timestamps: false
-    }
-  }
+const defaultConfig = require('./../config/default.js');
+
+if (!process.env.NODE_ENV) {
+	process.env.NODE_ENV = 'development';
 }
 
-config['development_int09h'] = {
-  ...config.development,
-  host: "arch",
-  port: 3309,
-  username: 'test',
-  password: 'test',
+let config = {};
+
+switch (process.env.NODE_ENV) {
+ case 'development':
+	 config = require('./../config/dev.js');
+	 config = {...defaultConfig, ...config};
+	 break;
+
+	 case 'production':
+		config = require('./../config/prod.js');
+		config = {...defaultConfig, ...config};
+		break;
 }
 
-module.exports = config;
+module.exports = {
+	[process.env.NODE_ENV] : config.db
+};
