@@ -19,18 +19,18 @@ import {
 import { MockHasher } from './utils/hasher';
 import { SignupTempMemory } from './temp/signup';
 import { initializePassport } from './controllers/v1/authenticate';
-import * as config from './db/config';
+import * as config from './config';
 import { createSignupRouter, SignupController } from './controllers/v1/signup.controller';
+import { EnvironmentConfig } from './config/types';
 
-const env = process.env.NODE_ENV || "development_" + os.userInfo().username;
-console.log(`starting server using ${env} env`);
+const envConfig: EnvironmentConfig = process.env.NODE_ENV == 'development' ? config.development : config.production;
 
 const
   port = 8008,
   app = express(),
   hasher = new MockHasher("mock_salt"),
-  db = createSequelizeDb(new Sequelize.default(config[env])),
-  jwt = new Jwt('SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT'),
+  db = createSequelizeDb(new Sequelize.default(envConfig.db)),
+  jwt = new Jwt(envConfig.jwtSecret),
   signupTemp = new SignupTempMemory(),
   signupController = new SignupController(db),
   userController = new UserController(db, hasher, signupTemp);

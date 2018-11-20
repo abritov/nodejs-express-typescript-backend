@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * @param {import('./types').Config} config
+ * @param {import('./types').EnvironmentConfig} config
  */
 const config = {
   db: {
