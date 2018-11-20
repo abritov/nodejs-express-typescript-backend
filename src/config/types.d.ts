@@ -16,7 +16,11 @@ export interface DbConfig {
     timestamps: boolean
   }
 }
-export interface Config {
+export interface EnvironmentConfig {
   db: DbConfig
   jwtSecret: string
+}
+export interface Config {
+  development: EnvironmentConfig
+  production: EnvironmentConfig
 }
