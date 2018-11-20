@@ -1,3 +1,8 @@
+// @ts-check
+
+/**
+ * @param {import('./types').Config} config
+ */
 const config = {
   db: {
     username: "",
