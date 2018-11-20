@@ -11,9 +11,7 @@ import {
   createTokenRouter,
   createUserRouter,
   createJwtStrategy,
-  createVkStrategy,
   createLocalStrategy,
-  createFacebookStrategy,
   UserController
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
