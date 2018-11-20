@@ -37,17 +37,6 @@ const
 
 
 passport.use(createJwtStrategy(db, jwt));
-passport.use(createVkStrategy(
-  db,
-  '6089541',
-  '556be07b556be07b556be07b1355370b3e5556b556be07b0c3bf286237a2ac5a17ec8f0',
-  'http://localhost:8008/user/vk/callback'));
-passport.use(createFacebookStrategy(
-  userController,
-  '2003405606351687',
-  '536e4f3a88170a008f169089915c8aa6',
-  'http://localhost:8008/user/fb/callback'
-));
 passport.use(createLocalStrategy(db, hasher));
 
 app.use(bodyParser.json());
