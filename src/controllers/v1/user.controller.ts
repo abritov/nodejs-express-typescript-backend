@@ -2,7 +2,7 @@ import passport = require('passport');
 import { UniqueConstraintError } from 'sequelize';
 import { Router, Request } from 'express';
 import { DbApi } from '../../db';
-import { CreateUser } from './schema';
+import { CreateUser, CreateSocialUser } from './schema';
 import { Hasher } from '../../utils/hasher';
 import { User } from '../../db/models/User';
 import { SignupTemp, SignupTempRecord } from '../../temp/signup';
@@ -15,7 +15,8 @@ export class UserController {
   }
 
   makeSocialPassword(accessToken: string) {
-    return this._hasher.createHash(accessToken);
+    let password = `${accessToken.toUpperCase()}${accessToken.length}`;
+    return this._hasher.createHash(password);
   }
 
   async createSignupRecord(user: User, provider: string, payload: any, active: boolean) {
@@ -39,6 +40,21 @@ export class UserController {
       email: user.email
     };
   }
+
+  async createSocial(request: CreateSocialUser) {
+    let password = this.makeSocialPassword(request.accessToken);
+    let passwordHash = this._hasher.createHash(
+      this._hasher.prepareCredentials(request.email, password));
+    let user = await this._db.User.create({
+      name: request.name,
+      email: request.email,
+      passwordHash
+    });
+    return {
+      name: user.name,
+      email: user.email
+    };
+  }
 }
 
 export function createUserRouter(controller: UserController) {
@@ -47,6 +63,17 @@ export function createUserRouter(controller: UserController) {
   router.post('/', async (req: Request, res) => {
     try {
       res.json(await controller.create(<CreateUser>req.body));
+    } catch (error) {
+      if (error instanceof UniqueConstraintError) {
+        res.status(422).json({ error: "user already exists" });
+      }
+    }
+  });
+
+  router.post('/social', async (req: Request, res) => {
+    try {
+      let user = await controller.createSocial(req.body);
+      res.json(user);
     } catch (error) {
       if (error instanceof UniqueConstraintError) {
         res.status(422).json({ error: "user already exists" });
