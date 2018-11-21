@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "npm run migrate-dev && yarn run ts-node-dev src/server.ts",
+    "watch": "npm run migrate-dev && yarn run ts-node-dev src/server.ts",
     "start-prod": "yarn run ts-node-dev src/server.ts",
     "migrate": "./node_modules/.bin/sequelize --config ./src/db/config.js --models-path ./src/db/models --seeders-path ./src/db/seeders --migrations-path ./src/db/migrations db:migrate",
     "migrate-prod": "cross-env NODE_ENV=production npm run migrate",
