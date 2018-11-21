@@ -10,15 +10,16 @@ import swaggerSpec from './controllers/v1/openapi.json';
 import {
   createTokenRouter,
   createUserRouter,
+  createSignupRouter,
   createJwtStrategy,
   createLocalStrategy,
-  UserController
+  UserController,
+  SignupController
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import { SignupTempMemory } from './temp/signup';
 import { initializePassport } from './controllers/v1/authenticate';
 import * as config from './config';
-import { createSignupRouter, SignupController } from './controllers/v1/signup.controller';
 import { EnvironmentConfig } from './config/types';
 
 const envConfig: EnvironmentConfig = process.env.NODE_ENV == 'development' ? config.development : config.production;
