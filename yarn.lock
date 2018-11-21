@@ -2728,7 +2728,7 @@ timers-ext@^0.1.5:
     es5-ext "~0.10.14"
     next-tick "1"
 
-tinyspec@^2.0.0:
+tinyspec@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tinyspec/-/tinyspec-2.1.0.tgz#ad2fbeaf4bdff9a019fae3ddd8aa36f1e63d12c2"
   integrity sha512-BDoRSQiB/BDdG9sC8YKtX9Yi7wtxw/3ix2VHpYfpEpPl9DtucK0wjNtRMRN0bAE2bUe0rQiEtUwgPHSJxyF1cQ==
