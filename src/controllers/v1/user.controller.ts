@@ -1,4 +1,3 @@
-import passport = require('passport');
 import { UniqueConstraintError } from 'sequelize';
 import { Router, Request } from 'express';
 import { DbApi } from '../../db';
