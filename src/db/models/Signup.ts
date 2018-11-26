@@ -63,6 +63,8 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
 }
 
+export { DB_TABLE_NAME as DB_TABLE_NAME_SIGNUP };
+export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_SIGNUP };
 export { Attributes as Signup };
 export { Instance as SignupInstance };
 export default function (sequelize: Sequelize.Sequelize) {
