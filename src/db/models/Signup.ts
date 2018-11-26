@@ -9,7 +9,8 @@ interface Attributes {
   userId: number
   provider: string
   payload: any
-  token?: string
+  jwtToken?: string
+  accessToken?: string
   active: boolean
   createdAt?: Date
   updatedAt?: Date
@@ -44,8 +45,12 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       type: DataTypes.JSON,
       allowNull: false,
     },
-    token: {
-      type: DataTypes.STRING(255),
+    jwtToken: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    accessToken: {
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     active: {
