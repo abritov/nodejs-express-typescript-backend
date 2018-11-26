@@ -1,11 +1,13 @@
 import * as Sequelize from 'sequelize'
 import { UserTokenInstance } from './UserToken';
+import { SEQUELIZE_MODEL_NAME_SIGNUP } from './Signup';
 
 const DB_TABLE_NAME = 'users';
 const SEQUELIZE_MODEL_NAME = 'User';
 
 interface Attributes {
   id?: number,
+  signupId?: number,
   name: string,
   email: string,
   passwordHash?: string,
@@ -27,6 +29,16 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
+    },
+    signupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: SEQUELIZE_MODEL_NAME_SIGNUP,
+        key: 'id',
+      },
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
     },
     name: {
       type: DataTypes.STRING(255),
