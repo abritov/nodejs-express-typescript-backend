@@ -1,12 +1,10 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_USER } from './User';
+import * as Sequelize from 'sequelize';
 
 const DB_TABLE_NAME = 'signup';
 const SEQUELIZE_MODEL_NAME = 'Signup';
 
 interface Attributes {
   id?: number
-  userId: number
   provider: string
   payload: any
   jwtToken?: string
@@ -26,16 +24,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: SEQUELIZE_MODEL_NAME_USER,
-        key: 'id',
-      },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
     },
     provider: {
       type: DataTypes.STRING(255),
