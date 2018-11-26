@@ -1,6 +1,5 @@
 import * as Sequelize from 'sequelize'
 import { UserTokenInstance } from './UserToken';
-import { UserRoleInstance } from './UserRole';
 
 const DB_TABLE_NAME = 'users';
 const SEQUELIZE_MODEL_NAME = 'User';
@@ -18,7 +17,6 @@ interface Attributes {
 
 interface Instance extends Sequelize.Instance<Attributes>, Attributes {
   getToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
-  getRoles: Sequelize.HasManyGetAssociationsMixin<UserRoleInstance>
 }
 interface Model extends Sequelize.Model<Instance, Attributes> { }
 
@@ -72,7 +70,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   const User = sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
   User.associate = models => {
     User.hasOne(models.UserToken, { as: 'token', foreignKey: 'userId' });
-    User.hasMany(models.UserRole, { as: 'roles', foreignKey: 'userId' });
   }
 
   return User;
