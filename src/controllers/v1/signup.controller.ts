@@ -20,10 +20,9 @@ export class SignupController {
 export function createSignupRouter(controller: SignupController) {
   const router = Router();
 
-  router.post('/', passport.authenticate('jwt', { session: false }), async (req: Request, res: Response) => {
-    const jwtToken: JwtPayload = req.user;
-    const signup = await controller.create(req.body, jwtToken.userId, true);
-    res.send();
+  router.post('/', async (req: Request, res: Response) => {
+    const signup = await controller.create(req.body, 'email', false);
+    res.send(signup);
   });
 
   return router;
