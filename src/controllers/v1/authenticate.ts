@@ -93,7 +93,7 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
   });
 }
 
-export function createFacebookStrategy(userController: UserController, clientID: string, clientSecret: string, callbackURL: string, profileFields?: string[]) {
+export function createFacebookStrategy(signupController: SignupController, clientID: string, clientSecret: string, callbackURL: string, profileFields?: string[]) {
   return new FacebookStrategy({
     clientID,
     clientSecret,
@@ -102,13 +102,13 @@ export function createFacebookStrategy(userController: UserController, clientID:
   }, async (accessToken, refreshToken, profile, done) => {
     console.log(accessToken, refreshToken, profile);
     try {
-      const user = await userController.create({
+      const signup = await signupController.create({
         name: profile.displayName,
-        email: profile.emails![0].value!,
-        password: userController.makeSocialPassword(accessToken)
-      });
-      const signup = await userController.createSignupRecord(user, 'fb', profile, true);
-      done(null, user);
+        email: profile.emails![0].value,
+        accessToken: accessToken,
+        payload: profile,
+      }, 'fb', true);
+      done(null, signup);
     }
     catch (error) {
       done(error, null);
