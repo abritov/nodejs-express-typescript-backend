@@ -27,11 +27,9 @@ export function createSignupRouter(controller: SignupController, passport: Passp
 
   router.get('/fb', passport.authenticate('facebook', { session: false }), async (req: Request, res: Response) => {
     // we do not get there
-    // res.status(200).send();
   });
 
   router.get('/fb/callback', passport.authenticate('facebook', { session: false }), async (req: Request, res: Response) => {
-    console.log(req.user);
     res.status(200).send(req.user);
   });
 
