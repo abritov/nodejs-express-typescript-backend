@@ -1,7 +1,7 @@
 import { UniqueConstraintError } from 'sequelize';
 import { Router, Request } from 'express';
 import { DbApi } from '../../db';
-import { CreateUser, CreateSocialUser } from './schema';
+import { CreateUser } from './schema';
 import { Hasher } from '../../utils/hasher';
 import { User } from '../../db/models/User';
 import { SignupTemp, SignupTempRecord } from '../../temp/signup';
@@ -16,15 +16,6 @@ export class UserController {
   makeSocialPassword(accessToken: string) {
     let password = `${accessToken.toUpperCase()}${accessToken.length}`;
     return this._hasher.createHash(password);
-  }
-
-  async createSignupRecord(user: User, provider: string, payload: any, active: boolean) {
-    return this._db.Signup.create({
-      userId: user.id!,
-      provider,
-      payload,
-      active
-    })
   }
 
   async create(request: CreateUser) {
@@ -62,17 +53,6 @@ export function createUserRouter(controller: UserController) {
   router.post('/', async (req: Request, res) => {
     try {
       res.json(await controller.create(<CreateUser>req.body));
-    } catch (error) {
-      if (error instanceof UniqueConstraintError) {
-        res.status(422).json({ error: "user already exists" });
-      }
-    }
-  });
-
-  router.post('/social', async (req: Request, res) => {
-    try {
-      let user = await controller.createSocial(req.body);
-      res.json(user);
     } catch (error) {
       if (error instanceof UniqueConstraintError) {
         res.status(422).json({ error: "user already exists" });
