@@ -1,4 +1,4 @@
-import passport = require('passport');
+import { PassportStatic } from 'passport';
 import { Router, Request, Response } from 'express';
 import { DbApi } from '../../db';
 import { CreateUserSignup } from './schema';
@@ -17,7 +17,7 @@ export class SignupController {
   }
 }
 
-export function createSignupRouter(controller: SignupController) {
+export function createSignupRouter(controller: SignupController, passport: PassportStatic) {
   const router = Router();
 
   router.post('/', async (req: Request, res: Response) => {
