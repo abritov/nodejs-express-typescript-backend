@@ -16,9 +16,15 @@ export interface DbConfig {
     timestamps: boolean
   }
 }
+export interface SocialAuthProvider {
+  clientID: string
+  clientSecret: string
+  callbackURL: string
+}
 export interface EnvironmentConfig {
   db: DbConfig
   jwtSecret: string
+  facebook: SocialAuthProvider
 }
 export interface Config {
   development: EnvironmentConfig

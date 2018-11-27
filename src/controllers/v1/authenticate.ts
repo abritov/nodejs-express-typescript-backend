@@ -15,6 +15,8 @@ import { DbApi } from '../../db/index';
 import { Hasher } from '../../utils/hasher';
 import { UserController } from './user.controller';
 import { EmailIsNotSpecified } from './error';
+import { SignupController } from './signup.controller';
+import { SocialAuthProvider } from '../../config/types';
 
 export interface JwtPayload {
   userId: number
@@ -93,11 +95,11 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
   });
 }
 
-export function createFacebookStrategy(signupController: SignupController, clientID: string, clientSecret: string, callbackURL: string, profileFields?: string[]) {
+export function createFacebookStrategy(signupController: SignupController, config: SocialAuthProvider, profileFields?: string[]) {
   return new FacebookStrategy({
-    clientID,
-    clientSecret,
-    callbackURL,
+    clientID: config.clientID,
+    clientSecret: config.clientSecret,
+    callbackURL: config.callbackURL,
     profileFields: profileFields || ['id', 'displayName', 'email']
   }, async (accessToken, refreshToken, profile, done) => {
     console.log(accessToken, refreshToken, profile);

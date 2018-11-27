@@ -23,6 +23,11 @@ const config = {
     }
   },
   jwtSecret: 'SCugV4e4Z6DTZzXmfYbHqh9KlblOSHVL8tpqy0gO3+W7ylryT',
+  facebook: {
+    clientID: '',
+    clientSecret: '',
+    callbackURL: ''
+  }
 }
 
 module.exports = config;
