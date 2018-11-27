@@ -9,6 +9,7 @@ interface Attributes {
   payload: any
   jwtToken?: string
   accessToken?: string
+  email?: string
   active: boolean
   createdAt?: Date
   updatedAt?: Date
@@ -40,6 +41,13 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     accessToken: {
       type: DataTypes.TEXT,
       allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      validate: {
+        isEmail: true,
+      },
     },
     active: {
       type: DataTypes.BOOLEAN,
