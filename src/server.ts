@@ -36,6 +36,7 @@ const
 
 passport.use(createJwtStrategy(db, jwt));
 passport.use(createLocalStrategy(db, hasher));
+passport.use(createFacebookStrategy(signupController, envConfig.facebook))
 
 app.use(bodyParser.json());
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
