@@ -1,3 +1,4 @@
+import { PassportStatic } from 'passport';
 import { UniqueConstraintError } from 'sequelize';
 import { Router, Request } from 'express';
 import { DbApi } from '../../db';
@@ -47,7 +48,7 @@ export class UserController {
   }
 }
 
-export function createUserRouter(controller: UserController) {
+export function createUserRouter(controller: UserController, passport: PassportStatic) {
   const router = Router();
 
   router.post('/', async (req: Request, res) => {
