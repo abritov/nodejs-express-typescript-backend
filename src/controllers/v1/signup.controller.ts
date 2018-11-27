@@ -25,5 +25,10 @@ export function createSignupRouter(controller: SignupController, passport: Passp
     res.send(signup);
   });
 
+  router.post('/fb', async (req: Request, res: Response) => {
+    const signup = await controller.create(req.body, 'fb', true);
+    res.send(signup);
+  });
+
   return router;
 }
