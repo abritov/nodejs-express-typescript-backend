@@ -104,13 +104,18 @@ export function createFacebookStrategy(signupController: SignupController, confi
   }, async (accessToken, refreshToken, profile, done) => {
     console.log(accessToken, refreshToken, profile);
     try {
-      const signup = await signupController.create({
+      let email: string | undefined;
+      if (profile.emails) {
+        email = profile.emails[0]!.value;
+      }
+      let createRequest: CreateSignup = {
+        email,
         name: profile.displayName,
-        email: profile.emails![0].value,
         accessToken: accessToken,
         payload: profile,
-      }, 'fb', true);
-      done(null, signup);
+      };
+      const signup = await signupController.create(createRequest, 'fb', true);
+      done(null, { ...createRequest, provider: 'facebook' });
     }
     catch (error) {
       done(error, null);
