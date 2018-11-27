@@ -31,21 +31,6 @@ export class UserController {
       email: user.email
     };
   }
-
-  async createSocial(request: CreateSocialUser) {
-    let password = this.makeSocialPassword(request.accessToken);
-    let passwordHash = this._hasher.createHash(
-      this._hasher.prepareCredentials(request.email, password));
-    let user = await this._db.User.create({
-      name: request.name,
-      email: request.email,
-      passwordHash
-    });
-    return {
-      name: user.name,
-      email: user.email
-    };
-  }
 }
 
 export function createUserRouter(controller: UserController, passport: PassportStatic) {
