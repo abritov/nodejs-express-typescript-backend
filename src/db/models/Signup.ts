@@ -6,7 +6,7 @@ const SEQUELIZE_MODEL_NAME = 'Signup';
 interface Attributes {
   id?: number
   provider: string
-  payload: any
+  payload?: any
   jwtToken?: string
   accessToken?: string
   email?: string
@@ -32,7 +32,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     payload: {
       type: DataTypes.JSON,
-      allowNull: false,
+      allowNull: true,
     },
     jwtToken: {
       type: DataTypes.TEXT,
