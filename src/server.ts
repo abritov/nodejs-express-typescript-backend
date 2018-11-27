@@ -1,4 +1,3 @@
-import * as os from 'os';
 import express, { NextFunction, Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import * as swaggerUi from 'swagger-ui-express';
