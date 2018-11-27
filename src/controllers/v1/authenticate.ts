@@ -17,6 +17,7 @@ import { UserController } from './user.controller';
 import { EmailIsNotSpecified } from './error';
 import { SignupController } from './signup.controller';
 import { SocialAuthProvider } from '../../config/types';
+import { CreateSignup } from './schema';
 
 export interface JwtPayload {
   userId: number
