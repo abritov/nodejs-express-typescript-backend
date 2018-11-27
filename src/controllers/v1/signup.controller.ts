@@ -1,17 +1,16 @@
 import { PassportStatic } from 'passport';
 import { Router, Request, Response } from 'express';
 import { DbApi } from '../../db';
-import { CreateUserSignup } from './schema';
-import { JwtPayload } from './authenticate';
+import { CreateSignup } from './schema';
 
 export class SignupController {
   constructor(public _db: DbApi) { }
 
-  async create(request: CreateUserSignup, userId: number, active: boolean) {
+  async create(request: CreateSignup, provider: string, active: boolean) {
     return this._db.Signup.create({
-      userId,
       active,
-      provider: request.provider,
+      provider,
+      email: request.email,
       payload: request.payload,
     })
   }
@@ -22,11 +21,6 @@ export function createSignupRouter(controller: SignupController, passport: Passp
 
   router.post('/', async (req: Request, res: Response) => {
     const signup = await controller.create(req.body, 'email', false);
-    res.send(signup);
-  });
-
-  router.post('/fb', async (req: Request, res: Response) => {
-    const signup = await controller.create(req.body, 'fb', true);
     res.send(signup);
   });
 
