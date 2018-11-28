@@ -31,7 +31,15 @@ export function createSignupRouter(controller: SignupController, passport: Passp
   });
 
   router.get('/fb/callback', passport.authenticate('facebook', { session: false }), async (req: Request, res: Response) => {
-    res.status(200).send(req.user);
+    let result: FacebookSignupResult = req.user;
+    console.log(result.error);
+    if (result.error) {
+      if (result.error instanceof UniqueConstraintError) {
+        res.status(422).send({ error: "this account is already used" });
+        return;
+      }
+    }
+    res.status(200).send(result.signup);
   });
 
   return router;

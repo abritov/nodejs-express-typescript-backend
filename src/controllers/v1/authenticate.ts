@@ -116,11 +116,17 @@ export function createFacebookStrategy(signupController: SignupController, confi
         socialId: profile.id,
         payload: profile,
       };
-      const signup = await signupController.create(createRequest, 'fb', true);
-      done(null, { ...createRequest, provider: 'facebook' });
+      let signup = await signupController.create(createRequest, 'fb', true);
+      let result: FacebookSignupResult = {
+        signup: {
+          id: signup.id,
+          ...createRequest
+        }
+      }
+      done(null, result);
     }
     catch (error) {
-      done(error, null);
+      done(null, <FacebookSignupResult>{ error });
     }
   });
 }
