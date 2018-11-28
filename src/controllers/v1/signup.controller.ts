@@ -1,7 +1,9 @@
+import { UniqueConstraintError } from 'sequelize';
 import { PassportStatic } from 'passport';
 import { Router, Request, Response } from 'express';
 import { DbApi } from '../../db';
 import { CreateSignup } from './schema';
+import { FacebookSignupResult } from './authenticate';
 
 export class SignupController {
   constructor(public _db: DbApi) { }
