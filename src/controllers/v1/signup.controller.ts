@@ -38,6 +38,8 @@ export function createSignupRouter(controller: SignupController, passport: Passp
         res.status(422).send({ error: "this account is already used" });
         return;
       }
+      res.status(400).send();
+      return;
     }
     res.status(200).send(result.signup);
   });
