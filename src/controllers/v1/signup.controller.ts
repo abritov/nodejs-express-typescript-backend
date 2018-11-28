@@ -12,6 +12,7 @@ export class SignupController {
       provider,
       email: request.email,
       payload: request.payload,
+      socialId: request.socialId,
       accessToken: request.accessToken,
     })
   }
