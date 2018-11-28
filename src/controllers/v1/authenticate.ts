@@ -113,6 +113,7 @@ export function createFacebookStrategy(signupController: SignupController, confi
         email,
         name: profile.displayName,
         accessToken: accessToken,
+        socialId: profile.id,
         payload: profile,
       };
       const signup = await signupController.create(createRequest, 'fb', true);
