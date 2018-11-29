@@ -58,7 +58,7 @@ export function createSignupRouter(controller: SignupController, passport: Passp
     console.error(result.error);
     if (result.error) {
       if (result.error instanceof UniqueConstraintError) {
-        res.status(422).send({ error: "this account is already used" });
+        res.status(422).send({ error: "this account is already in use" });
         return;
       }
       res.status(400).send();
