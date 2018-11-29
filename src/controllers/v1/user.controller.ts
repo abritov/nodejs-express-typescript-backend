@@ -1,9 +1,10 @@
-import { Authenticator } from 'passport';
+import { PassportStatic } from 'passport';
 import { UniqueConstraintError } from 'sequelize';
 import { Router, Request } from 'express';
 import { DbApi } from '../../db';
 import { CreateUser } from './schema';
 import { Hasher } from '../../utils/hasher';
+import { User } from '../../db/models/User';
 import { SignupTemp, SignupTempRecord } from '../../temp/signup';
 
 export class UserController {
@@ -32,7 +33,7 @@ export class UserController {
   }
 }
 
-export function createUserRouter(controller: UserController, passport: Authenticator) {
+export function createUserRouter(controller: UserController, passport: PassportStatic) {
   const router = Router();
 
   router.post('/', async (req: Request, res) => {
