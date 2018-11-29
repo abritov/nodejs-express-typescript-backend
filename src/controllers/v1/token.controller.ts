@@ -1,6 +1,6 @@
+import { PassportStatic } from 'passport';
 import { Router, Request, Response } from 'express';
 import { CreateToken, AuthorizationToken } from './schema';
-import passport = require('passport');
 import { DbApi } from '../../db';
 import { Hasher } from '../../utils/hasher';
 import { User } from '../../db/models/User';
@@ -25,9 +25,8 @@ export class TokenController {
   }
 }
 
-export function createTokenRouter(db: DbApi, hasher: Hasher, jwt: Jwt) {
+export function createTokenRouter(controller: TokenController, passport: PassportStatic) {
   const router = Router();
-  const controller = new TokenController(db, hasher, jwt);
 
   router.post('/insecure', async (req: Request, res: Response) => {
     if (!(req.ip == "127.0.0.1" || req.ip == "::1")) {
@@ -35,7 +34,7 @@ export function createTokenRouter(db: DbApi, hasher: Hasher, jwt: Jwt) {
       return;
     }
     try {
-      const user = await db.User.findOne({ where: { email: req.body.email } });
+      const user = await controller._db.User.findOne({ where: { email: req.body.email } });
       if (!user) {
         res.status(404).json({ error: "user not found" });
         return;
