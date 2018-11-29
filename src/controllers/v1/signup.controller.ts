@@ -5,8 +5,29 @@ import { DbApi } from '../../db';
 import { CreateSignup } from './schema';
 import { FacebookSignupResult } from './authenticate';
 
+const SIGNUP_CIPHER_ALGORITHM = 'aes192';
+
+interface SignupToken {
+  id: number
+  socialId?: string
+  email?: string
+}
+
 export class SignupController {
-  constructor(public _db: DbApi) { }
+  constructor(public _db: DbApi, public _signupSecret: string) { }
+
+  encodeRequest(req: SignupToken) {
+    let aes = createCipher(SIGNUP_CIPHER_ALGORITHM, this._signupSecret);
+    aes.update(JSON.stringify(req), 'utf8', 'hex');
+    return aes.final('hex');
+  }
+
+  decodeRequest(req: string): SignupToken {
+    let aes = createDecipher(SIGNUP_CIPHER_ALGORITHM, this._signupSecret);
+    aes.update(req, 'hex', 'utf8');
+    let decoded = aes.final('utf8');
+    return JSON.parse(decoded);
+  }
 
   async create(request: CreateSignup, provider: string, active: boolean) {
     return this._db.Signup.create({
@@ -43,7 +64,16 @@ export function createSignupRouter(controller: SignupController, passport: Passp
       res.status(400).send();
       return;
     }
-    res.status(200).send(result.signup);
+    let encodedSignup = controller.encodeRequest({
+      id: result.signup!.id!,
+      email: result.signup!.email,
+      socialId: result.signup!.socialId
+    });
+    res.status(200).send({ signup: encodedSignup });
+  });
+
+  router.post('/decode', (req: Request, res: Response) => {
+    res.send(controller.decodeRequest(req.body.signup));
   });
 
   return router;
