@@ -1,3 +1,4 @@
+import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import { UniqueConstraintError } from 'sequelize';
 import { PassportStatic } from 'passport';
 import { Router, Request, Response } from 'express';
@@ -5,7 +6,9 @@ import { DbApi } from '../../db';
 import { CreateSignup } from './schema';
 import { FacebookSignupResult } from './authenticate';
 
-const SIGNUP_CIPHER_ALGORITHM = 'aes192';
+const SIGNUP_CIPHER_ALGORITHM = 'aes-256-cbc';
+const IV_LEN = 16;
+const DELIMITER = ';';
 
 interface SignupToken {
   id: number
@@ -17,15 +20,22 @@ export class SignupController {
   constructor(public _db: DbApi, public _signupSecret: string) { }
 
   encodeRequest(req: SignupToken) {
-    let aes = createCipher(SIGNUP_CIPHER_ALGORITHM, this._signupSecret);
-    aes.update(JSON.stringify(req), 'utf8', 'hex');
-    return aes.final('hex');
+    let iv = randomBytes(IV_LEN);
+    let aes = createCipheriv(SIGNUP_CIPHER_ALGORITHM, this._signupSecret, iv);
+    let encoded = aes.update(JSON.stringify(req), 'utf8', 'hex');
+    encoded += aes.final('hex');
+    return iv.toString('hex') + DELIMITER + encoded;
   }
 
   decodeRequest(req: string): SignupToken {
-    let aes = createDecipher(SIGNUP_CIPHER_ALGORITHM, this._signupSecret);
-    aes.update(req, 'hex', 'utf8');
-    let decoded = aes.final('utf8');
+    let parts = req.split(DELIMITER);
+    if (!parts)
+      throw Error('invalid request');
+    let iv = new Buffer(parts.shift()!, 'hex');
+    let aes = createDecipheriv(SIGNUP_CIPHER_ALGORITHM, this._signupSecret, iv);
+    let decoded = aes.update(req, 'hex', 'utf8');
+    decoded += aes.final('utf8');
+    console.log(decoded);
     return JSON.parse(decoded);
   }
 
