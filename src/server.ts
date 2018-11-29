@@ -12,6 +12,7 @@ import {
   createSignupRouter,
   createJwtStrategy,
   createLocalStrategy,
+  createFacebookStrategy,
   UserController,
   SignupController
 } from './controllers/v1';
