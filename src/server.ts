@@ -30,7 +30,7 @@ const
   db = createSequelizeDb(new Sequelize.default(envConfig.db)),
   jwt = new Jwt(envConfig.jwtSecret),
   signupTemp = new SignupTempMemory(),
-  signupController = new SignupController(db),
+  signupController = new SignupController(db, envConfig.jwtSecret),
   userController = new UserController(db, hasher, signupTemp);
 
 
