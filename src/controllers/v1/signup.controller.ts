@@ -31,7 +31,7 @@ export class SignupController {
     let parts = req.split(DELIMITER);
     if (!parts)
       throw Error('invalid request');
-    let iv = new Buffer(parts.shift()!, 'hex');
+    let iv = Buffer.from(parts.shift()!, 'hex');
     let aes = createDecipheriv(SIGNUP_CIPHER_ALGORITHM, this._signupSecret, iv);
     let decoded = aes.update(req, 'hex', 'utf8');
     decoded += aes.final('utf8');
