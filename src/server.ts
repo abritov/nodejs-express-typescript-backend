@@ -14,7 +14,8 @@ import {
   createLocalStrategy,
   createFacebookStrategy,
   UserController,
-  SignupController
+  SignupController,
+  TokenController
 } from './controllers/v1';
 import { MockHasher } from './utils/hasher';
 import { SignupTempMemory } from './temp/signup';
@@ -32,7 +33,8 @@ const
   jwt = new Jwt(envConfig.jwtSecret),
   signupTemp = new SignupTempMemory(),
   signupController = new SignupController(db, envConfig.jwtSecret),
-  userController = new UserController(db, hasher, signupTemp);
+  userController = new UserController(db, hasher, signupTemp),
+  tokenController = new TokenController(db, hasher, jwt);
 
 
 passport.use(createJwtStrategy(db, jwt));
@@ -49,7 +51,7 @@ initializePassport(db, app, passport);
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/token', createTokenRouter(db, hasher, jwt));
+app.use('/token', createTokenRouter(tokenController, passport));
 app.use('/signup', createSignupRouter(signupController, passport));
 app.use('/user', createUserRouter(userController, passport));
 
