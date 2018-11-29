@@ -22,9 +22,9 @@ export class SignupController {
   encodeRequest(req: SignupToken) {
     let iv = randomBytes(IV_LEN);
     let aes = createCipheriv(SIGNUP_CIPHER_ALGORITHM, this._signupSecret, iv);
-    let encoded = aes.update(JSON.stringify(req), 'utf8', 'hex');
-    encoded += aes.final('hex');
-    return iv.toString('hex') + DELIMITER + encoded;
+    let encoded = aes.update(JSON.stringify(req));
+    encoded = Buffer.concat([encoded, aes.final()]);
+    return iv.toString('hex') + DELIMITER + encoded.toString('hex');
   }
 
   decodeRequest(req: string): SignupToken {
@@ -32,11 +32,12 @@ export class SignupController {
     if (!parts)
       throw Error('invalid request');
     let iv = Buffer.from(parts.shift()!, 'hex');
+    let encryptedRequest = Buffer.from(parts.join(DELIMITER), 'hex');
     let aes = createDecipheriv(SIGNUP_CIPHER_ALGORITHM, this._signupSecret, iv);
-    let decoded = aes.update(req, 'hex', 'utf8');
-    decoded += aes.final('utf8');
+    let decoded = aes.update(encryptedRequest);
+    decoded = Buffer.concat([decoded, aes.final()]);
     console.log(decoded);
-    return JSON.parse(decoded);
+    return JSON.parse(decoded.toString());
   }
 
   async create(request: CreateSignup, provider: string, active: boolean) {
