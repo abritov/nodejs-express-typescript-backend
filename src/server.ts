@@ -22,7 +22,7 @@ import { initializePassport } from './controllers/v1/authenticate';
 import * as config from './config';
 import { EnvironmentConfig } from './config/types';
 
-const envConfig: EnvironmentConfig = process.env.NODE_ENV == 'development' ? config.development : config.production;
+const envConfig: EnvironmentConfig = process.env.NODE_ENV == 'production' ? config.production : config.development;
 
 const
   port = 8008,
