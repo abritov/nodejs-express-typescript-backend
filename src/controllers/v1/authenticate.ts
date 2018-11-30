@@ -25,6 +25,11 @@ export interface JwtPayload {
   accessBitmask: number
 }
 
+export interface FacebookSignupResult {
+  error?: Error
+  signup?: CreateSignup & { id?: number }
+}
+
 export class Jwt {
   constructor(public secret: string, public algorithm?: string) {
     this.algorithm = algorithm || "HS256";
