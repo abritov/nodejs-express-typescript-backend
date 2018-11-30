@@ -27,6 +27,12 @@ const config = {
     clientID: '',
     clientSecret: '',
     callbackURL: ''
+  },
+  signupTokenCipher: {
+    secret: '00000000000000000000000000000000',
+    algorithm: 'aes-256-cbc',
+    ivLength: 16,
+    delimiter: ';'
   }
 }
 

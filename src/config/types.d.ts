@@ -21,10 +21,17 @@ export interface SocialAuthProvider {
   clientSecret: string
   callbackURL: string
 }
+export interface CryptoConfig {
+  secret: string
+  algorithm: string
+  ivLength: number
+  delimiter: string
+}
 export interface EnvironmentConfig {
   db: DbConfig
   jwtSecret: string
   facebook: SocialAuthProvider
+  signupTokenCipher: CryptoConfig
 }
 export interface Config {
   development: EnvironmentConfig

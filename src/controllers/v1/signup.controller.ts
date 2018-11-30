@@ -6,6 +6,7 @@ import { Router, Request, Response } from 'express';
 import { DbApi } from '../../db';
 import { CreateSignup } from './schema';
 import { FacebookSignupResult } from './authenticate';
+import { CryptoConfig } from '../../config/types';
 
 const SIGNUP_CIPHER_ALGORITHM = 'aes-256-cbc';
 const IV_LEN = 16;
@@ -18,11 +19,17 @@ interface SignupToken {
 }
 
 export class SignupEncDec {
-  constructor(public _secret: string,
-    public _algorigthm: string = SIGNUP_CIPHER_ALGORITHM,
-    public _ivlen: number = IV_LEN,
-    public _delimiter: string = DELIMITER) {
-    assert.equal(_secret, 32, 'SignupEncDec wrong secret length (must be 32)');
+  _secret: string
+  _algorigthm: string
+  _ivlen: number
+  _delimiter: string
+
+  constructor(config: CryptoConfig) {
+    this._secret = config.secret;
+    this._algorigthm = config.algorithm;
+    this._ivlen = config.ivLength;
+    this._delimiter = config.delimiter;
+    assert.equal(this._secret.length, 32, 'SignupEncDec wrong secret length, must be 32 got ' + this._secret.length);
   }
 
   encodeRequest(req: SignupToken) {

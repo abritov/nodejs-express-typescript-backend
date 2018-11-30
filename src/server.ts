@@ -33,7 +33,7 @@ const
   db = createSequelizeDb(new Sequelize.default(envConfig.db)),
   jwt = new Jwt(envConfig.jwtSecret),
   signupTemp = new SignupTempMemory(),
-  signupController = new SignupController(db, new SignupEncDec(envConfig.jwtSecret)),
+  signupController = new SignupController(db, new SignupEncDec(envConfig.signupTokenCipher)),
   userController = new UserController(db, hasher, signupTemp),
   tokenController = new TokenController(db, hasher, jwt);
 
