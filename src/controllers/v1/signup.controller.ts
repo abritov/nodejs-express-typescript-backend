@@ -33,7 +33,7 @@ export class SignupEncDec {
     assert.equal(this._secret.length, 32, 'SignupEncDec wrong secret length, must be 32 got ' + this._secret.length);
   }
 
-  encodeRequest(req: SignupToken) {
+  encode(req: SignupToken) {
     let iv = randomBytes(this._ivlen);
     let aes = createCipheriv(this._algorigthm, this._secret, iv);
     let encoded = aes.update(JSON.stringify(req));
@@ -41,7 +41,7 @@ export class SignupEncDec {
     return iv.toString('hex') + this._delimiter + encoded.toString('hex');
   }
 
-  decodeRequest(req: string): SignupToken {
+  decode(req: string): SignupToken {
     let parts = req.split(this._delimiter);
     if (!parts)
       throw Error('invalid request');
@@ -50,7 +50,6 @@ export class SignupEncDec {
     let aes = createDecipheriv(this._algorigthm, this._secret, iv);
     let decoded = aes.update(encryptedRequest);
     decoded = Buffer.concat([decoded, aes.final()]);
-    console.log(decoded);
     return JSON.parse(decoded.toString());
   }
 }
@@ -59,11 +58,11 @@ export class SignupController {
   constructor(public _db: DbApi, public _cipher: SignupEncDec) { }
 
   encodeRequest(req: SignupToken) {
-    return this._cipher.encodeRequest(req);
+    return this._cipher.encode(req);
   }
 
   decodeRequest(req: string): SignupToken {
-    return this._cipher.decodeRequest(req);
+    return this._cipher.decode(req);
   }
 
   async create(request: CreateSignup, provider: string, active: boolean) {
@@ -81,9 +80,9 @@ export class SignupController {
 export function createSignupRouter(controller: SignupController, passport: PassportStatic) {
   const router = Router();
 
-  router.post('/', async (req: Request, res: Response) => {
-    const signup = await controller.create(req.body, 'email', false);
-    res.send(signup);
+  router.post('/', passport.authenticate('local', { session: false }), async (req: Request, res: Response) => {
+    console.log('post /user');
+    res.status(200).send();
   });
 
   router.get('/fb', passport.authenticate('facebook', { session: false }), async (req: Request, res: Response) => {
