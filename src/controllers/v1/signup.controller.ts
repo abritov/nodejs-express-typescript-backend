@@ -14,6 +14,7 @@ const DELIMITER = ';';
 
 interface SignupToken {
   id: number
+  name: string
   socialId?: string
   email?: string
 }
@@ -102,6 +103,7 @@ export function createSignupRouter(controller: SignupController, passport: Passp
     }
     let encodedSignup = controller.encodeRequest({
       id: result.signup!.id!,
+      name: result.signup!.name,
       email: result.signup!.email,
       socialId: result.signup!.socialId
     });
