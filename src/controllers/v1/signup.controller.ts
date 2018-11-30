@@ -1,3 +1,4 @@
+import * as assert from 'assert';
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import { UniqueConstraintError } from 'sequelize';
 import { PassportStatic } from 'passport';
@@ -16,28 +17,45 @@ interface SignupToken {
   email?: string
 }
 
-export class SignupController {
-  constructor(public _db: DbApi, public _signupSecret: string) { }
+export class SignupEncDec {
+  constructor(public _secret: string,
+    public _algorigthm: string = SIGNUP_CIPHER_ALGORITHM,
+    public _ivlen: number = IV_LEN,
+    public _delimiter: string = DELIMITER) {
+    assert.equal(_secret, 32, 'SignupEncDec wrong secret length (must be 32)');
+  }
 
   encodeRequest(req: SignupToken) {
-    let iv = randomBytes(IV_LEN);
-    let aes = createCipheriv(SIGNUP_CIPHER_ALGORITHM, this._signupSecret, iv);
+    let iv = randomBytes(this._ivlen);
+    let aes = createCipheriv(this._algorigthm, this._secret, iv);
     let encoded = aes.update(JSON.stringify(req));
     encoded = Buffer.concat([encoded, aes.final()]);
-    return iv.toString('hex') + DELIMITER + encoded.toString('hex');
+    return iv.toString('hex') + this._delimiter + encoded.toString('hex');
   }
 
   decodeRequest(req: string): SignupToken {
-    let parts = req.split(DELIMITER);
+    let parts = req.split(this._delimiter);
     if (!parts)
       throw Error('invalid request');
     let iv = Buffer.from(parts.shift()!, 'hex');
-    let encryptedRequest = Buffer.from(parts.join(DELIMITER), 'hex');
-    let aes = createDecipheriv(SIGNUP_CIPHER_ALGORITHM, this._signupSecret, iv);
+    let encryptedRequest = Buffer.from(parts.join(this._delimiter), 'hex');
+    let aes = createDecipheriv(this._algorigthm, this._secret, iv);
     let decoded = aes.update(encryptedRequest);
     decoded = Buffer.concat([decoded, aes.final()]);
     console.log(decoded);
     return JSON.parse(decoded.toString());
+  }
+}
+
+export class SignupController {
+  constructor(public _db: DbApi, public _cipher: SignupEncDec) { }
+
+  encodeRequest(req: SignupToken) {
+    return this._cipher.encodeRequest(req);
+  }
+
+  decodeRequest(req: string): SignupToken {
+    return this._cipher.decodeRequest(req);
   }
 
   async create(request: CreateSignup, provider: string, active: boolean) {
@@ -80,6 +98,7 @@ export function createSignupRouter(controller: SignupController, passport: Passp
       email: result.signup!.email,
       socialId: result.signup!.socialId
     });
+    console.log(encodedSignup);
     res.status(200).send({ signup: encodedSignup });
   });
 
