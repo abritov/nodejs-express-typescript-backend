@@ -27,7 +27,7 @@ export interface JwtPayload {
 
 export interface FacebookSignupResult {
   error?: Error
-  signup?: CreateSignup & { id?: number }
+  signup?: SignupToken
 }
 
 export class Jwt {
@@ -125,7 +125,7 @@ export function createFacebookStrategy(signupController: SignupController, userC
       let signup = await signupController.create(createRequest, 'fb', true);
       let result: FacebookSignupResult = {
         signup: {
-          id: signup.id,
+          id: signup.id!,
           ...createRequest
         }
       }

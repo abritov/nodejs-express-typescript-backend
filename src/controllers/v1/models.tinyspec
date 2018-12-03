@@ -1,3 +1,5 @@
+SignupToken {id: i, name, socialId?, email?, password}
+
 AuthorizationToken {token}
 CreateUser {name, email, password}
 CreateSignup {name, email?, password, socialId?, accessToken?, payload?: o}

@@ -4,21 +4,13 @@ import { UniqueConstraintError } from 'sequelize';
 import { PassportStatic } from 'passport';
 import { Router, Request, Response } from 'express';
 import { DbApi } from '../../db';
-import { CreateSignup } from './schema';
+import { CreateSignup, SignupToken } from './schema';
 import { FacebookSignupResult } from './authenticate';
 import { CryptoConfig } from '../../config/types';
 
 const SIGNUP_CIPHER_ALGORITHM = 'aes-256-cbc';
 const IV_LEN = 16;
 const DELIMITER = ';';
-
-interface SignupToken {
-  id: number
-  name: string
-  socialId?: string
-  email?: string
-  password: string
-}
 
 export class SignupEncDec {
   _secret: string
