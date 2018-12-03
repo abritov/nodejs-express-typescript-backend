@@ -10,6 +10,7 @@ interface Attributes {
   jwtToken?: string
   accessToken?: string
   email?: string
+  password: string
   socialId?: string
   active: boolean
   createdAt?: Date
@@ -49,6 +50,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       validate: {
         isEmail: true,
       },
+    },
+    password: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     socialId: {
       type: DataTypes.STRING(255),

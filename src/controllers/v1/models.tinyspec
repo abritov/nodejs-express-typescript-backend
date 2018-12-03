@@ -1,6 +1,6 @@
 AuthorizationToken {token}
 CreateUser {name, email, password}
-CreateSignup {name, email?, socialId?, accessToken?, payload?: o}
+CreateSignup {name, email?, password, socialId?, accessToken?, payload?: o}
 CreateToken {email, password, accessBitmask?: i}
 CreateUserSignup {provider, payload}
 

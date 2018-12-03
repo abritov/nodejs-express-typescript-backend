@@ -17,7 +17,7 @@ import { UserController } from './user.controller';
 import { EmailIsNotSpecified } from './error';
 import { SignupController } from './signup.controller';
 import { SocialAuthProvider } from '../../config/types';
-import { CreateSignup } from './schema';
+import { CreateSignup, CreateUser } from './schema';
 
 export interface JwtPayload {
   userId: number
@@ -101,7 +101,7 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
   });
 }
 
-export function createFacebookStrategy(signupController: SignupController, config: SocialAuthProvider, profileFields?: string[]) {
+export function createFacebookStrategy(signupController: SignupController, userController: UserController, config: SocialAuthProvider, profileFields?: string[]) {
   return new FacebookStrategy({
     clientID: config.clientID,
     clientSecret: config.clientSecret,
@@ -120,6 +120,7 @@ export function createFacebookStrategy(signupController: SignupController, confi
         accessToken: accessToken,
         socialId: profile.id,
         payload: profile,
+        password: userController.makeSocialPassword(profile.id)
       };
       let signup = await signupController.create(createRequest, 'fb', true);
       let result: FacebookSignupResult = {

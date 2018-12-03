@@ -17,6 +17,7 @@ interface SignupToken {
   name: string
   socialId?: string
   email?: string
+  password: string
 }
 
 export class SignupEncDec {
@@ -70,6 +71,7 @@ export class SignupController {
       active,
       provider,
       email: request.email,
+      password: request.password,
       payload: request.payload,
       socialId: request.socialId,
       accessToken: request.accessToken,
@@ -104,6 +106,7 @@ export function createSignupRouter(controller: SignupController, passport: Passp
       id: result.signup!.id!,
       name: result.signup!.name,
       email: result.signup!.email,
+      password: result.signup!.password,
       socialId: result.signup!.socialId
     });
     console.log(encodedSignup);
