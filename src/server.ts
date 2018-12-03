@@ -54,7 +54,7 @@ app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/token', createTokenRouter(tokenController, passport));
 app.use('/signup', createSignupRouter(signupController, passport));
-app.use('/user', createUserRouter(userController, passport));
+app.use('/user', createUserRouter(userController, signupController, passport));
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/`);

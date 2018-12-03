@@ -32,7 +32,7 @@ export class UserController {
   }
 }
 
-export function createUserRouter(controller: UserController, passport: PassportStatic) {
+export function createUserRouter(controller: UserController, signupController: SignupController, passport: PassportStatic) {
   const router = Router();
 
   router.post('/', async (req: Request, res) => {
