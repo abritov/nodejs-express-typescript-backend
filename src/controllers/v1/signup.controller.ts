@@ -74,9 +74,26 @@ export class SignupController {
 export function createSignupRouter(controller: SignupController, passport: PassportStatic) {
   const router = Router();
 
-  router.post('/', passport.authenticate('local', { session: false }), async (req: Request, res: Response) => {
-    console.log('post /user');
-    res.status(200).send();
+  router.post('/', async (req: Request, res: Response) => {
+    try {
+      let request: CreateSignup = req.body;
+      let signup = await controller.create(request, 'email', false);
+      let encodedSignup = controller.encodeRequest({
+        id: signup!.id!,
+        name: request.name,
+        email: signup!.email,
+        password: signup!.password
+      });
+      res.status(200).send({ signup: encodedSignup });
+    }
+    catch (error) {
+      if (error instanceof UniqueConstraintError) {
+        res.status(422).json({ error: "record already exists" });
+      } else {
+        console.error(error.message);
+        res.status(400).send();
+      }
+    }
   });
 
   router.get('/fb', passport.authenticate('facebook', { session: false }), async (req: Request, res: Response) => {
