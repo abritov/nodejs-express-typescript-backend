@@ -84,7 +84,7 @@ export function createSignupRouter(controller: SignupController, passport: Passp
         email: signup!.email,
         password: signup!.password
       });
-      res.status(200).send({ signup: encodedSignup });
+      res.status(200).send({ encodedSignup });
     }
     catch (error) {
       if (error instanceof UniqueConstraintError) {
@@ -119,7 +119,7 @@ export function createSignupRouter(controller: SignupController, passport: Passp
       socialId: result.signup!.socialId
     });
     console.log(encodedSignup);
-    res.status(200).send({ signup: encodedSignup });
+    res.status(200).send({ encodedSignup });
   });
 
   router.post('/decode', (req: Request, res: Response) => {
