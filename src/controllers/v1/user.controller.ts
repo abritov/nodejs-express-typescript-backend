@@ -19,12 +19,13 @@ export class UserController {
     return this._hasher.createHash(password);
   }
 
-  async create(request: CreateUser, approved: boolean) {
-    const passwordHash = this._hasher.createHash(this._hasher.prepareCredentials(request.email, request.password));
+  async create(request: CreateUser, signupId: number, approved: boolean) {
+    const passwordHash = this._hasher.createHash(this._hasher.prepareCredentials(request.email!, request.password!));
     const user = await this._db.User.create({
       name: request.name,
-      email: request.email,
+      email: request.email!,
       passwordHash,
+      signupId,
       approved
     });
     return user;
