@@ -46,6 +46,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     email: {
       type: DataTypes.STRING(255),
+      unique: true,
       allowNull: true,
       validate: {
         isEmail: true,
