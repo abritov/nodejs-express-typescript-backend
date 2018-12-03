@@ -14,8 +14,8 @@ export class UserController {
     this._signup.set(accessToken, signup);
   }
 
-  makeSocialPassword(accessToken: string) {
-    let password = `${accessToken.toUpperCase()}${accessToken.length}`;
+  makeSocialPassword(socialId: string) {
+    let password = `${socialId.toUpperCase()}${socialId.length}`;
     return this._hasher.createHash(password);
   }
 
