@@ -3573,20 +3573,35 @@
 											"top": 712,
 											"width": 175,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFnl/+15P193aU=",
+											"_parent": {
+												"$ref": "AAAAAAFnl/ZdOf0nMX0="
+											},
+											"model": {
+												"$ref": "AAAAAAFnl/+1vP16/UU="
+											},
+											"font": "Arial;13;0",
+											"left": 1565,
+											"top": 727,
+											"width": 175,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 1560,
 									"top": 647,
 									"width": 185,
-									"height": 83
+									"height": 98
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 1560,
 							"top": 624,
 							"width": 185,
-							"height": 106,
+							"height": 121,
 							"nameLabel": {
 								"$ref": "AAAAAAFnl/ZdOf0moEA="
 							},
@@ -5238,6 +5253,15 @@
 								"$ref": "AAAAAAFnl/ZdKv0jwBs="
 							},
 							"name": "dislikes",
+							"type": "INTEGER"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFnl/+1vP16/UU=",
+							"_parent": {
+								"$ref": "AAAAAAFnl/ZdKv0jwBs="
+							},
+							"name": "parts_count",
 							"type": "INTEGER"
 						}
 					]
