@@ -1590,20 +1590,35 @@
 											"top": 601,
 											"width": 289.2041015625,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFnmGR++v3/FMI=",
+											"_parent": {
+												"$ref": "AAAAAAFneW9Hx55rIKs="
+											},
+											"model": {
+												"$ref": "AAAAAAFnmGR+2P387DE="
+											},
+											"font": "Arial;13;0",
+											"left": 861,
+											"top": 616,
+											"width": 289.2041015625,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 856,
 									"top": 551,
 									"width": 299.2041015625,
-									"height": 68
+									"height": 83
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 856,
 							"top": 528,
 							"width": 299.2041015625,
-							"height": 91,
+							"height": 106,
 							"nameLabel": {
 								"$ref": "AAAAAAFneW9Hx55q5P4="
 							},
@@ -5032,6 +5047,15 @@
 							},
 							"name": "freeAccessAt",
 							"type": "DATETIME"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFnmGR+2P387DE=",
+							"_parent": {
+								"$ref": "AAAAAAFneW9Hx55nXpc="
+							},
+							"name": "views",
+							"type": "INTEGER"
 						}
 					]
 				},
