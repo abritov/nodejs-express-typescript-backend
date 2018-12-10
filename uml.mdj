@@ -3631,7 +3631,7 @@
 							"left": 1560,
 							"top": 624,
 							"width": 194.70263671875,
-							"height": 136,
+							"height": 151,
 							"nameLabel": {
 								"$ref": "AAAAAAFnl/ZdOf0moEA="
 							},
@@ -5300,7 +5300,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFnl/ZdKv0jwBs="
 							},
-							"name": "parts_count",
+							"name": "partsCount",
 							"type": "INTEGER"
 						},
 						{
@@ -5309,7 +5309,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFnl/ZdKv0jwBs="
 							},
-							"name": "readers_count",
+							"name": "readersCount",
 							"type": "INTEGER"
 						}
 					]
