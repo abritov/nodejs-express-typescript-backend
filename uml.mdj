@@ -4791,7 +4791,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFneW9Hx55nXpc="
 							},
-							"name": "availableForCustomersAt",
+							"name": "availableForPurchaseAt",
 							"type": "DATETIME"
 						},
 						{
