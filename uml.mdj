@@ -592,20 +592,35 @@
 											"top": 520,
 											"width": 242.955078125,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFnmBCVwP2NhIk=",
+											"_parent": {
+												"$ref": "AAAAAAFneT+cOq6qJmw="
+											},
+											"model": {
+												"$ref": "AAAAAAFnmBCVpf2K8qI="
+											},
+											"font": "Arial;13;0",
+											"left": 1205,
+											"top": 535,
+											"width": 242.955078125,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 1200,
 									"top": 335,
 									"width": 252.955078125,
-									"height": 203
+									"height": 218
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 1200,
 							"top": 312,
 							"width": 252.955078125,
-							"height": 226,
+							"height": 241,
 							"nameLabel": {
 								"$ref": "AAAAAAFneT+cOq6phlM="
 							},
@@ -2337,8 +2352,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 1336,
-									"top": 629,
+									"left": 1335,
+									"top": 637,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -2355,7 +2370,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 1336,
-									"top": 556,
+									"top": 571,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -2389,7 +2404,7 @@
 								"$ref": "AAAAAAFneT+cOq6o1xk="
 							},
 							"lineStyle": 2,
-							"points": "1321:537;1321:736",
+							"points": "1321:552;1321:736",
 							"nameLabel": {
 								"$ref": "AAAAAAFng8+kQPsWSA4="
 							},
@@ -3660,7 +3675,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 1444,
-									"top": 556,
+									"top": 571,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -3694,7 +3709,7 @@
 								"$ref": "AAAAAAFneT+cOq6o1xk="
 							},
 							"lineStyle": 2,
-							"points": "1429:537;1429:704;1560:704",
+							"points": "1429:552;1429:704;1560:704",
 							"nameLabel": {
 								"$ref": "AAAAAAFnl/i/Lf1olpA="
 							},
@@ -4435,6 +4450,15 @@
 								"$ref": "AAAAAAFneT+cOq6mAHc="
 							},
 							"name": "createdAt",
+							"type": "DATETIME"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFnmBCVpf2K8qI=",
+							"_parent": {
+								"$ref": "AAAAAAFneT+cOq6mAHc="
+							},
+							"name": "updatedAt",
 							"type": "DATETIME"
 						}
 					]
