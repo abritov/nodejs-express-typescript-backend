@@ -3754,7 +3754,7 @@
 									"font": "Arial;13;1",
 									"left": 720,
 									"top": 461,
-									"width": 163.62451171875,
+									"width": 172.771484375,
 									"height": 13,
 									"text": "ChapterVisit"
 								},
@@ -3780,7 +3780,7 @@
 											"font": "Arial;13;0",
 											"left": 725,
 											"top": 484,
-											"width": 153.62451171875,
+											"width": 162.771484375,
 											"height": 13
 										},
 										{
@@ -3795,22 +3795,37 @@
 											"font": "Arial;13;0",
 											"left": 725,
 											"top": 499,
-											"width": 153.62451171875,
+											"width": 162.771484375,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFnnJYMOv6dhio=",
+											"_parent": {
+												"$ref": "AAAAAAFnnI0GAf4jz30="
+											},
+											"model": {
+												"$ref": "AAAAAAFnnJYMEf6aEvk="
+											},
+											"font": "Arial;13;0",
+											"left": 725,
+											"top": 514,
+											"width": 162.771484375,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 720,
 									"top": 479,
-									"width": 163.62451171875,
-									"height": 38
+									"width": 172.771484375,
+									"height": 53
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 720,
 							"top": 456,
-							"width": 163.62451171875,
-							"height": 61,
+							"width": 172.771484375,
+							"height": 76,
 							"nameLabel": {
 								"$ref": "AAAAAAFnnI0GAf4i+WM="
 							},
@@ -3870,7 +3885,7 @@
 										"$ref": "AAAAAAFnnI5Cev5Ec84="
 									},
 									"font": "Arial;13;0",
-									"left": 908,
+									"left": 917,
 									"top": 494,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -3888,7 +3903,7 @@
 								"$ref": "AAAAAAFneT91Hq6bQ7o="
 							},
 							"lineStyle": 2,
-							"points": "1048:406;1048:486;883:486",
+							"points": "1048:406;1048:486;892:486",
 							"nameLabel": {
 								"$ref": "AAAAAAFnnI5Cev5FV/E="
 							},
@@ -5747,6 +5762,15 @@
 							"name": "userId",
 							"type": "INTEGER",
 							"foreignKey": true
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFnnJYMEf6aEvk=",
+							"_parent": {
+								"$ref": "AAAAAAFnnI0GAP4fcsM="
+							},
+							"name": "createdAt",
+							"type": "DATETIME"
 						}
 					]
 				},
