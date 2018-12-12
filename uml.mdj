@@ -4503,7 +4503,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFneT91Ha6Z6Po="
 							},
-							"name": "is_complete",
+							"name": "isComplete",
 							"type": "BOOLEAN"
 						}
 					]
