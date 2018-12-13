@@ -1,12 +1,15 @@
-import * as Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize'
+import { SEQUELIZE_MODEL_NAME_USER } from './User';
 
-const DB_TABLE_NAME = 'genres';
-const SEQUELIZE_MODEL_NAME = 'Genre';
+const DB_TABLE_NAME = 'subscribe_purchase';
+const SEQUELIZE_MODEL_NAME = 'SubscribePurchase';
 
 interface Attributes {
   id?: number
-  titleRu: string
-  titleEn: string
+  userId?: number
+  type: string
+  cost: number
+  createdAt?: Date
 }
 
 
@@ -20,14 +23,29 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       autoIncrement: true,
       allowNull: false,
     },
-    titleRu: {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: SEQUELIZE_MODEL_NAME_USER,
+        key: 'id',
+      },
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
+    },
+    type: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    titleEn: {
-      type: DataTypes.STRING(255),
+    cost: {
+      type: DataTypes.DECIMAL,
       allowNull: false,
-    }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.default.literal('CURRENT_TIMESTAMP'),
+      allowNull: false,
+    },
   };
 
   const options: Sequelize.DefineOptions<Attributes> = {
@@ -37,9 +55,8 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
 }
 
-export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_GENRE };
-export { Attributes as Genre };
-export { Instance as GenreInstance };
+export { Attributes as SubscribePurchase };
+export { Instance as SubscribePurchaseInstance };
 export default function (sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }

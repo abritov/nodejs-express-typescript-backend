@@ -1,12 +1,13 @@
-import * as Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize'
+import { SEQUELIZE_MODEL_NAME_USER } from './User';
 
-const DB_TABLE_NAME = 'genres';
-const SEQUELIZE_MODEL_NAME = 'Genre';
+const DB_TABLE_NAME = 'country';
+const SEQUELIZE_MODEL_NAME = 'Country';
 
 interface Attributes {
   id?: number
-  titleRu: string
-  titleEn: string
+  name: string
+  alias: string
 }
 
 
@@ -20,14 +21,14 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       autoIncrement: true,
       allowNull: false,
     },
-    titleRu: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    titleEn: {
+    alias: {
       type: DataTypes.STRING(255),
       allowNull: false,
-    }
+    },
   };
 
   const options: Sequelize.DefineOptions<Attributes> = {
@@ -37,9 +38,9 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
 }
 
-export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_GENRE };
-export { Attributes as Genre };
-export { Instance as GenreInstance };
+export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_COUNTRY };
+export { Attributes as Country };
+export { Instance as CountryInstance };
 export default function (sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize)
 }
