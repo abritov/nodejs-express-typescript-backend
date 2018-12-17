@@ -15,6 +15,7 @@ import bookFactory, { BookInstance, Book } from "./models/Book";
 import bookLikeFactory, { BookLikeInstance, BookLike } from "./models/BookLike";
 import bookModeratorFactory, { BookModeratorInstance, BookModerator } from "./models/BookModerator";
 import chapterFactory, { ChapterInstance, Chapter } from "./models/Chapter";
+import bookGenreFactory, { BookGenreInstance, BookGenre } from "./models/BookGenre";
 
 export interface DbApi {
   sequelize: Sequelize.Sequelize
@@ -35,6 +36,7 @@ export interface DbApi {
   ChapterVisit: Sequelize.Model<ChapterVisitInstance, ChapterVisit>
   Country: Sequelize.Model<CountryInstance, Country>
   SubscribePurchase: Sequelize.Model<SubscribePurchaseInstance, SubscribePurchase>
+  BookGenre: Sequelize.Model<BookGenreInstance, BookGenre>
 }
 
 export function createSequelizeDb(sequelize: Sequelize.Sequelize) {
@@ -58,6 +60,7 @@ export function createSequelizeDb(sequelize: Sequelize.Sequelize) {
     ChapterVisit: chapterVisitFactory(sequelize),
     Country: countryFactory(sequelize),
     SubscribePurchase: subscribePurchaseFactory(sequelize),
+    BookGenre: bookGenreFactory(sequelize)
   };
 
   (<any>Object).values(db).forEach((model: any) => {
