@@ -13,7 +13,6 @@ interface Attributes {
   titleLongEn: string
   description: string
   countryId?: number
-  genreId?: number
   sourceUrl: string
   author: string
   partnerLink: string
@@ -59,16 +58,6 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_COUNTRY,
-        key: 'id',
-      },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
-    },
-    genreId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: SEQUELIZE_MODEL_NAME_GENRE,
         key: 'id',
       },
       onUpdate: 'cascade',
