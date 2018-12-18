@@ -10,6 +10,7 @@ const config = {
     database: "ranobe_v2",
     host: "127.0.0.1",
     dialect: "mysql",
+    dialectOptions: { charset: 'utf8' },
     port: 3306,
     operatorsAliases: false,
     sync: {
