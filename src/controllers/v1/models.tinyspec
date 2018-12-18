@@ -3,7 +3,7 @@ SignupToken {id: i, name, socialId?, email?, password}
 AuthorizationToken {token}
 CreateUser {name, email?, password?, encodedSignup}
 CreateSignup {name, email?, password, socialId?, accessToken?, payload?: o}
-CreateToken {email, password, accessBitmask?: i}
+CreateToken {encodedSignup, accessBitmask?: i}
 CreateUserSignup {provider, payload}
 
 CreateUserResp {name, email}
