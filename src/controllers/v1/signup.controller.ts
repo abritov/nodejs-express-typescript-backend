@@ -48,7 +48,7 @@ export class SignupEncDec {
 }
 
 export class SignupController {
-  constructor(public _db: DbApi, public _cipher: SignupEncDec) { }
+  constructor(public readonly _db: DbApi, public _cipher: SignupEncDec) { }
 
   encodeRequest(req: SignupToken) {
     return this._cipher.encode(req);

@@ -9,7 +9,7 @@ import { TokenRequestAccepted, RecordNotFound, ENTITY_SIGNUP } from './error';
 import { SignupEncDec } from './signup.controller';
 
 export class TokenController {
-  constructor(public _db: DbApi, public _hasher: Hasher, public _jwt: Jwt) { }
+  constructor(public readonly _db: DbApi, public _hasher: Hasher, public _jwt: Jwt) { }
 
   async create(request: CreateToken, user: User) {
     const accessBitmask = request.accessBitmask || 1;

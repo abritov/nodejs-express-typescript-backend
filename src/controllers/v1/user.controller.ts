@@ -8,7 +8,7 @@ import { User } from '../../db/models/User';
 import { SignupTemp, SignupTempRecord } from '../../temp/signup';
 
 export class UserController {
-  constructor(public _db: DbApi, public _hasher: Hasher, public _signup: SignupTemp) { }
+  constructor(public readonly _db: DbApi, public _hasher: Hasher, public _signup: SignupTemp) { }
 
   signupReserve(accessToken: string, signup: SignupTempRecord) {
     this._signup.set(accessToken, signup);
