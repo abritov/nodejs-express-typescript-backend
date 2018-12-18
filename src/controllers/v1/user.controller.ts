@@ -5,8 +5,8 @@ import { Router, Request } from 'express';
 import { DbApi } from '../../db';
 import { CreateUser } from './schema';
 import { Hasher } from '../../utils/hasher';
-import { User } from '../../db/models/User';
 import { SignupTemp, SignupTempRecord } from '../../temp/signup';
+import { SignupController } from './signup.controller';
 
 export class UserController {
   constructor(public readonly _db: DbApi, public _hasher: Hasher, public _signup: SignupTemp) { }
@@ -37,11 +37,32 @@ export function createUserRouter(controller: UserController, signupController: S
   const router = Router();
 
   router.post('/', async (req: Request, res) => {
+    let isSocial = false;
     try {
-      res.json(await controller.create(<CreateUser>req.body));
-    } catch (error) {
+      let request: CreateUser = req.body;
+      console.log(request.encodedSignup);
+      let signup = signupController.decodeRequest(request.encodedSignup);
+      if (!request.email) {
+        isSocial = true;
+        request.email = signup.email!;
+      }
+      if (!request.password) {
+        isSocial = true;
+        request.password = signup.password;
+      }
+      if (!request.name) {
+        request.name = signup.name;
+      }
+      console.log(request);
+      let user = await controller.create(request, signup.id, isSocial);
+      res.status(HttpStatus.OK).send(user);
+    }
+    catch (error) {
       if (error instanceof UniqueConstraintError) {
-        res.status(422).json({ error: "user already exists" });
+        res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({ error: "user already exists" });
+      } else {
+        console.error(error.message);
+        res.status(HttpStatus.BAD_REQUEST).send();
       }
     }
   });
