@@ -1,3 +1,4 @@
+import HttpStatus from 'http-status';
 import { PassportStatic } from 'passport';
 import { UniqueConstraintError } from 'sequelize';
 import { Router, Request } from 'express';

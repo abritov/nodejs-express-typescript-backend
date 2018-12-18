@@ -1,3 +1,4 @@
+import HttpStatus from 'http-status';
 import { PassportStatic } from 'passport';
 import { Router, Request, Response } from 'express';
 import { CreateToken, AuthorizationToken } from './schema';
@@ -37,23 +38,23 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
 
   router.post('/insecure', async (req: Request, res: Response) => {
     if (!(req.ip == "127.0.0.1" || req.ip == "::1")) {
-      res.status(403).send();
+      res.status(HttpStatus.FORBIDDEN).send();
       return;
     }
     try {
       const user = await controller._db.User.findOne({ where: { email: req.body.email } });
       if (!user) {
-        res.status(404).json({ error: "user not found" });
+        res.status(HttpStatus.NOT_FOUND).json({ error: "user not found" });
         return;
       }
       res.json(controller.create(<CreateToken>req.body, user));
     }
     catch (error) {
       if (error instanceof TokenRequestAccepted) {
-        res.status(202).json({ message: "please wait until your token will be approved" });
+        res.status(HttpStatus.ACCEPTED).json({ message: "please wait until your token will be approved" });
         return;
       }
-      res.status(400).json({ error });
+      res.status(HttpStatus.BAD_REQUEST).json({ error });
     }
   });
 
@@ -64,10 +65,10 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
     }
     catch (error) {
       if (error instanceof TokenRequestAccepted) {
-        res.status(202).json({ message: "please wait until your token will be approved" });
+        res.status(HttpStatus.ACCEPTED).json({ message: "please wait until your token will be approved" });
         return;
       }
-      res.status(400).json({ error: error.message || error.stack[0] });
+      res.status(HttpStatus.BAD_REQUEST).json({ error: error.message || error.stack[0] });
     }
   });
 
@@ -75,16 +76,16 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
     try {
       let signup = signupCipher.decode(req.query.encodedSignup);
       let token = await controller.get(signup.id);
-      res.status(200).json({ token });
+      res.status(HttpStatus.OK).json({ token });
     }
     catch (error) {
       console.error(error);
       if (error instanceof TypeError) {
-        res.status(400).send();
+        res.status(HttpStatus.BAD_REQUEST).send();
         return;
       }
       if (error instanceof RecordNotFound) {
-        res.status(404).send();
+        res.status(HttpStatus.NOT_FOUND).send();
         return;
       }
     }

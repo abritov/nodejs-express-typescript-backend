@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import HttpStatus from 'http-status';
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import { UniqueConstraintError } from 'sequelize';
 import { PassportStatic } from 'passport';
@@ -84,14 +85,14 @@ export function createSignupRouter(controller: SignupController, passport: Passp
         email: signup!.email,
         password: signup!.password
       });
-      res.status(200).send({ encodedSignup });
+      res.status(HttpStatus.OK).send({ encodedSignup });
     }
     catch (error) {
       if (error instanceof UniqueConstraintError) {
-        res.status(422).json({ error: "record already exists" });
+        res.status(HttpStatus.UNPROCESSABLE_ENTITY).json({ error: "record already exists" });
       } else {
         console.error(error.message);
-        res.status(400).send();
+        res.status(HttpStatus.BAD_REQUEST).send();
       }
     }
   });
@@ -105,10 +106,10 @@ export function createSignupRouter(controller: SignupController, passport: Passp
     console.error(result.error);
     if (result.error) {
       if (result.error instanceof UniqueConstraintError) {
-        res.status(422).send({ error: "this account is already in use" });
+        res.status(HttpStatus.UNPROCESSABLE_ENTITY).send({ error: "this account is already in use" });
         return;
       }
-      res.status(400).send();
+      res.status(HttpStatus.BAD_REQUEST).send();
       return;
     }
     let encodedSignup = controller.encodeRequest({
@@ -119,7 +120,7 @@ export function createSignupRouter(controller: SignupController, passport: Passp
       socialId: result.signup!.socialId
     });
     console.log(encodedSignup);
-    res.status(200).send({ encodedSignup });
+    res.status(HttpStatus.OK).send({ encodedSignup });
   });
 
   router.post('/decode', (req: Request, res: Response) => {
