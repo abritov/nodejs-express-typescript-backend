@@ -5,7 +5,8 @@ import { DbApi } from '../../db';
 import { Hasher } from '../../utils/hasher';
 import { User } from '../../db/models/User';
 import { Jwt, JwtPayload } from './authenticate';
-import { TokenRequestAccepted } from './error';
+import { TokenRequestAccepted, RecordNotFound, ENTITY_SIGNUP } from './error';
+import { SignupEncDec } from './signup.controller';
 
 export class TokenController {
   constructor(public _db: DbApi, public _hasher: Hasher, public _jwt: Jwt) { }
@@ -23,9 +24,15 @@ export class TokenController {
     });
     return <AuthorizationToken>{ token }
   }
+
+  async get(signupId: number) {
+    let signup = await this._db.Signup.findById(signupId);
+    if (!signup) throw new RecordNotFound(ENTITY_SIGNUP);
+    return signup.jwtToken;
+  }
 }
 
-export function createTokenRouter(controller: TokenController, passport: PassportStatic) {
+export function createTokenRouter(controller: TokenController, signupCipher: SignupEncDec, passport: PassportStatic) {
   const router = Router();
 
   router.post('/insecure', async (req: Request, res: Response) => {
@@ -60,6 +67,25 @@ export function createTokenRouter(controller: TokenController, passport: Passpor
         return;
       }
       res.status(400).json({ error: error.message || error.stack[0] });
+    }
+  });
+
+  router.get('/', async (req: Request, res: Response) => {
+    try {
+      let signup = signupCipher.decode(req.query.encodedSignup);
+      let token = await controller.get(signup.id);
+      res.status(200).send(token);
+    }
+    catch (error) {
+      console.error(error);
+      if (error instanceof TypeError) {
+        res.status(400).send();
+        return;
+      }
+      if (error instanceof RecordNotFound) {
+        res.status(404).send();
+        return;
+      }
     }
   });
 

@@ -33,7 +33,8 @@ const
   db = createSequelizeDb(new Sequelize.default(envConfig.db)),
   jwt = new Jwt(envConfig.jwtSecret),
   signupTemp = new SignupTempMemory(),
-  signupController = new SignupController(db, new SignupEncDec(envConfig.signupTokenCipher)),
+  signupCipher = new SignupEncDec(envConfig.signupTokenCipher),
+  signupController = new SignupController(db, signupCipher),
   userController = new UserController(db, hasher, signupTemp),
   tokenController = new TokenController(db, hasher, jwt);
 
@@ -52,7 +53,7 @@ initializePassport(db, app, passport);
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/token', createTokenRouter(tokenController, passport));
+app.use('/token', createTokenRouter(tokenController, signupCipher, passport));
 app.use('/signup', createSignupRouter(signupController, passport));
 app.use('/user', createUserRouter(userController, signupController, passport));
 
