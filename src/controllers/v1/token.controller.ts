@@ -22,7 +22,7 @@ export class TokenController {
       name: user.name,
       accessBitmask
     });
-    return <AuthorizationToken>{ token }
+    return token;
   }
 
   async get(signupId: number) {
@@ -59,7 +59,8 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
 
   router.post('/', passport.authenticate('local', { session: false }), async (req: Request, res: Response) => {
     try {
-      res.json(await controller.create(<CreateToken>req.body, req.user));
+      let token = await controller.create(req.body, req.user);
+      res.json({ token });
     }
     catch (error) {
       if (error instanceof TokenRequestAccepted) {
@@ -74,7 +75,7 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
     try {
       let signup = signupCipher.decode(req.query.encodedSignup);
       let token = await controller.get(signup.id);
-      res.status(200).send(token);
+      res.status(200).json({ token });
     }
     catch (error) {
       console.error(error);
