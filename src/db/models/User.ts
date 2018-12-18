@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize'
 import { UserTokenInstance } from './UserToken';
-import { SEQUELIZE_MODEL_NAME_SIGNUP } from './Signup';
+import { SEQUELIZE_MODEL_NAME_SIGNUP, SignupInstance } from './Signup';
 
 const DB_TABLE_NAME = 'users';
 const SEQUELIZE_MODEL_NAME = 'User';
@@ -19,6 +19,7 @@ interface Attributes {
 
 interface Instance extends Sequelize.Instance<Attributes>, Attributes {
   getToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
+  getSignup: Sequelize.HasOneGetAssociationMixin<SignupInstance>
 }
 interface Model extends Sequelize.Model<Instance, Attributes> { }
 
@@ -82,6 +83,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   const User = sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
   User.associate = models => {
     User.hasOne(models.UserToken, { as: 'token', foreignKey: 'userId' });
+    User.hasOne(models.Signup, { as: 'signup', foreignKey: 'id' });
   }
 
   return User;
