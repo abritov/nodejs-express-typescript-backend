@@ -4,22 +4,29 @@ import { Router, Request, Response } from 'express';
 import { CreateToken, AuthorizationToken } from './schema';
 import { DbApi } from '../../db';
 import { Hasher } from '../../utils/hasher';
-import { User } from '../../db/models/User';
 import { Jwt, JwtPayload } from './authenticate';
-import { TokenRequestAccepted, RecordNotFound, ENTITY_SIGNUP } from './error';
+import { TokenRequestAccepted, RecordNotFound, ENTITY_SIGNUP, ENTITY_USER } from './error';
 import { SignupEncDec } from './signup.controller';
 
 export class TokenController {
   constructor(public readonly _db: DbApi, public _hasher: Hasher, public _jwt: Jwt) { }
 
-  async create(request: CreateToken, user: User) {
-    const accessBitmask = request.accessBitmask || 1;
+  async create(signupId: number, _accessBitmask?: number) {
+    let accessBitmask = _accessBitmask || 1;
     if (accessBitmask < 1)
       throw Error("invalid accessBitmask value");
     if (accessBitmask > 1)
       throw new TokenRequestAccepted();
+
+    let user = await this._db.User.findOne({
+      where: {
+        signupId
+      }
+    });
+    if (!user) throw new RecordNotFound(ENTITY_USER);
+
     const token = this._jwt.encrypt(<JwtPayload>{
-      userId: user.id!,
+      userId: user.id,
       name: user.name,
       accessBitmask
     });
@@ -47,7 +54,7 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
         res.status(HttpStatus.NOT_FOUND).json({ error: "user not found" });
         return;
       }
-      res.json(controller.create(<CreateToken>req.body, user));
+      res.json(controller.create(user.id!, req.body.accessBitmask));
     }
     catch (error) {
       if (error instanceof TokenRequestAccepted) {
@@ -58,9 +65,11 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
     }
   });
 
-  router.post('/', passport.authenticate('local', { session: false }), async (req: Request, res: Response) => {
+  router.post('/', async (req: Request, res: Response) => {
     try {
-      let token = await controller.create(req.body, req.user);
+      let request: CreateToken = req.body;
+      let signup = signupCipher.decode(request.encodedSignup);
+      let token = await controller.create(signup.id, request.accessBitmask);
       res.json({ token });
     }
     catch (error) {
