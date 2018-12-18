@@ -30,6 +30,13 @@ export class TokenController {
       name: user.name,
       accessBitmask
     });
+
+    let signup = await this._db.Signup.findById(signupId);
+    if (!signup) throw new RecordNotFound(ENTITY_SIGNUP);
+
+    signup.jwtToken = token;
+    signup.save();
+
     return token;
   }
 
