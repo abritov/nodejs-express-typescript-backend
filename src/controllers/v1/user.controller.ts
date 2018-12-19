@@ -9,7 +9,7 @@ import { SignupTemp, SignupTempRecord } from '../../temp/signup';
 import { SignupController } from './signup.controller';
 
 export class UserController {
-  constructor(public readonly _db: DbApi, public _hasher: Hasher, public _signup: SignupTemp) { }
+  constructor(public readonly _db: DbApi, public readonly _hasher: Hasher, public readonly _signup: SignupTemp) { }
 
   signupReserve(accessToken: string, signup: SignupTempRecord) {
     this._signup.set(accessToken, signup);

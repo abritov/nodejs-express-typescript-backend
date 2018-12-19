@@ -9,7 +9,7 @@ import { TokenRequestAccepted, RecordNotFound, ENTITY_SIGNUP, ENTITY_USER } from
 import { SignupEncDec } from './signup.controller';
 
 export class TokenController {
-  constructor(public readonly _db: DbApi, public _hasher: Hasher, public _jwt: Jwt) { }
+  constructor(public readonly _db: DbApi, public readonly _hasher: Hasher, public readonly _jwt: Jwt) { }
 
   async create(signupId: number, _accessBitmask?: number) {
     let accessBitmask = _accessBitmask || 1;
