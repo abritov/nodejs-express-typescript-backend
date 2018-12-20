@@ -23,7 +23,6 @@ import { SignupTempMemory } from './temp/signup';
 import { initializePassport } from './controllers/v1/authenticate';
 import * as config from './config';
 import { EnvironmentConfig } from './config/types';
-import { createSigninRouter, SigninController } from './controllers/v1/signin.controller';
 import { createTextRouter, TextController } from './controllers/v1/text.controller';
 
 const envConfig: EnvironmentConfig = process.env.NODE_ENV == 'production' ? config.production : config.development;
