@@ -23,6 +23,8 @@ import { SignupTempMemory } from './temp/signup';
 import { initializePassport } from './controllers/v1/authenticate';
 import * as config from './config';
 import { EnvironmentConfig } from './config/types';
+import { createSigninRouter, SigninController } from './controllers/v1/signin.controller';
+import { createTextRouter, TextController } from './controllers/v1/text.controller';
 
 const envConfig: EnvironmentConfig = process.env.NODE_ENV == 'production' ? config.production : config.development;
 
@@ -36,7 +38,8 @@ const
   signupCipher = new SignupEncDec(envConfig.signupTokenCipher),
   signupController = new SignupController(db, signupCipher),
   userController = new UserController(db, hasher, signupTemp),
-  tokenController = new TokenController(db, hasher, jwt);
+  tokenController = new TokenController(db, hasher, jwt),
+  textController = new TextController();
 
 
 passport.use(createJwtStrategy(db, jwt));
@@ -56,6 +59,7 @@ app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/token', createTokenRouter(tokenController, signupCipher, passport));
 app.use('/signup', createSignupRouter(signupController, passport));
 app.use('/user', createUserRouter(userController, signupController, passport));
+app.use('/text', createTextRouter(textController));
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/`);
