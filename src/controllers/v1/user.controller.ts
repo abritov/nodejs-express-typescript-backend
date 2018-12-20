@@ -67,9 +67,5 @@ export function createUserRouter(controller: UserController, signupController: S
     }
   });
 
-  router.post('/signin', passport.authenticate('local'), async (req: Request, res) => {
-    res.json({ token: 'supersecrettoken' });
-  });
-
   return router;
 }
