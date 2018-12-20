@@ -1,5 +1,7 @@
 POST /token CreateToken
-    => 200 AuthorizationToken
+    => 200 {token}
+GET /token?encodedSignup
+    => 200 {token}
 POST /user CreateUser
     => 200 CreateUserResp
     => 422 UserExistsError
