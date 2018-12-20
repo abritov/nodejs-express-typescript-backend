@@ -1,7 +1,14 @@
 POST /token CreateToken
     => 200 {token}
+
 GET /token?encodedSignup
     => 200 {token}
+
 POST /user CreateUser
     => 200 CreateUserResp
     => 422 UserExistsError
+
+POST /signup CreateSignup
+    => 200 {encodedSignup}
+    => 400 Error
+    
