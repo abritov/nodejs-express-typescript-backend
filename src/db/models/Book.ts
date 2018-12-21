@@ -13,10 +13,10 @@ interface Attributes {
   titleLongEn: string
   description: string
   countryId?: number
-  sourceUrl: string
+  sourceUrl?: string
   author: string
-  partnerLink: string
-  cooperationLetter: string
+  partnerLink?: string
+  cooperationLetter?: string
   serviceInfo: string
   createdAt?: Date
   updatedAt?: Date
@@ -65,7 +65,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     sourceUrl: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     author: {
       type: DataTypes.STRING(255),
@@ -73,11 +73,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     partnerLink: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     cooperationLetter: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     serviceInfo: {
       type: DataTypes.TEXT,
