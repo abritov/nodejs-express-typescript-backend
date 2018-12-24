@@ -7,10 +7,8 @@ const SEQUELIZE_MODEL_NAME = 'Book';
 
 interface Attributes {
   id?: number
-  titleRu: string
-  titleEn: string
-  titleLongRu: string
-  titleLongEn: string
+  title: string
+  titleLong: string
   description: string
   countryId?: number
   sourceUrl?: string
@@ -33,19 +31,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       autoIncrement: true,
       allowNull: false,
     },
-    titleRu: {
-      type: DataTypes.STRING(255),
+    title: {
+      type: DataTypes.STRING(512),
       allowNull: false,
     },
-    titleEn: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    titleLongRu: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    titleLongEn: {
+    titleLong: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
