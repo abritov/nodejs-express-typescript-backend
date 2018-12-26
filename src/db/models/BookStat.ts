@@ -1,19 +1,18 @@
-import * as Sequelize from 'sequelize'
+import * as Sequelize from "sequelize";
 
-const DB_TABLE_NAME = 'book_stat';
-const SEQUELIZE_MODEL_NAME = 'BookStatView';
+const DB_TABLE_NAME = "book_stat";
+const SEQUELIZE_MODEL_NAME = "BookStatView";
 
 interface Attributes {
-  bookId?: number
-  views: number
-  rating: number
-  likes: number
-  dislikes: number
-  chaptersCount: number
-  readersCount: number
-  lastPurchaseAt?: Date
+  bookId?: number;
+  views: number;
+  rating: number;
+  likes: number;
+  dislikes: number;
+  chaptersCount: number;
+  readersCount: number;
+  lastPurchaseAt?: Date;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -57,11 +56,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { Attributes as BookStatView };
 export { Instance as BookStatViewInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

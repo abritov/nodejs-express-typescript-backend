@@ -1,16 +1,15 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_BOOK } from './Book';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_BOOK } from "./Book";
 
-const DB_TABLE_NAME = 'chapter_publish_graphic';
-const SEQUELIZE_MODEL_NAME = 'ChapterPublishGraphic';
+const DB_TABLE_NAME = "chapter_publish_graphic";
+const SEQUELIZE_MODEL_NAME = "ChapterPublishGraphic";
 
 interface Attributes {
-  bookId?: number
-  purchaseDelaySec: number
-  subscribeDelaySec: number
-  freeAccessDelaySec: number
+  bookId?: number;
+  purchaseDelaySec: number;
+  subscribeDelaySec: number;
+  freeAccessDelaySec: number;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -21,10 +20,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_BOOK,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     purchaseDelaySec: {
       type: DataTypes.INTEGER,
@@ -36,7 +35,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     freeAccessDelaySec: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
   };
 
@@ -44,11 +43,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { Attributes as ChapterPublishGraphic };
 export { Instance as ChapterPublishGraphicInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

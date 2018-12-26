@@ -1,12 +1,12 @@
-import { Router, Request, Response } from 'express';
-import { decryptInteger, encryptInteger } from '../../utils/spacecrypt';
+import { Request, Response, Router } from "express";
+import { decryptInteger, encryptInteger } from "../../utils/spacecrypt";
 
 export class TextController {
-  decode(text: string) {
+  public decode(text: string) {
     return decryptInteger(text);
   }
 
-  encode(text: string, payload: number) {
+  public encode(text: string, payload: number) {
     return encryptInteger(text, payload);
   }
 }
@@ -14,13 +14,13 @@ export class TextController {
 export function createTextRouter(controller: TextController) {
   const router = Router();
 
-  router.post('/decode', (req: Request, res: Response) => {
-    let payload = controller.decode(req.body.textWithPayload);
+  router.post("/decode", (req: Request, res: Response) => {
+    const payload = controller.decode(req.body.textWithPayload);
     res.json({ payload });
   });
 
-  router.post('/encode', (req: Request, res: Response) => {
-    let textWithPayload = controller.encode(req.body.text, req.body.number);
+  router.post("/encode", (req: Request, res: Response) => {
+    const textWithPayload = controller.encode(req.body.text, req.body.number);
     res.json({ textWithPayload });
   });
 

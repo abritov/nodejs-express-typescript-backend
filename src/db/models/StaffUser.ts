@@ -1,17 +1,16 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_USER } from './User';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_USER } from "./User";
 
-const DB_TABLE_NAME = 'staff_users';
-const SEQUELIZE_MODEL_NAME = 'StaffUser';
+const DB_TABLE_NAME = "staff_users";
+const SEQUELIZE_MODEL_NAME = "StaffUser";
 
 interface Attributes {
-  id?: number,
-  userId: number,
-  rateTranslate: number,
-  rateRedactor: number,
-  adminActivity: number
+  id?: number;
+  userId: number;
+  rateTranslate: number;
+  rateRedactor: number;
+  adminActivity: number;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -28,10 +27,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_USER,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     rateTranslate: {
       type: DataTypes.INTEGER(10),
@@ -53,11 +52,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { Attributes as StaffUser };
 export { Instance as StaffUserInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

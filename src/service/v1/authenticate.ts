@@ -1,32 +1,32 @@
-import { Express } from 'express';
-import { PassportStatic } from 'passport';
-import { Strategy as VkStrategy, VerifyFunction } from 'passport-vkontakte';
-import { Strategy as LocalStrategy } from 'passport-local';
-import { Strategy as FacebookStrategy } from 'passport-facebook';
-import jwtToken from 'jsonwebtoken';
+import { Express } from "express";
+import jwtToken from "jsonwebtoken";
+import { PassportStatic } from "passport";
+import { Strategy as FacebookStrategy } from "passport-facebook";
 import {
-  StrategyOptions as JwtStrategyOptions,
-  Strategy as JwtStrategy,
   ExtractJwt,
-  VerifiedCallback as JwtVerifiedCallback
-} from 'passport-jwt';
-import { User } from '../../db/models/User';
-import { DbApi } from '../../db/index';
-import { Hasher } from '../../utils/hasher';
-import { UserController } from './user.controller';
-import { SignupController } from './signup.controller';
-import { SocialAuthProvider } from '../../config/types';
-import { CreateSignup, SignupToken } from './schema';
+  Strategy as JwtStrategy,
+  StrategyOptions as JwtStrategyOptions,
+  VerifiedCallback as JwtVerifiedCallback,
+} from "passport-jwt";
+import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as VkStrategy, VerifyFunction } from "passport-vkontakte";
+import { SocialAuthProvider } from "../../config/types";
+import { DbApi } from "../../db/index";
+import { User } from "../../db/models/User";
+import { Hasher } from "../../utils/hasher";
+import { CreateSignup, SignupToken } from "./schema";
+import { SignupController } from "./signup.controller";
+import { UserController } from "./user.controller";
 
 export interface JwtPayload {
-  userId: number
-  name: string
-  accessBitmask: number
+  userId: number;
+  name: string;
+  accessBitmask: number;
 }
 
 export interface FacebookSignupResult {
-  error?: Error
-  signup?: SignupToken
+  error?: Error;
+  signup?: SignupToken;
 }
 
 export class Jwt {
@@ -34,15 +34,15 @@ export class Jwt {
     this.algorithm = algorithm || "HS256";
   }
 
-  encrypt(data: JwtPayload) {
-    return jwtToken.sign(data, this.secret, { algorithm: this.algorithm })
+  public encrypt(data: JwtPayload) {
+    return jwtToken.sign(data, this.secret, { algorithm: this.algorithm });
   }
 
-  toJwtStrategyOptions(): JwtStrategyOptions {
+  public toJwtStrategyOptions(): JwtStrategyOptions {
     return {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: this.secret,
-      algorithms: [this.algorithm!]
+      algorithms: [this.algorithm!],
     };
   }
 }
@@ -68,24 +68,24 @@ export function createJwtStrategy(db: DbApi, jwt: Jwt) {
     if (user) {
       return done(null, payload);
     }
-    return done('cannot find user', null);
+    return done("cannot find user", null);
   });
 }
 
 export function createLocalStrategy(db: DbApi, hasher: Hasher) {
-  return new LocalStrategy({ usernameField: 'email' },
+  return new LocalStrategy({ usernameField: "email" },
     async (email, password, done) => {
       try {
         const user = await db.User.findOne({ where: { email } });
-        if (!user) return done(null, false);
-        if (!hasher.validate(hasher.prepareCredentials(email, password), user.passwordHash!))
+        if (!user) { return done(null, false); }
+        if (!hasher.validate(hasher.prepareCredentials(email, password), user.passwordHash!)) {
           return done(null, false);
+        }
         return done(null, user);
-      }
-      catch (err) {
+      } catch (err) {
         return done(err);
       }
-    }
+    },
   );
 }
 
@@ -93,7 +93,7 @@ export function createVkStrategy(db: DbApi, clientID: string, clientSecret: stri
   return new VkStrategy({
     clientID,
     clientSecret,
-    callbackURL
+    callbackURL,
   }, (accessToken, refreshToken, params, profile, done) => {
     console.log(accessToken, refreshToken, params, profile);
     done(null, profile);
@@ -105,7 +105,7 @@ export function createFacebookStrategy(signupController: SignupController, userC
     clientID: config.clientID,
     clientSecret: config.clientSecret,
     callbackURL: config.callbackURL,
-    profileFields: profileFields || ['id', 'displayName', 'email']
+    profileFields: profileFields || ["id", "displayName", "email"],
   }, async (accessToken, refreshToken, profile, done) => {
     console.log(accessToken, refreshToken, profile);
     try {
@@ -113,25 +113,24 @@ export function createFacebookStrategy(signupController: SignupController, userC
       if (profile.emails) {
         email = profile.emails[0]!.value;
       }
-      let createRequest: CreateSignup = {
+      const createRequest: CreateSignup = {
         email,
         name: profile.displayName,
-        accessToken: accessToken,
+        accessToken,
         socialId: profile.id,
         payload: profile,
-        password: userController.makeSocialPassword(profile.id)
+        password: userController.makeSocialPassword(profile.id),
       };
-      let signup = await signupController.create(createRequest, 'fb', true);
-      let result: FacebookSignupResult = {
+      const signup = await signupController.create(createRequest, "fb", true);
+      const result: FacebookSignupResult = {
         signup: {
           id: signup.id!,
-          ...createRequest
-        }
-      }
+          ...createRequest,
+        },
+      };
       done(null, result);
-    }
-    catch (error) {
-      done(null, <FacebookSignupResult>{ error });
+    } catch (error) {
+      done(null, { error } as FacebookSignupResult);
     }
   });
 }

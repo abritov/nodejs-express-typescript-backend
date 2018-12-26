@@ -1,19 +1,18 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_USER } from './User';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_USER } from "./User";
 
-const DB_TABLE_NAME = 'part';
-const SEQUELIZE_MODEL_NAME = 'Part';
+const DB_TABLE_NAME = "part";
+const SEQUELIZE_MODEL_NAME = "Part";
 
 interface Attributes {
-  id?: number
-  userId?: number
-  alias: string
-  title: string
-  content: string
-  createdAt?: Date
-  updatedAt?: Date
+  id?: number;
+  userId?: number;
+  alias: string;
+  title: string;
+  content: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -30,10 +29,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_USER,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     alias: {
       type: DataTypes.STRING(255),
@@ -48,11 +47,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.default.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.default.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
   };
@@ -61,11 +60,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { Attributes as Part };
 export { Instance as PartInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

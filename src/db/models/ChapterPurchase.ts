@@ -1,18 +1,17 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_USER } from './User';
-import { SEQUELIZE_MODEL_NAME_CHAPTER } from './Chapter';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_CHAPTER } from "./Chapter";
+import { SEQUELIZE_MODEL_NAME_USER } from "./User";
 
-const DB_TABLE_NAME = 'chapter_purchase';
-const SEQUELIZE_MODEL_NAME = 'ChapterPurchase';
+const DB_TABLE_NAME = "chapter_purchase";
+const SEQUELIZE_MODEL_NAME = "ChapterPurchase";
 
 interface Attributes {
-  id?: number
-  userId: number
-  chapterId: number
-  cost: number
-  createdAt?: Date
+  id?: number;
+  userId: number;
+  chapterId: number;
+  cost: number;
+  createdAt?: Date;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -29,20 +28,20 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_USER,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     chapterId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_CHAPTER,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     cost: {
       type: DataTypes.DECIMAL,
@@ -50,7 +49,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.default.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.default.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
   };
@@ -59,11 +58,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { Attributes as ChapterPurchase };
 export { Instance as ChapterPurchaseInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

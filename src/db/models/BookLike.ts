@@ -1,17 +1,16 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_USER } from './User';
-import { SEQUELIZE_MODEL_NAME_BOOK } from './Book';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_BOOK } from "./Book";
+import { SEQUELIZE_MODEL_NAME_USER } from "./User";
 
-const DB_TABLE_NAME = 'book_like';
-const SEQUELIZE_MODEL_NAME = 'BookLike';
+const DB_TABLE_NAME = "book_like";
+const SEQUELIZE_MODEL_NAME = "BookLike";
 
 interface Attributes {
-  bookId?: number
-  userId?: number
-  isLike: boolean
-  createdAt?: Date
+  bookId?: number;
+  userId?: number;
+  isLike: boolean;
+  createdAt?: Date;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -22,20 +21,20 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_BOOK,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_USER,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     isLike: {
       type: DataTypes.BOOLEAN,
@@ -43,7 +42,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.default.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.default.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
   };
@@ -52,11 +51,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { Attributes as BookLike };
 export { Instance as BookLikeInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

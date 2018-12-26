@@ -1,17 +1,16 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_USER } from './User';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_USER } from "./User";
 
-const DB_TABLE_NAME = 'subscribe_purchase';
-const SEQUELIZE_MODEL_NAME = 'SubscribePurchase';
+const DB_TABLE_NAME = "subscribe_purchase";
+const SEQUELIZE_MODEL_NAME = "SubscribePurchase";
 
 interface Attributes {
-  id?: number
-  userId?: number
-  type: string
-  cost: number
-  createdAt?: Date
+  id?: number;
+  userId?: number;
+  type: string;
+  cost: number;
+  createdAt?: Date;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -28,10 +27,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_USER,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     type: {
       type: DataTypes.STRING(255),
@@ -43,7 +42,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.default.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.default.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
   };
@@ -52,11 +51,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { Attributes as SubscribePurchase };
 export { Instance as SubscribePurchaseInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

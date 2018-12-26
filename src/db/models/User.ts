@@ -1,25 +1,24 @@
-import * as Sequelize from 'sequelize'
-import { UserTokenInstance } from './UserToken';
-import { SEQUELIZE_MODEL_NAME_SIGNUP, SignupInstance } from './Signup';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_SIGNUP, SignupInstance } from "./Signup";
+import { UserTokenInstance } from "./UserToken";
 
-const DB_TABLE_NAME = 'users';
-const SEQUELIZE_MODEL_NAME = 'User';
+const DB_TABLE_NAME = "users";
+const SEQUELIZE_MODEL_NAME = "User";
 
 interface Attributes {
-  id?: number,
-  signupId?: number,
-  name: string,
-  email: string,
-  passwordHash?: string,
-  approved?: boolean,
-  lastLogin?: Date,
-  createdAt?: Date,
+  id?: number;
+  signupId?: number;
+  name: string;
+  email: string;
+  passwordHash?: string;
+  approved?: boolean;
+  lastLogin?: Date;
+  createdAt?: Date;
 }
 
-
 interface Instance extends Sequelize.Instance<Attributes>, Attributes {
-  getToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>
-  getSignup: Sequelize.HasOneGetAssociationMixin<SignupInstance>
+  getToken: Sequelize.HasOneGetAssociationMixin<UserTokenInstance>;
+  getSignup: Sequelize.HasOneGetAssociationMixin<SignupInstance>;
 }
 interface Model extends Sequelize.Model<Instance, Attributes> { }
 
@@ -36,10 +35,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_SIGNUP,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     name: {
       type: DataTypes.STRING(255),
@@ -72,7 +71,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.default.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.default.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
   };
@@ -80,23 +79,22 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
   const options: Sequelize.DefineOptions<Attributes> = {
     tableName: DB_TABLE_NAME,
   };
-  const User = sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
-  User.associate = models => {
-    User.hasOne(models.UserToken, { as: 'token', foreignKey: 'userId' });
-    User.hasOne(models.Signup, { as: 'signup', foreignKey: 'id' });
-  }
+  const User = sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
+  User.associate = (models) => {
+    User.hasOne(models.UserToken, { as: "token", foreignKey: "userId" });
+    User.hasOne(models.Signup, { as: "signup", foreignKey: "id" });
+  };
 
   return User;
 }
 
-
 function userFactory(sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+  return createInstance(sequelize, Sequelize);
 }
 
-export { DB_TABLE_NAME as DB_TABLE_NAME_USER }
-export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_USER }
-export { Attributes as User }
-export { Instance as UserInstance }
-export { Model as UserModel }
-export default userFactory
+export { DB_TABLE_NAME as DB_TABLE_NAME_USER };
+export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_USER };
+export { Attributes as User };
+export { Instance as UserInstance };
+export { Model as UserModel };
+export default userFactory;

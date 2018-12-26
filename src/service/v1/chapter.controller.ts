@@ -1,21 +1,21 @@
-import { DbApi } from '../../db/index';
+import { DbApi } from "../../db/index";
 
 export class ChapterController {
   constructor(public readonly _db: DbApi) { }
 
-  get() {
+  public get() {
 
   }
 
-  create() {
+  public create() {
 
   }
 
-  update() {
+  public update() {
 
   }
 
-  progress() {
+  public progress() {
 
   }
 }

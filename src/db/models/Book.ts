@@ -1,25 +1,24 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_COUNTRY } from './Country';
-import { SEQUELIZE_MODEL_NAME_GENRE } from './Genre';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_COUNTRY } from "./Country";
+import { SEQUELIZE_MODEL_NAME_GENRE } from "./Genre";
 
-const DB_TABLE_NAME = 'books';
-const SEQUELIZE_MODEL_NAME = 'Book';
+const DB_TABLE_NAME = "books";
+const SEQUELIZE_MODEL_NAME = "Book";
 
 interface Attributes {
-  id?: number
-  title: string
-  titleLong: string
-  description: string
-  countryId?: number
-  sourceUrl?: string
-  author: string
-  partnerLink?: string
-  cooperationLetter?: string
-  serviceInfo: string
-  createdAt?: Date
-  updatedAt?: Date
+  id?: number;
+  title: string;
+  titleLong: string;
+  description: string;
+  countryId?: number;
+  sourceUrl?: string;
+  author: string;
+  partnerLink?: string;
+  cooperationLetter?: string;
+  serviceInfo: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -48,10 +47,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_COUNTRY,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     sourceUrl: {
       type: DataTypes.TEXT,
@@ -75,7 +74,7 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.default.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.default.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
     updatedAt: {
@@ -88,12 +87,12 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_BOOK };
 export { Attributes as Book };
 export { Instance as BookInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

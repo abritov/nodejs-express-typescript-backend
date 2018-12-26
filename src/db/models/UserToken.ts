@@ -1,15 +1,14 @@
-import * as Sequelize from 'sequelize'
-import { SEQUELIZE_MODEL_NAME_USER } from './User';
+import * as Sequelize from "sequelize";
+import { SEQUELIZE_MODEL_NAME_USER } from "./User";
 
-const DB_TABLE_NAME = 'user_token';
-const SEQUELIZE_MODEL_NAME = 'UserToken';
+const DB_TABLE_NAME = "user_token";
+const SEQUELIZE_MODEL_NAME = "UserToken";
 
 interface Attributes {
-  id?: number,
-  userId: number,
-  token: string,
+  id?: number;
+  userId: number;
+  token: string;
 }
-
 
 interface Instance extends Sequelize.Instance<Attributes>, Attributes {
 
@@ -28,10 +27,10 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_USER,
-        key: 'id',
+        key: "id",
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     token: {
       type: DataTypes.STRING(255),
@@ -44,11 +43,11 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
-export { Attributes as UserToken }
-export { Instance as UserTokenInstance }
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export { Attributes as UserToken };
+export { Instance as UserTokenInstance };
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }

@@ -1,14 +1,13 @@
-import * as Sequelize from 'sequelize';
+import * as Sequelize from "sequelize";
 
-const DB_TABLE_NAME = 'genres';
-const SEQUELIZE_MODEL_NAME = 'Genre';
+const DB_TABLE_NAME = "genres";
+const SEQUELIZE_MODEL_NAME = "Genre";
 
 interface Attributes {
-  id?: number
-  titleRu: string
-  titleEn: string
+  id?: number;
+  titleRu: string;
+  titleEn: string;
 }
-
 
 type Instance = Sequelize.Instance<Attributes> & Attributes;
 
@@ -27,19 +26,19 @@ function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.Dat
     titleEn: {
       type: DataTypes.STRING(255),
       allowNull: false,
-    }
+    },
   };
 
   const options: Sequelize.DefineOptions<Attributes> = {
     tableName: DB_TABLE_NAME,
   };
 
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options)
+  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
 }
 
 export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_GENRE };
 export { Attributes as Genre };
 export { Instance as GenreInstance };
-export default function (sequelize: Sequelize.Sequelize) {
-  return createInstance(sequelize, Sequelize)
+export default function(sequelize: Sequelize.Sequelize) {
+  return createInstance(sequelize, Sequelize);
 }
