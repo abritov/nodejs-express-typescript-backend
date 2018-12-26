@@ -3,9 +3,9 @@ import * as bodyParser from 'body-parser';
 import * as swaggerUi from 'swagger-ui-express';
 import * as Sequelize from "sequelize";
 import passport = require('passport');
-import { Jwt } from './controllers/v1/authenticate';
+import { Jwt } from './service/v1/authenticate';
 import { createSequelizeDb } from './db';
-import swaggerSpec from './controllers/v1/openapi.json';
+import swaggerSpec from './service/v1/openapi.json';
 import {
   createTokenRouter,
   createUserRouter,
@@ -17,13 +17,13 @@ import {
   SignupController,
   TokenController,
   SignupEncDec
-} from './controllers/v1';
+} from './service/v1';
 import { MockHasher } from './utils/hasher';
 import { SignupTempMemory } from './temp/signup';
-import { initializePassport } from './controllers/v1/authenticate';
+import { initializePassport } from './service/v1/authenticate';
 import * as config from './config';
 import { EnvironmentConfig } from './config/types';
-import { createTextRouter, TextController } from './controllers/v1/text.controller';
+import { createTextRouter, TextController } from './service/v1/text.controller';
 
 const envConfig: EnvironmentConfig = process.env.NODE_ENV == 'production' ? config.production : config.development;
 

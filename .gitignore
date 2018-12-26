@@ -6,7 +6,7 @@ build-migrations/
 .DS_Store
 db.sqlite
 .vscode/
-src/controllers/**/openapi.json
-src/controllers/**/schema.d.ts
+src/service/**/openapi.json
+src/service/**/schema.d.ts
 src/config/dev.js
 src/config/prod.js
