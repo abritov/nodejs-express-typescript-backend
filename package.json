@@ -9,6 +9,7 @@
     "migrate": "./node_modules/.bin/sequelize --config ./src/db/config.js --models-path ./src/db/models --seeders-path ./src/db/seeders --migrations-path ./src/db/migrations db:migrate",
     "migrate-prod": "cross-env NODE_ENV=production npm run migrate",
     "migrate-dev": "cross-env NODE_ENV=development npm run migrate",
+    "docs": "yarn gen-spec-v1",
     "gen-spec-v1": "(cd src/service/v1/ && yarn run tinyspec -j -o src/service/v1/); yarn run sw2dts ./src/service/v1/openapi.json -o ./src/service/v1/schema.d.ts"
   },
   "dependencies": {
