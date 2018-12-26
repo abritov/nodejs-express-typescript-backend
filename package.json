@@ -43,6 +43,7 @@
     "dotenv": "^6.1.0",
     "sqlite3": "^4.0.3",
     "sw2dts": "^2.6.1",
-    "ts-node-dev": "^1.0.0-pre.30"
+    "ts-node-dev": "^1.0.0-pre.30",
+    "tslint": "^5.12.0"
   }
 }
