@@ -1,3 +1,4 @@
+import HttpStatus from "http-status";
 import * as bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
 import passport = require("passport");
@@ -45,9 +46,9 @@ passport.use(createLocalStrategy(db, hasher));
 passport.use(createFacebookStrategy(signupController, userController, envConfig.facebook));
 
 app.use(bodyParser.json());
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ error: err });
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(error.stack);
+  res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ error });
 });
 
 initializePassport(db, app, passport);
