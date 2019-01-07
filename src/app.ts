@@ -14,15 +14,15 @@ import {
   createSignupRouter,
   createTokenRouter,
   createUserRouter,
+  createTextRouter,
   SignupController,
   SignupEncDec,
   TokenController,
   UserController,
+  TextController
 } from "./service/v1";
-import { Jwt } from "./service/v1/authenticate";
-import { initializePassport } from "./service/v1/authenticate";
+import { Jwt, initializePassport } from "./service/v1/authenticate";
 import swaggerSpec from "./service/v1/openapi.json";
-import { createTextRouter, TextController } from "./service/v1/text.controller";
 import { SignupTempMemory } from "./temp/signup";
 import { MockHasher } from "./utils/hasher";
 
