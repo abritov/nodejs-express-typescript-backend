@@ -1,9 +1,15 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
-    ],
-    "jsRules": {},
-    "rules": {},
-    "rulesDirectory": []
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "linterOptions": {
+    "exclude": [
+      "./src/service/v1/openapi.json",
+      "./src/service/v1/schema.d.ts",
+      "node_modules/**/*.ts",
+      "build/**/.ts"
+    ]
+  },
+  "jsRules": {},
+  "rules": {},
+  "rulesDirectory": []
 }
