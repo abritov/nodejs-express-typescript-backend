@@ -5,7 +5,7 @@ import { SEQUELIZE_MODEL_NAME_GENRE } from "./Genre";
 const DB_TABLE_NAME = "books";
 const SEQUELIZE_MODEL_NAME = "Book";
 
-interface Attributes {
+interface IAttributes {
   id?: number;
   title: string;
   titleLong: string;
@@ -20,78 +20,86 @@ interface Attributes {
   updatedAt?: Date;
 }
 
-type Instance = Sequelize.Instance<Attributes> & Attributes;
+type Instance = Sequelize.Instance<IAttributes> & IAttributes;
 
-function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
-  const attributes: Sequelize.DefineModelAttributes<Attributes> = {
+function createInstance(
+  sequelize: Sequelize.Sequelize,
+  DataTypes: Sequelize.DataTypes
+) {
+  /* tslint:disable */
+  const attributes: Sequelize.DefineModelAttributes<IAttributes> = {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      allowNull: false
     },
     title: {
       type: DataTypes.STRING(512),
-      allowNull: false,
+      allowNull: false
     },
     titleLong: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: false
     },
     countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_COUNTRY,
-        key: "id",
+        key: "id"
       },
       onUpdate: "cascade",
-      onDelete: "cascade",
+      onDelete: "cascade"
     },
     sourceUrl: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: true
     },
     author: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     partnerLink: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: true
     },
     cooperationLetter: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: true
     },
     serviceInfo: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.default.literal("CURRENT_TIMESTAMP"),
-      allowNull: false,
+      allowNull: false
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: true,
-    },
+      allowNull: true
+    }
+  };
+  /* tslint:enable */
+  const options: Sequelize.DefineOptions<IAttributes> = {
+    tableName: DB_TABLE_NAME
   };
 
-  const options: Sequelize.DefineOptions<Attributes> = {
-    tableName: DB_TABLE_NAME,
-  };
-
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
+  return sequelize.define<Instance, IAttributes>(
+    SEQUELIZE_MODEL_NAME,
+    attributes,
+    options
+  );
 }
 
 export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_BOOK };
-export { Attributes as Book };
+export { IAttributes as Book };
 export { Instance as BookInstance };
 export default function(sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize);

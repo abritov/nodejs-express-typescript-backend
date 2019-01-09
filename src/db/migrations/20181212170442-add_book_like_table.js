@@ -5,36 +5,36 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('book_like', {
+  return queryInterface.createTable("book_like", {
     bookId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'books',
-        key: 'id',
+        model: "books",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     userId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     isLike: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
+      allowNull: false
     },
     createdAt: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      allowNull: false,
-    },
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      allowNull: false
+    }
   });
 };
 
@@ -43,5 +43,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('book_like');
+  return queryInterface.dropTable("book_like");
 };

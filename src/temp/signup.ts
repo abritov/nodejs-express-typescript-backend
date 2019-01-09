@@ -1,27 +1,30 @@
-export interface SignupTempRecord {
+export interface ISignupTempRecord {
   name: string;
   profile: any;
   provider: string;
 }
 
-export interface SignupTemp {
-  get(accessToken: string): SignupTempRecord | undefined;
-  set(accessToken: string, value: SignupTempRecord): void;
+export interface ISignupTemp {
+  get(accessToken: string): ISignupTempRecord | undefined;
+  set(accessToken: string, value: ISignupTempRecord): void;
   has(accessToken: string): boolean;
 }
 
-export class SignupTempMemory implements SignupTemp {
-  public store: Map<string, SignupTempRecord> = new Map<string, SignupTempRecord>();
+export class SignupTempMemory implements ISignupTemp {
+  public store: Map<string, ISignupTempRecord> = new Map<
+    string,
+    ISignupTempRecord
+  >();
 
   public has(accessToken: string): boolean {
     return this.store.has(accessToken);
   }
 
-  public get(accessToken: string): SignupTempRecord | undefined {
+  public get(accessToken: string): ISignupTempRecord | undefined {
     return this.store.get(accessToken);
   }
 
-  public set(accessToken: string, value: SignupTempRecord): void {
+  public set(accessToken: string, value: ISignupTempRecord): void {
     this.store.set(accessToken, value);
   }
 }

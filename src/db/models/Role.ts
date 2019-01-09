@@ -3,40 +3,48 @@ import * as Sequelize from "sequelize";
 const DB_TABLE_NAME = "roles";
 const SEQUELIZE_MODEL_NAME = "Role";
 
-interface Attributes {
+interface IAttributes {
   id?: number;
   name: string;
 }
 
-type Instance = Sequelize.Instance<Attributes> & Attributes;
+type Instance = Sequelize.Instance<IAttributes> & IAttributes;
 
-function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
-  const attributes: Sequelize.DefineModelAttributes<Attributes> = {
+function createInstance(
+  sequelize: Sequelize.Sequelize,
+  DataTypes: Sequelize.DataTypes
+) {
+  /* tslint:disable */
+  const attributes: Sequelize.DefineModelAttributes<IAttributes> = {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING(128),
       allowNull: false,
       unique: true,
       validate: {
-        notEmpty: true,
-      },
-    },
+        notEmpty: true
+      }
+    }
+  };
+  /* tslint:enable */
+  const options: Sequelize.DefineOptions<IAttributes> = {
+    tableName: DB_TABLE_NAME
   };
 
-  const options: Sequelize.DefineOptions<Attributes> = {
-    tableName: DB_TABLE_NAME,
-  };
-
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
+  return sequelize.define<Instance, IAttributes>(
+    SEQUELIZE_MODEL_NAME,
+    attributes,
+    options
+  );
 }
 
 export { SEQUELIZE_MODEL_NAME as SEQUELIZE_MODEL_NAME_ROLE };
-export { Attributes as Role };
+export { IAttributes as Role };
 export { Instance as RoleInstance };
 export default function(sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize);

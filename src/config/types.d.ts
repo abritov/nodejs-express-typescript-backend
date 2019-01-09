@@ -1,4 +1,4 @@
-export interface DbConfig {
+export interface IDbConfig {
   username: string;
   password: string;
   database: string;
@@ -7,33 +7,33 @@ export interface DbConfig {
   port: number;
   operatorsAliases: boolean;
   sync: {
-    force: boolean,
+    force: boolean;
   };
   define: {
-    underscored: boolean
-    freezeTableName: boolean
-    charset: string
-    timestamps: boolean,
+    underscored: boolean;
+    freezeTableName: boolean;
+    charset: string;
+    timestamps: boolean;
   };
 }
-export interface SocialAuthProvider {
+export interface ISocialAuthProvider {
   clientID: string;
   clientSecret: string;
   callbackURL: string;
 }
-export interface CryptoConfig {
+export interface ICryptoConfig {
   secret: string;
   algorithm: string;
   ivLength: number;
   delimiter: string;
 }
-export interface EnvironmentConfig {
-  db: DbConfig;
+export interface IEnvironmentConfig {
+  db: IDbConfig;
   jwtSecret: string;
-  facebook: SocialAuthProvider;
-  signupTokenCipher: CryptoConfig;
+  facebook: ISocialAuthProvider;
+  signupTokenCipher: ICryptoConfig;
 }
-export interface Config {
-  development: EnvironmentConfig;
-  production: EnvironmentConfig;
+export interface IConfig {
+  development: IEnvironmentConfig;
+  production: IEnvironmentConfig;
 }

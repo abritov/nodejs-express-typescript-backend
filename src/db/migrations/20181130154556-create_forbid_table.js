@@ -5,30 +5,30 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('forbid', {
+  return queryInterface.createTable("forbid", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      allowNull: false
     },
     userId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     action: {
       type: Sequelize.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     reason: {
       type: Sequelize.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     endsAt: {
       type: Sequelize.DATE,
@@ -36,9 +36,9 @@ module.exports.up = (queryInterface, Sequelize) => {
     },
     createdAt: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      allowNull: false,
-    },
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      allowNull: false
+    }
   });
 };
 
@@ -47,5 +47,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('forbid');
+  return queryInterface.dropTable("forbid");
 };

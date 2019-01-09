@@ -5,33 +5,33 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('part', {
+  return queryInterface.createTable("part", {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      allowNull: false,
+      allowNull: false
     },
     userId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     alias: {
       type: Sequelize.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     title: {
       type: Sequelize.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     content: {
-      type: Sequelize.TEXT,
+      type: Sequelize.TEXT
     },
     updatedAt: {
       type: Sequelize.DATE,
@@ -39,10 +39,10 @@ module.exports.up = (queryInterface, Sequelize) => {
     },
     createdAt: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      allowNull: false,
-    },
-  })
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      allowNull: false
+    }
+  });
 };
 
 /**
@@ -50,5 +50,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('part')
+  return queryInterface.dropTable("part");
 };

@@ -5,11 +5,10 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.changeColumn('signup', 'payload',
-    {
-      type: Sequelize.JSON,
-      allowNull: true,
-    });
+  return queryInterface.changeColumn("signup", "payload", {
+    type: Sequelize.JSON,
+    allowNull: true
+  });
 };
 
 /**
@@ -17,9 +16,8 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.changeColumn('signup', 'payload',
-    {
-      type: Sequelize.JSON,
-      allowNull: false,
-    });
+  return queryInterface.changeColumn("signup", "payload", {
+    type: Sequelize.JSON,
+    allowNull: false
+  });
 };

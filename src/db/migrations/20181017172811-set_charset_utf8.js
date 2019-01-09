@@ -5,7 +5,9 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.sequelize.query("ALTER SCHEMA `ranobe_v2` DEFAULT CHARACTER SET utf8;");
+  return queryInterface.sequelize.query(
+    "ALTER SCHEMA `ranobe_v2` DEFAULT CHARACTER SET utf8;"
+  );
 };
 
 /**
@@ -13,5 +15,7 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.sequelize.query("ALTER SCHEMA `ranobe_v2` DEFAULT CHARACTER SET latin1;")
+  return queryInterface.sequelize.query(
+    "ALTER SCHEMA `ranobe_v2` DEFAULT CHARACTER SET latin1;"
+  );
 };

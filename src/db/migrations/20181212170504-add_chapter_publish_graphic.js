@@ -5,29 +5,29 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('chapter_publish_graphic', {
+  return queryInterface.createTable("chapter_publish_graphic", {
     bookId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'books',
-        key: 'id',
+        model: "books",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     purchaseDelaySec: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     subscribeDelaySec: {
       type: Sequelize.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     freeAccessDelaySec: {
       type: Sequelize.INTEGER,
       allowNull: false
-    },
+    }
   });
 };
 
@@ -36,5 +36,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('chapter_publish_graphic');
+  return queryInterface.dropTable("chapter_publish_graphic");
 };

@@ -1,8 +1,9 @@
 function binToBytes(bin: number[]) {
   const byteLen = 7;
   const bytes = new Uint8Array(bin.length / 8);
-  for (let i = 0, byteIndex = 0; i < bin.length;) {
+  for (let i = 0, byteIndex = 0; i < bin.length; ) {
     for (let bitIndex = byteLen; bitIndex >= 0; bitIndex--) {
+      // tslint:disable-next-line:no-bitwise
       bytes[byteIndex] |= bin[i + bitIndex] << (byteLen - bitIndex);
     }
     byteIndex++;
@@ -32,11 +33,14 @@ function getHiddenBits(text: string) {
   const bin = Array<number>();
   const textParts = text.split(" ");
 
-  for (let i = 0; i < textParts.length;) {
-    const bit = textParts[i + 1] == "" ? 1 : 0;
+  for (let i = 0; i < textParts.length; ) {
+    const bit = textParts[i + 1] === "" ? 1 : 0;
     bin.push(bit);
-    if (textParts[i + 1] == "") { i += 2; }
-    else { i += 1; }
+    if (textParts[i + 1] === "") {
+      i += 2;
+    } else {
+      i += 1;
+    }
   }
   return bin;
 }
@@ -48,7 +52,9 @@ export function encryptInteger(text: string, int: number) {
 
   for (let i = 0; i < textParts.length; i++) {
     newText.push(textParts[i]);
-    if (payload[i] == "1") { newText.push(""); }
+    if (payload[i] === "1") {
+      newText.push("");
+    }
   }
 
   return newText.join(" ");

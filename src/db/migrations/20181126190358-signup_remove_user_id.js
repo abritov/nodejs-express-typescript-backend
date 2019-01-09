@@ -5,7 +5,7 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.removeColumn('signup', 'userId');
+  return queryInterface.removeColumn("signup", "userId");
 };
 
 /**
@@ -13,14 +13,14 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.addColumn('signup', 'userId', {
+  return queryInterface.addColumn("signup", "userId", {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'users',
-      key: 'id',
+      model: "users",
+      key: "id"
     },
-    onUpdate: 'cascade',
-    onDelete: 'cascade',
+    onUpdate: "cascade",
+    onDelete: "cascade"
   });
 };

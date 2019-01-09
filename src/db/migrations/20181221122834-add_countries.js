@@ -5,31 +5,31 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.bulkInsert('country', [
+  return queryInterface.bulkInsert("country", [
     {
-      name: 'Великобритания',
-      alias: 'England'
+      name: "Великобритания",
+      alias: "England"
     },
     {
-      name: 'Корея',
-      alias: 'Korea'
+      name: "Корея",
+      alias: "Korea"
     },
     {
-      name: 'Китай',
-      alias: 'China'
+      name: "Китай",
+      alias: "China"
     },
     {
-      name: 'Япония',
-      alias: 'Japan'
+      name: "Япония",
+      alias: "Japan"
     },
     {
-      name: 'Россия',
-      alias: 'Russia'
+      name: "Россия",
+      alias: "Russia"
     },
     {
-      name: 'США',
-      alias: 'USA'
-    },
+      name: "США",
+      alias: "USA"
+    }
   ]);
 };
 
@@ -38,7 +38,7 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.bulkDelete('country', {
+  return queryInterface.bulkDelete("country", {
     where: {
       id: {
         [Sequelize.Op.gte]: 1

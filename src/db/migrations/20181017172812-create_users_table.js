@@ -5,45 +5,45 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('users', {
+  return queryInterface.createTable("users", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      allowNull: false
     },
     name: {
       type: Sequelize.STRING(255),
       allowNull: false,
       validate: {
-        notEmpty: true,
-      },
+        notEmpty: true
+      }
     },
     authKey: {
       type: Sequelize.STRING(255),
-      allowNull: true,
+      allowNull: true
     },
     passwordHash: {
       type: Sequelize.STRING(255),
-      allowNull: true,
+      allowNull: true
     },
     salt: {
       type: Sequelize.STRING(255),
       allowNull: false,
       validate: {
-        notEmpty: true,
-      },
+        notEmpty: true
+      }
     },
     oldHash: {
       type: Sequelize.STRING(255),
       allowNull: false,
       validate: {
-        notEmpty: true,
-      },
+        notEmpty: true
+      }
     },
     passwordResetToken: {
       type: Sequelize.STRING(255),
-      allowNull: true,
+      allowNull: true
     },
     email: {
       type: Sequelize.STRING(255),
@@ -51,29 +51,29 @@ module.exports.up = (queryInterface, Sequelize) => {
       unique: true,
       validate: {
         notEmpty: true,
-        isEmail: true,
-      },
+        isEmail: true
+      }
     },
     statusId: {
       type: Sequelize.INTEGER(10),
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 0
     },
     approved: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
+      defaultValue: false
     },
     lastLogin: {
       type: Sequelize.DATE,
-      allowNull: true,
+      allowNull: true
     },
     createdAt: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      allowNull: false,
-    },
-  })
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      allowNull: false
+    }
+  });
 };
 
 /**
@@ -81,5 +81,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('users')
+  return queryInterface.dropTable("users");
 };

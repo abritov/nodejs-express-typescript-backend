@@ -3,3 +3,4 @@ export * from "./user.controller";
 export * from "./signup.controller";
 export * from "./text.controller";
 export * from "./authenticate";
+export * from "./signup.encdec";

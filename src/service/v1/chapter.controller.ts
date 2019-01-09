@@ -1,21 +1,5 @@
-import { DbApi } from "../../db/index";
+import { IDbApi } from "../../db/index";
 
 export class ChapterController {
-  constructor(public readonly _db: DbApi) { }
-
-  public get() {
-
-  }
-
-  public create() {
-
-  }
-
-  public update() {
-
-  }
-
-  public progress() {
-
-  }
+  constructor(private readonly db: IDbApi) {}
 }

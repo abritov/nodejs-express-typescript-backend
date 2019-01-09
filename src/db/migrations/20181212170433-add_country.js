@@ -5,21 +5,21 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('country', {
+  return queryInterface.createTable("country", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      allowNull: false
     },
     name: {
       type: Sequelize.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     alias: {
       type: Sequelize.STRING(255),
-      allowNull: false,
-    },
+      allowNull: false
+    }
   });
 };
 
@@ -28,5 +28,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('country');
+  return queryInterface.dropTable("country");
 };

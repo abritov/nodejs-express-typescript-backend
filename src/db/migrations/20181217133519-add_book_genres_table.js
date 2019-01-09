@@ -5,29 +5,28 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('book_genres',
-    {
-      bookId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'books',
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
+  return queryInterface.createTable("book_genres", {
+    bookId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: "books",
+        key: "id"
       },
-      genreId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'genres',
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-      }
-    });
+      onUpdate: "cascade",
+      onDelete: "cascade"
+    },
+    genreId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: "genres",
+        key: "id"
+      },
+      onUpdate: "cascade",
+      onDelete: "cascade"
+    }
+  });
 };
 
 /**
@@ -35,5 +34,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('book_genres');
+  return queryInterface.dropTable("book_genres");
 };

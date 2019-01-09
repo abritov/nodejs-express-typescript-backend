@@ -5,16 +5,16 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.bulkInsert('user_token', [
+  return queryInterface.bulkInsert("user_token", [
     {
       userId: 1,
-      token: 'zzzzzzzzzzzzzzzzzzzz',
+      token: "zzzzzzzzzzzzzzzzzzzz"
     },
     {
       userId: 2,
-      token: 'lllllllllllllllllllll',
+      token: "lllllllllllllllllllll"
     }
-  ])
+  ]);
 };
 
 /**
@@ -22,5 +22,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.bulkDelete('user_token', null, {});
+  return queryInterface.bulkDelete("user_token", null, {});
 };

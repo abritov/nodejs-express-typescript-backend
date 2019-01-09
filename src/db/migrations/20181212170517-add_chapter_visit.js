@@ -5,30 +5,30 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('chapter_visit', {
+  return queryInterface.createTable("chapter_visit", {
     chapterId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'chapters',
-        key: 'id',
-      },
+        model: "chapters",
+        key: "id"
+      }
     },
     userId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     createdAt: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      allowNull: false,
-    },
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      allowNull: false
+    }
   });
 };
 
@@ -37,5 +37,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('chapter_visit');
+  return queryInterface.dropTable("chapter_visit");
 };

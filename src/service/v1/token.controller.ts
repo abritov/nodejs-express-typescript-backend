@@ -1,40 +1,53 @@
 import { Request, Response, Router } from "express";
 import HttpStatus from "http-status";
 import { PassportStatic } from "passport";
-import { DbApi } from "../../db";
-import { Hasher } from "../../utils/hasher";
-import { Jwt, JwtPayload } from "./authenticate";
-import { ENTITY_SIGNUP, ENTITY_USER, RecordNotFound, TokenRequestAccepted } from "./error";
-import { AuthorizationToken, CreateToken } from "./schema";
-import { SignupEncDec } from "./signup.controller";
+import { IDbApi } from "../../db";
+import { IHash, logger } from "../../utils";
+import { IJwtPayload, Jwt } from "./authenticate";
+import {
+  ENTITY_SIGNUP,
+  ENTITY_USER,
+  RecordNotFound,
+  TokenRequestAccepted
+} from "./error";
+import { CreateToken } from "./schema";
+import { SignupEncDec } from "./signup.encdec";
 
 export class TokenController {
-  constructor(public readonly _db: DbApi, public readonly _hasher: Hasher, public readonly _jwt: Jwt) { }
+  constructor(
+    private readonly db: IDbApi,
+    private readonly hasher: IHash,
+    private readonly jwt: Jwt
+  ) {}
 
-  public async create(signupId: number, _accessBitmask?: number) {
-    const accessBitmask = _accessBitmask || 1;
-    if (accessBitmask < 1) {
+  public async create(signupId: number, accessBitmask?: number) {
+    const accessBitmaskValue = accessBitmask || 1;
+    if (accessBitmaskValue < 1) {
       throw Error("invalid accessBitmask value");
     }
-    if (accessBitmask > 1) {
+    if (accessBitmaskValue > 1) {
       throw new TokenRequestAccepted();
     }
 
-    const user = await this._db.User.findOne({
+    const user = await this.db.User.findOne({
       where: {
-        signupId,
-      },
+        signupId
+      }
     });
-    if (!user) { throw new RecordNotFound(ENTITY_USER); }
+    if (!user) {
+      throw new RecordNotFound(ENTITY_USER);
+    }
 
-    const token = this._jwt.encrypt({
-      userId: user.id,
+    const token = this.jwt.encrypt({
+      accessBitmask: accessBitmaskValue,
       name: user.name,
-      accessBitmask,
-    } as JwtPayload);
+      userId: user.id
+    } as IJwtPayload);
 
-    const signup = await this._db.Signup.findById(signupId);
-    if (!signup) { throw new RecordNotFound(ENTITY_SIGNUP); }
+    const signup = await this.db.Signup.findById(signupId);
+    if (!signup) {
+      throw new RecordNotFound(ENTITY_SIGNUP);
+    }
 
     signup.jwtToken = token;
     signup.save();
@@ -43,30 +56,33 @@ export class TokenController {
   }
 
   public async get(signupId: number) {
-    const signup = await this._db.Signup.findById(signupId);
-    if (!signup) { throw new RecordNotFound(ENTITY_SIGNUP); }
+    const signup = await this.db.Signup.findById(signupId);
+    if (!signup) {
+      throw new RecordNotFound(ENTITY_SIGNUP);
+    }
     return signup.jwtToken;
   }
 }
 
-export function createTokenRouter(controller: TokenController, signupCipher: SignupEncDec, passport: PassportStatic) {
+export function createTokenRouter(
+  controller: TokenController,
+  signupCipher: SignupEncDec,
+  passport: PassportStatic
+) {
   const router = Router();
 
   router.post("/insecure", async (req: Request, res: Response) => {
-    if (!(req.ip == "127.0.0.1" || req.ip == "::1")) {
+    if (!(req.ip === "127.0.0.1" || req.ip === "::1")) {
       res.status(HttpStatus.FORBIDDEN).send();
       return;
     }
     try {
-      const user = await controller._db.User.findOne({ where: { email: req.body.email } });
-      if (!user) {
-        res.status(HttpStatus.NOT_FOUND).json({ error: "user not found" });
-        return;
-      }
-      res.json(controller.create(user.id!, req.body.accessBitmask));
+      res.json(controller.create(req.body.userId, req.body.accessBitmask));
     } catch (error) {
       if (error instanceof TokenRequestAccepted) {
-        res.status(HttpStatus.ACCEPTED).json({ message: "please wait until your token will be approved" });
+        res
+          .status(HttpStatus.ACCEPTED)
+          .json({ message: "please wait until your token will be approved" });
         return;
       }
       res.status(HttpStatus.BAD_REQUEST).json({ error });
@@ -81,10 +97,14 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
       res.json({ token });
     } catch (error) {
       if (error instanceof TokenRequestAccepted) {
-        res.status(HttpStatus.ACCEPTED).json({ message: "please wait until your token will be approved" });
+        res
+          .status(HttpStatus.ACCEPTED)
+          .json({ message: "please wait until your token will be approved" });
         return;
       }
-      res.status(HttpStatus.BAD_REQUEST).json({ error: error.message || error.stack[0] });
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ error: error.message || error.stack[0] });
     }
   });
 
@@ -94,7 +114,7 @@ export function createTokenRouter(controller: TokenController, signupCipher: Sig
       const token = await controller.get(signup.id);
       res.status(HttpStatus.OK).json({ token });
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       if (error instanceof TypeError) {
         res.status(HttpStatus.BAD_REQUEST).send();
         return;

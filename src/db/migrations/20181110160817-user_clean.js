@@ -6,11 +6,11 @@
  */
 module.exports.up = (queryInterface, Sequelize) => {
   return Promise.all([
-    queryInterface.removeColumn('users', 'authKey'),
-    queryInterface.removeColumn('users', 'salt'),
-    queryInterface.removeColumn('users', 'oldHash'),
-    queryInterface.removeColumn('users', 'passwordResetToken'),
-    queryInterface.removeColumn('users', 'statusId')
+    queryInterface.removeColumn("users", "authKey"),
+    queryInterface.removeColumn("users", "salt"),
+    queryInterface.removeColumn("users", "oldHash"),
+    queryInterface.removeColumn("users", "passwordResetToken"),
+    queryInterface.removeColumn("users", "statusId")
   ]);
 };
 
@@ -20,32 +20,32 @@ module.exports.up = (queryInterface, Sequelize) => {
  */
 module.exports.down = (queryInterface, Sequelize) => {
   return Promise.all([
-    queryInterface.addColumn('users', 'authKey', {
+    queryInterface.addColumn("users", "authKey", {
       type: Sequelize.STRING(255),
-      allowNull: true,
+      allowNull: true
     }),
-    queryInterface.addColumn('users', 'salt', {
-      type: Sequelize.STRING(255),
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    }),
-    queryInterface.addColumn('users', 'oldHash', {
+    queryInterface.addColumn("users", "salt", {
       type: Sequelize.STRING(255),
       allowNull: false,
       validate: {
-        notEmpty: true,
-      },
+        notEmpty: true
+      }
     }),
-    queryInterface.addColumn('users', 'passwordResetToken', {
+    queryInterface.addColumn("users", "oldHash", {
       type: Sequelize.STRING(255),
-      allowNull: true,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     }),
-    queryInterface.addColumn('users', 'statusId', {
+    queryInterface.addColumn("users", "passwordResetToken", {
+      type: Sequelize.STRING(255),
+      allowNull: true
+    }),
+    queryInterface.addColumn("users", "statusId", {
       type: Sequelize.INTEGER(10),
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 0
     })
   ]);
 };

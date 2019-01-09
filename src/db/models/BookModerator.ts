@@ -5,58 +5,66 @@ import { SEQUELIZE_MODEL_NAME_USER } from "./User";
 const DB_TABLE_NAME = "book_moderators";
 const SEQUELIZE_MODEL_NAME = "BookModerator";
 
-interface Attributes {
+interface IAttributes {
   id?: number;
   userId?: number;
   bookId?: number;
   createdAt?: Date;
 }
 
-type Instance = Sequelize.Instance<Attributes> & Attributes;
+type Instance = Sequelize.Instance<IAttributes> & IAttributes;
 
-function createInstance(sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) {
-  const attributes: Sequelize.DefineModelAttributes<Attributes> = {
+function createInstance(
+  sequelize: Sequelize.Sequelize,
+  DataTypes: Sequelize.DataTypes
+) {
+  /* tslint:disable */
+  const attributes: Sequelize.DefineModelAttributes<IAttributes> = {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      allowNull: false
     },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_USER,
-        key: "id",
+        key: "id"
       },
       onUpdate: "cascade",
-      onDelete: "cascade",
+      onDelete: "cascade"
     },
     bookId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: SEQUELIZE_MODEL_NAME_BOOK,
-        key: "id",
+        key: "id"
       },
       onUpdate: "cascade",
-      onDelete: "cascade",
+      onDelete: "cascade"
     },
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.default.literal("CURRENT_TIMESTAMP"),
-      allowNull: false,
-    },
+      allowNull: false
+    }
+  };
+  /* tslint:enable */
+  const options: Sequelize.DefineOptions<IAttributes> = {
+    tableName: DB_TABLE_NAME
   };
 
-  const options: Sequelize.DefineOptions<Attributes> = {
-    tableName: DB_TABLE_NAME,
-  };
-
-  return sequelize.define<Instance, Attributes>(SEQUELIZE_MODEL_NAME, attributes, options);
+  return sequelize.define<Instance, IAttributes>(
+    SEQUELIZE_MODEL_NAME,
+    attributes,
+    options
+  );
 }
 
-export { Attributes as BookModerator };
+export { IAttributes as BookModerator };
 export { Instance as BookModeratorInstance };
 export default function(sequelize: Sequelize.Sequelize) {
   return createInstance(sequelize, Sequelize);

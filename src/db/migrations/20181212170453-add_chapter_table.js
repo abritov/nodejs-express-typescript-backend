@@ -5,50 +5,50 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('chapters', {
+  return queryInterface.createTable("chapters", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      allowNull: false
     },
     bookId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'books',
-        key: 'id',
+        model: "books",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     titleRu: {
       type: Sequelize.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     titleEn: {
       type: Sequelize.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     translatorId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     redactorId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     content: {
       type: Sequelize.TEXT,
@@ -60,13 +60,13 @@ module.exports.up = (queryInterface, Sequelize) => {
     },
     createdAt: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      allowNull: false,
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      allowNull: false
     },
     updatedAt: {
       type: Sequelize.DATE,
-      allowNull: true,
-    },
+      allowNull: true
+    }
   });
 };
 
@@ -75,5 +75,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('chapters');
+  return queryInterface.dropTable("chapters");
 };

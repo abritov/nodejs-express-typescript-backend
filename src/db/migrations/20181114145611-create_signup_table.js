@@ -5,34 +5,34 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.createTable('signup', {
+  return queryInterface.createTable("signup", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
+      allowNull: false
     },
     userId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id"
       },
-      onUpdate: 'cascade',
-      onDelete: 'cascade',
+      onUpdate: "cascade",
+      onDelete: "cascade"
     },
     provider: {
       type: Sequelize.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     payload: {
       type: Sequelize.JSON,
-      allowNull: false,
+      allowNull: false
     },
     token: {
       type: Sequelize.STRING(255),
-      allowNull: true,
+      allowNull: true
     },
     active: {
       type: Sequelize.BOOLEAN,
@@ -44,9 +44,9 @@ module.exports.up = (queryInterface, Sequelize) => {
     },
     createdAt: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      allowNull: false,
-    },
+      defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      allowNull: false
+    }
   });
 };
 
@@ -55,5 +55,5 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.dropTable('signup');
+  return queryInterface.dropTable("signup");
 };

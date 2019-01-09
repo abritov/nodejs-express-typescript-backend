@@ -1,22 +1,21 @@
 // @ts-check
 
 /**
- * @param {import('./types').EnvironmentConfig} development
+ * @param {import('./types').IEnvironmentConfig} development
  */
-const development = require('./dev');
+const development = require("./dev");
 
 /**
- * @param {import('./types').EnvironmentConfig} production
+ * @param {import('./types').IEnvironmentConfig} production
  */
-const production = require('./prod');
-
+const production = require("./prod");
 
 /**
- * @param {import('./types').Config} production
+ * @param {import('./types').IConfig} production
  */
 const config = {
   development,
   production
-}
+};
 
 module.exports = config;

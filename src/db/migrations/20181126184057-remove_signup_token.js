@@ -5,7 +5,7 @@
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.up = (queryInterface, Sequelize) => {
-  return queryInterface.removeColumn('signup', 'token');
+  return queryInterface.removeColumn("signup", "token");
 };
 
 /**
@@ -13,8 +13,8 @@ module.exports.up = (queryInterface, Sequelize) => {
  * @param {import('sequelize').SequelizeStatic} Sequelize
  */
 module.exports.down = (queryInterface, Sequelize) => {
-  return queryInterface.addColumn('signup', 'token', {
+  return queryInterface.addColumn("signup", "token", {
     type: Sequelize.STRING(255),
-    allowNull: true,
+    allowNull: true
   });
 };
