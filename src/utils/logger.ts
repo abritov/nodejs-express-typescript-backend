@@ -11,4 +11,7 @@ export class LoggerAdapter {
   public static instance: ILoggerInstance;
 }
 
-export const logger = LoggerAdapter.instance.getInstance();
+export const logger =
+  LoggerAdapter.instance === undefined
+    ? console
+    : LoggerAdapter.instance.getInstance();
